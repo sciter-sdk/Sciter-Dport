@@ -1,4 +1,4 @@
-ACTUAL SCITER VERSION: 
+ACTUAL SCITER VERSION: 3.2.0.5
 
 
 About
@@ -12,13 +12,13 @@ Platforms supported and tested: Windows 32bits, Linux 32bits
 Package content
 ===============
 
-dub.json					-> DUB package manifest
-sciter32-import-lib.lib		-> win32 only: DLL import lib
-/samples					-> contains sample of complete GUI aplications making use of this library; samples starting with 'u' are universal ones and the same sources compiles for all supported platforms
-/source						-> source code of this library, you should add this path to the compiler 'include path'
-/source/sciter				-> .d files directly in this folder are basically header files with only declarations, not definitions, that is, the .h files ported to D
-/source/sciter/definitions	-> .d files here are the actual definitions of everything, from support classes, to the actual API functions
-/source/winkit				-> win32 only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on
+* dub.json					-> DUB package manifest
+* sciter32-import-lib.lib		-> win32 only: DLL import lib
+* /samples					-> contains sample of complete GUI aplications making use of this library; samples starting with 'u' are universal ones and the same sources compiles for all supported platforms
+* /source						-> source code of this library, you should add this path to the compiler 'include path'
+* /source/sciter				-> .d files directly in this folder are basically header files with only declarations, not definitions, that is, the .h files ported to D
+* /source/sciter/definitions	-> .d files here are the actual definitions of everything, from support classes, to the actual API functions
+* /source/winkit				-> win32 only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on
 
 
 sciter32-import-lib.lib
