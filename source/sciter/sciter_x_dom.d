@@ -31,6 +31,10 @@ extern(Windows)
 	const int SCDOM_OPERATION_FAILED = 5;
 	const int SCDOM_OK_NOT_HANDLED = (-1);
 
+	struct METHOD_PARAMS
+	{
+		UINT methodID;
+	}
 	struct REQUEST_PARAM
 	{
 		LPCWSTR name;

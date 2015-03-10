@@ -422,11 +422,7 @@ extern(Windows)
 	
 	alias BEHAVIOR_METHOD_IDENTIFIERS eBehaviorMethodIdentifiers;
 
-	struct METHOD_PARAMS
-	{
-		UINT methodID; // see: enum BEHAVIOR_METHOD_IDENTIFIERS
-	}
-
+	
 	struct SCRIPTING_METHOD_PARAMS
 	{
 		LPCSTR        name;
@@ -445,6 +441,19 @@ extern(Windows)
 		tiscript_value result;
 	}
 	
+	// GET_VALUE/SET_VALUE methods params
+	struct VALUE_PARAMS 
+	{
+		UINT         methodID;
+		SCITER_VALUE val;
+	}
+	// IS_EMPTY method params
+	struct IS_EMPTY_PARAMS
+	{
+		UINT methodID;
+		UINT is_empty; // !0 - is empty
+	}
+
 	struct DATA_ARRIVED_PARAMS
 	{
 		HELEMENT  initiator;

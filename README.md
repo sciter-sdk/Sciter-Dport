@@ -1,4 +1,4 @@
-ACTUAL SCITER VERSION: 3.2.0.5
+ACTUAL SCITER VERSION: 3.2.0.6
 
 
 About
@@ -21,8 +21,8 @@ Package content
 * /source/winkit				-> win32 only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on
 
 
-sciter32-import-lib.lib
------------------------
+Win32: sciter32-import-lib.lib
+------------------------------
 
 For compiling your app on Windows you need to pass this file for the linker to find the functions definitions.
 
