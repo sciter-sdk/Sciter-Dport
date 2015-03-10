@@ -1,0 +1,14 @@
+﻿{
+	"name": "uminimal",
+	"license": "GPL-3.0",
+	"description": "Minimal demonstration of usage of sciter-dport to create an universal Sciter window (the same source code for the three supported platforms: Windows, Linux GTX and Mac OSX)",
+	"copyright": "Copyright © 2015, midi",
+	"authors": ["midi"],
+	
+	"dependencies": {
+		"sciter-dport": {
+			"version": "~master",
+			"path": "../../"
+		}
+	}
+}
