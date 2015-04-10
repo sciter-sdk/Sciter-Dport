@@ -11,6 +11,8 @@ The code is very well tested, and constantly used in real world applications, so
 Platforms supported until now: **Windows 32bits only**
 *(Linux GTX support is on the way)*
 
+License: GNU GENERAL PUBLIC LICENSE Version 2
+
 
 Package content
 ===============
