@@ -50,9 +50,7 @@ This file was generated using 'coffimplib' app (ftp://ftp.digitalmars.com/coffim
 Requirements:
 
 - add every .d files under /source/sciter directory to the compiler input, that is, compile them together with your app others .d files
-
 - add /source to the compiler include path
-
 - add needed import statements like: ```import sciter.definitions.api```
 
 
