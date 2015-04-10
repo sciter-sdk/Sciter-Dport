@@ -9,8 +9,7 @@
 	"libs-linux": ["dl"],
 	"libs-windows": ["$PACKAGE_DIR/sciter32-import-lib"],
 	
-	
 	"dependencies-linux" : {
-		"gtk-d:gtkd": ">=2.4.2"
+		"gtk-d:gtkd": "~>3.0.0"
 	}
 }

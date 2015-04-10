@@ -1,4 +1,6 @@
 {
 	"fileVersion": 1,
-	"versions": {}
+	"versions": {
+		"gtk-d": "3.0.0"
+	}
 }

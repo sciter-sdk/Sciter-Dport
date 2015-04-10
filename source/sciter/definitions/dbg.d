@@ -33,6 +33,7 @@ void InspectWindow(HWINDOW hwnd)
 	{
 		import core.sys.windows.windows;
 		HMODULE hinsp = LoadLibraryA("inspector32.dll".ptr);
+		assert(hinsp);
 		auto pSciterInspect = cast(SciterWindowInspectorPF) GetProcAddress(hinsp, "SciterWindowInspector");
 		assert(pSciterInspect);
 
@@ -62,7 +63,7 @@ abstract class debug_output
 	extern(Windows) static void _output_debug(LPVOID param, UINT subsystem, UINT severity, LPCWSTR text, UINT text_length)
 	{
 		debug_output _this = cast(debug_output) param;
-		_this.output(cast(OUTPUT_SUBSYTEM) subsystem, cast(OUTPUT_SEVERITY) severity, cast(wstring) text[0..text_length]);
+		_this.output(cast(OUTPUT_SUBSYTEM) subsystem, cast(OUTPUT_SEVERITY) severity, text[0..text_length].idup);
 	}
 }
 

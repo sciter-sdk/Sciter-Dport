@@ -8,11 +8,11 @@
 
 module winkit.MessageBox;
 
-import std.conv;
+import winkit.Window;
 import win32.core;
 
 
-public void Show(string msg)
+public void Show(wstring msg, Window wnd_owner)
 {
-	MessageBox(null, to!wstring(msg ~ '\0').ptr, null, MB_OK | MB_ICONEXCLAMATION);
+	MessageBox(wnd_owner, (msg ~ '\0').ptr, null, MB_OK | MB_ICONEXCLAMATION);
 }

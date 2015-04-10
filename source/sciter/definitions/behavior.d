@@ -79,6 +79,13 @@ abstract class EventHandler
 	{
 		EventHandler evh = cast(EventHandler)tag;
 
+		/*debug
+		{
+			static i = 0;
+			import std.stdio;
+			stderr.writeln("element_proc ", i++);
+		}*/
+
 		switch( cast(EVENT_GROUPS)evtg )
 		{
 			case EVENT_GROUPS.SUBSCRIPTIONS_REQUEST:

@@ -15,7 +15,6 @@ void main()
 		&frame, null, null, null);
 		
 	SciterLoadFile(wnd, "minimal.html");
-	SciterSetOption(wnd, SCITER_RT_OPTIONS.SCITER_TRANSPARENT_WINDOW, 0);
 	
 	
 	version(Windows)

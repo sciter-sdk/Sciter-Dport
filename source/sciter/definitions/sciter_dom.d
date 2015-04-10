@@ -220,6 +220,16 @@ public:
 public:
 	this(HELEMENT h) { use(h); }
 	this(this) { use(he); }
+	this(VALUE data)
+	{
+		import sciter.definitions.sciter_value;
+
+		json_value jv = data;
+		assert(jv.is_object());
+
+		HELEMENT he = cast(size_t) jv.get_object_data();
+		use(he);
+	}
 	~this() { unuse(); }
 	bool is_valid() const { return he!=HELEMENT.init; }
 
@@ -573,7 +583,6 @@ public:
 	HWINDOW get_element_hwnd(bool root_window)
 	{
 		HWINDOW hwnd;
-		auto res = .SciterGetElementHwnd(he, &hwnd, root_window);
 		.SciterGetElementHwnd(he, &hwnd, root_window) == SCDOM_OK || assert(false);
 		return hwnd;
 	}
