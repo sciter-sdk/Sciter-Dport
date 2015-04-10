@@ -37,9 +37,9 @@ Library usage (win32)
 1. Configuring linker: sciter32-import-lib.lib import lib
 ---------------------------------------------------------
 
-You need to add the file 'sciter32-import-lib.lib' to the linker input in order to it find the functions definitions of the Sciter DLL. This is the import lib that you pass to the linker parameters for making your executable statically link to the sciter32.dll exports.
+You need to add the file 'sciter32-import-lib.lib' to the linker input in order to it find the functions definitions of the Sciter DLL. This is the import lib that you pass to the linker for making your executable statically link to the sciter32.dll exports.
 
-This file was generated using 'coffimplib' app found at ftp://ftp.digitalmars.com/coffimplib.zip and documented at http://www.digitalmars.com/ctg/coffimplib.html.
+This file was generated using 'coffimplib' app (ftp://ftp.digitalmars.com/coffimplib.zip and  http://www.digitalmars.com/ctg/coffimplib.html).
 
 
 2. Compiling your code
@@ -90,10 +90,3 @@ void main()
 	}
 }
 ```
-
-
-
-Misc
-----
-
-* Has unittest coverage so, in DMD, compile it with the -unittest flag to run them.
