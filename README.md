@@ -46,6 +46,12 @@ void main()
 }
 ```
 
+This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://www.terrainformatica.com/sciter/main.whtm
+
+The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D)
+
+Platforms supported and tested: Windows 32bits, Linux 32bits
+
 
 Package content
 ===============
