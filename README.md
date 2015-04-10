@@ -47,14 +47,14 @@ This file was generated using 'coffimplib' app (ftp://ftp.digitalmars.com/coffim
 
 Requirements:
 
--add every .d files under /source/sciter directory to the compiler input, that is, compile them together with your app others .d files
+- add every .d files under /source/sciter directory to the compiler input, that is, compile them together with your app others .d files
 
--add /source to the compiler include path
+- add /source to the compiler include path
 
--add needed import statetems like: ```import sciter.definitions.api```
+- add needed import statements like: ```import sciter.definitions.api```
 
 
-Minimal code for creating a Sciter based HWND and loading a HTML page:
+Minimal code for creating a Sciter based HWND and loading a external .html file:
 ```D
 import sciter.sciter_x_types;
 import sciter.definitions.api;
