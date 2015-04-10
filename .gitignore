@@ -1,3 +1,9 @@
+# Temporary things
+READMElinux.md
+
+
+
+# Garbage
 /source_trash
 /include-reference
 /include-referenceOLD
@@ -5,10 +11,13 @@
 sciter-dport.lib
 libsciter-dport.a
 
-
-#DUB things
-.dub
 docs.json
 __dummy.html
 *.o
 *.obj
+
+
+
+#DUB things
+.dub
+dub.selections.json
