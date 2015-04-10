@@ -8,6 +8,8 @@ This library is a port of Sciter headers to the D language. The originals C head
 
 The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D)
 
+Has unittest coverage so, in DMD, compile it with the -unittest flag to run them.
+
 Platforms supported until now: **Windows 32bits only**
 *(Linux GTX support is on the way)*
 
