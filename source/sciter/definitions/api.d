@@ -41,7 +41,7 @@ static this()
 		import core.stdc.stdio;
 		import core.stdc.stdlib;
 
-		void* lib_sciter_handle = dlopen("./sciter-gtk-64.so", RTLD_LOCAL|RTLD_LAZY);
+		void* lib_sciter_handle = dlopen("./sciter-gtk-64.so", RTLD_LOCAL|RTLD_LAZY);// there is not 32bits .so version in the SDK
 		if(!lib_sciter_handle)
 		{
 			fprintf(stderr, "dlopen error: %s\n", dlerror());
