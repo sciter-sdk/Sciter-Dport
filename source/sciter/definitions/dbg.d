@@ -79,11 +79,11 @@ abstract class script_debugger_client
 
 	public void attach()
 	{
-		SciterDebugSetupClient(hSciterHost, &this, &_SCITER_DEBUG_BP_HIT_CB, &_SCITER_DEBUG_DATA_CB) || assert(false);
+		SciterDebugSetupClient(hSciterHost, cast(void*) this, &_SCITER_DEBUG_BP_HIT_CB, &_SCITER_DEBUG_DATA_CB) || assert(false);
 	}
 	public void detach()
 	{
-		SciterDebugSetupClient(hSciterHost, &this, null, null) || assert(false);
+		SciterDebugSetupClient(hSciterHost, cast(void*) this, null, null) || assert(false);
 	}
 
 	public void dbg_addBreakpoint(const WCHAR* fileUrl, uint lineNo)

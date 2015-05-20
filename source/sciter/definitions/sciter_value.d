@@ -23,6 +23,16 @@ unittest
 
 	json_value jarr = json_value.from_array([1,2,3]);
 	assert(jarr.to_string(VALUE_STRING_CVT_TYPE.CVT_JSON_LITERAL)=="[1, 2, 3]");
+
+	json_value jassoc1 = [
+		"key1" : 1,
+		"key2" : 2,
+	];
+	json_value jassoc2 = [
+		"key1" : json_value(1),
+		"key2" : json_value(2),
+	];
+	assert(jassoc1.to_string() == jassoc2.to_string());
 }
 
 
@@ -60,6 +70,18 @@ public:
 	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, cast(uint)bs.length, VALUE_TYPE.T_BYTES, 0); }
 	
 	this(in json_value[] arr)	{ .ValueInit(&data); foreach(i, ref a; arr) set_item(cast(uint)i, a); }
+	this(T)(in T[string] assocarr)
+	{
+		.ValueInit(&data);
+		foreach(key; assocarr.keys)
+			set_item( json_value(key), json_value(assocarr[key]) );
+	}
+	this(in json_value[string] assocarr)
+	{
+		.ValueInit(&data);
+		foreach(key; assocarr.keys)
+			set_item( json_value(key), assocarr[key] );
+	}
 	~this()				{ .ValueClear(&data); }
 
 	static json_value from_array(T)(in T[] arr)// could not make it a this() constructor because of ambiguity - midi
@@ -188,12 +210,12 @@ public:
 	{
 		if( ct_how == VALUE_STRING_CVT_TYPE.CVT_SIMPLE && is_string() )
 			return get_chars().idup;
-
+		
 		json_value v = data;
-		.ValueToString(&v.data, ct_how);// trickie thing, grr, who owns this VALUE now? guess me
-
-
-		return v.get_chars.idup;
+		.ValueToString(&v.data, ct_how);// as in SDK: ValueToString converts value to T_STRING inplace
+										// trickie thing, grr, who owns this VALUE now? guess me
+		auto r = v.get_chars();
+		return v.get_chars().idup;
 	}
 
 	void clear()

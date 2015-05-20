@@ -8,6 +8,7 @@
 
 module winkit.DropFileTarget;
 
+
 mixin template DropFileTarget()
 {
 public:
@@ -28,6 +29,13 @@ public:
 		// Turn the WS_EX_ACCEPTFILES style on or off based on the value of the
 		// bAccept parameter
 		DragAcceptFiles(wnd, bAccept);
+		
+		/*version(Windows7)
+		{
+			ChangeWindowMessageFilter(WM_DROPFILES, 1);
+			ChangeWindowMessageFilter(WM_COPYDATA, 1);
+			ChangeWindowMessageFilter(0x0049, 1);
+		}*/
 	}
 
 

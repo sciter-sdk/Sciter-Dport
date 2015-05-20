@@ -10,6 +10,7 @@ module sciter.definitions.sciter_dom;
 
 import std.array;
 import std.conv;
+import std.algorithm.iteration;
 
 import sciter.tiscript;
 import sciter.sciter_x_types;
@@ -602,8 +603,8 @@ public:
 	static HELEMENT element_by_uid(HWINDOW hSciterWnd, UINT uid)
 	{
 		HELEMENT h;
-		.SciterGetElementByUID(hSciterWnd, uid, &h) == SCDOM_OK || assert(false);
-		return h;
+		.SciterGetElementByUID(hSciterWnd, uid, &h);// == SCDOM_OK || assert(false);
+		return h;// might be 0, be aware, I am not asserting it
 	}
 
 	wchar[] combine_url(wstring url)

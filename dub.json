@@ -6,10 +6,21 @@
 	"authors": ["midi"],
 	
 	"excludedSourceFiles": ["source/winkit/*"],
-	"libs-linux": ["dl"],
-	"libs-windows": ["$PACKAGE_DIR/sciter32-import-lib"],
 	
-	"dependencies-linux" : {
-		"gtk-d:gtkd": "~>3.0.0"
-	}
+	"configurations": [
+		{
+			"name": "linux-library",
+			"platforms": ["linux"],
+			"libs": ["dl"],
+			"dependencies": {
+				"gtk-d:gtkd": "~>3.0.0"
+			}
+		},
+		
+		{
+			"name": "windows-library",
+			"platforms": ["windows"],
+			"libs": ["$PACKAGE_DIR/sciter32-import-lib"],
+		}
+	]
 }

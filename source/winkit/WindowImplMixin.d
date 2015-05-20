@@ -8,17 +8,16 @@
 
 module winkit.WindowImplMixin;
 
-import std.conv;
-import std.traits;
-import win32.core;
-
-import winkit.Window;
-import sciter.definitions.api;
-
+//import win32.core;
+//import sciter.definitions.api;
 
 mixin template WindowImplMixin(bool isSciter = false)
 {
 public:
+	import std.conv;
+	import std.traits;
+	import winkit.Window;
+
 	Window wnd;
 
 	void Create(SIZE sz, wstring title, HWND parent = NULL, DWORD dwStyle = WS_OVERLAPPEDWINDOW, DWORD dwExStyle = 0)// frames

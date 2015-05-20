@@ -346,6 +346,10 @@ extern(Windows)
 
 		ANIMATION         = 0xA0,      // animation started (reason=1) or ended(reason=0) on the element.
 		DOCUMENT_CREATED  = 0xC0,      // document created, script namespace initialized. target -> the document
+		DOCUMENT_CLOSE_REQUEST = 0xC1, // document is about to be closed, to cancel closing do: evt.data = sciter::value("cancel");
+		DOCUMENT_CLOSE    = 0xC2,      // last notification before document removal from the DOM
+		DOCUMENT_READY    = 0xC3,      // document has got DOM structure, styles and behaviors of DOM elements. Script loading run is complete at this moment. 
+
 
 		VIDEO_INITIALIZED = 0xD1,      // <video> "ready" notification   
 		VIDEO_STARTED     = 0xD2,      // <video> playback started notification   

@@ -20,20 +20,52 @@ License: GNU GENERAL PUBLIC LICENSE Version 2
 Package content
 ===============
 
-* dub.json						-> DUB package manifest
-* sciter32-import-lib.lib		-> **win32** only: DLL import lib
-* /samples						-> contains sample of complete GUI aplications making use of this library; samples starting with 'u' are universal ones and the same source code should compile in all supported platforms
-* /source						-> source code of this library, you should add this path to the compiler 'include path'
-* /source/sciter				-> .d files directly in this folder are basically header files with only declarations, not definitions, that is, the .h files ported to D
-* /source/sciter/definitions	-> .d files here are the actual definitions of everything, from support classes, to the actual API functions
-* /source/winkit				-> **win32** only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on..
+```
+dub.json					-> DUB package manifest
+sciter32-import-lib.lib		-> **win32** only: DLL import lib
+/samples					-> contains sample of complete GUI aplications making use of this library; samples starting with 'u' are universal ones and the same source code should compile in all supported platforms
+/source						-> source code of this library, you should add this path to the compiler 'include path'
+/source/sciter				-> .d files directly in this folder are basically header files with only declarations, not definitions, that is, the .h files ported to D
+/source/sciter/definitions	-> .d files here are the actual definitions of everything, from support classes, to the actual API functions
+/source/winkit				-> **win32** only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on..
+```
 
+Mapping over the oficial SDK headers
+------------------------------------
 
-Headers mapping over the oficial SDK headers
---------------------------------------------
+```
+/source/sciter/definitions/dbg.d
+- equivalent file -> sciter-x-debug.h
+- classes ported: 
+	sciter::debug_output				-> abstract class debug_output
+	sciter::script_debugger_client		-> abstract class script_debugger_client
+```
+```
+/source/sciter/definitions/sciter_value.d
+- equivalent file -> value.hpp
+- classes ported: 
+	sciter::value						-> struct json_value
+```
 
-/source/sciter/definitions/dbg.d	-> sciter-x-debug.h
-TBD
+Features
+--------
+
+json_value supports construction through associative arrays, for example:
+
+```D
+void Foo()
+{
+	json_value jassoc1 = [
+		"key1" : 1,
+		"key2" : 2,
+	];
+	
+	json_value jassoc2 = [
+		"key1" : json_value(1),
+		"key2" : json_value(2),
+	];
+}
+```
 
 
 Library usage (win32)

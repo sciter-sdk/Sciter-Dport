@@ -201,7 +201,7 @@ extern(Windows)// needed for the functions alias'es
 
 
 	version(Windows)
-		alias BOOL function(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, LRESULT* pResult) SciterWindowDelegate;
+		alias LRESULT function(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, BOOL* handled) SciterWindowDelegate;
 	version(linux)
 		alias void* SciterWindowDelegate;
 	version(OSX)
