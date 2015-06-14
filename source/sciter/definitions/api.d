@@ -20,8 +20,8 @@ unittest
 	// you need this port version to be the same version of Sciter SDK (else for sure it will crash)
 	UINT major = SciterVersion(TRUE);
 	UINT minor = SciterVersion(FALSE);
-	assert(major==0x00030008);
-	assert(minor==0x00000001);
+	assert(major==0x00030002);
+	assert(minor==0x00000009);
 	assert(SAPI()._version==0);
 }
 

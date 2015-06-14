@@ -42,14 +42,14 @@ public:
 		har = SAPI().SciterOpenArchive(data.ptr, cast(UINT/*x64 issue*/) data.length);
 		assert(har);
 	}
-
+	
 	void close()
 	{
 		if(har)
 			SAPI().SciterCloseArchive(har);
 		har = 0;
 	}
-
+	
     // get archive item:
 	const(ubyte)[] get(wstring path)
 	{

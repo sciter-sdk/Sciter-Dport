@@ -8,7 +8,6 @@
 
 module winkit.WindowImplMixin;
 
-//import win32.core;
 //import sciter.definitions.api;
 
 mixin template WindowImplMixin(bool isSciter = false)
@@ -17,6 +16,7 @@ public:
 	import std.conv;
 	import std.traits;
 	import winkit.Window;
+	import win32.core;
 
 	Window wnd;
 
@@ -37,7 +37,7 @@ public:
 
 		assert(hWnd && wnd==hWnd);// wnd set at StartWndProc
 	}
-
+	
 	void Create(POINT pt, SIZE sz, HWND parent, DWORD dwStyle = WS_CHILD | WS_VISIBLE, DWORD dwExStyle = 0)// childs
 	{
 		HWND hWnd = CreateWindowEx(
@@ -61,9 +61,10 @@ public:
 	{
 		static if(isSciter)
 		{
-			return .SciterProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
+			import sciter.definitions.api;
+			return SciterProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
 		} else {
-			return .DefWindowProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
+			return DefWindowProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
 		}
 	}
 
