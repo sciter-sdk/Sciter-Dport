@@ -66,7 +66,7 @@ public:
 	this(double v)		{ .ValueInit(&data); .ValueFloatDataSet(&data, v, VALUE_TYPE.T_FLOAT, 0); }
 
 	this(wstring s)		{ .ValueInit(&data); .ValueStringDataSet(&data, s.ptr, cast(uint)s.length, 0); }
-	this(string s)		{ wstring sw = to!wstring(s); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, cast(uint)sw.length, VALUE_UNIT_TYPE.UT_SYMBOL); }
+	this(string s)		{ wstring sw = to!wstring(s); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, cast(uint)sw.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL); }
 	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, cast(uint)bs.length, VALUE_TYPE.T_BYTES, 0); }
 	
 	this(in json_value[] arr)	{ .ValueInit(&data); foreach(i, ref a; arr) set_item(cast(uint)i, a); }
@@ -123,19 +123,33 @@ public:
 	static value date( INT64 v )		{ value t = new value; .ValueInt64DataSet(&t.data, v, VALUE_TYPE.T_DATE, 0); return t; }
 	static value date( FILETIME ft )	{ value t = new value; .ValueInt64DataSet(&t.data, *cast(INT64*)&ft, VALUE_TYPE.T_DATE, 0); return t; }
 	static value symbol( wstring s )	{ value t = new value; .ValueInit(&t.data); .ValueStringDataSet(&t.data, s.ptr, s.length, VALUE_UNIT_TYPE.UT_SYMBOL); return t; }
-	static value secure_string(wstring s)
-	{
-		value t = new value;
-		.ValueStringDataSet(&t.data, s.ptr, s.length, 2);
-		return t;
-	}*/
+	*/
 
+	static json_value secure_string(wstring s)// what is a secure string? - midi
+	{
+		json_value jv;
+		.ValueStringDataSet(&jv.data, s.ptr, s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SECURE);
+		return jv;
+	}
+
+	static json_value make_error(wstring s)	// returns string representing error.
+											// if such value is used as a return value from native function
+											// the script runtime will throw an error in script rather than returning that value.
+	{
+        json_value jv;
+        if(!s)
+			return jv;
+		.ValueStringDataSet(&jv.data, s.ptr, s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_ERROR);
+        return jv;
+	}
+	
 	bool is_undefined() const { return data.t == VALUE_TYPE.T_UNDEFINED; }
 	bool is_bool() const { return data.t == VALUE_TYPE.T_BOOL; }
 	bool is_int() const { return data.t == VALUE_TYPE.T_INT; }
 	bool is_float() const { return data.t == VALUE_TYPE.T_FLOAT; }
 	bool is_string() const { return data.t == VALUE_TYPE.T_STRING; }
-	bool is_symbol() const { return data.t == VALUE_TYPE.T_STRING && data.u == VALUE_UNIT_TYPE.UT_SYMBOL; }
+	bool is_symbol() const { return data.t == VALUE_TYPE.T_STRING && data.u == VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL; }
+	bool is_error_string() const { return data.t == VALUE_TYPE.T_STRING && data.u == VALUE_UNIT_TYPE_STRING.UT_STRING_ERROR; }
 	bool is_date() const { return data.t == VALUE_TYPE.T_DATE; }
 	bool is_currency() const { return data.t == VALUE_TYPE.T_CURRENCY; }
 	bool is_map() const { return data.t == VALUE_TYPE.T_MAP; }

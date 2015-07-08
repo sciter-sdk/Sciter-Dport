@@ -8,6 +8,13 @@
 
 module sciter.definitions.api;
 
+version(Win64)
+{
+	pragma(lib, r"sciter64-import-lib.lib");
+} else {
+	pragma(lib, r"sciter32-import-lib.lib");
+}
+
 public import sciter.sciter_x;
 public import sciter.definitions.types;
 import sciter.sciter_x_types;
@@ -20,8 +27,8 @@ unittest
 	// you need this port version to be the same version of Sciter SDK (else for sure it will crash)
 	UINT major = SciterVersion(TRUE);
 	UINT minor = SciterVersion(FALSE);
-	assert(major==0x00030002);
-	assert(minor==0x00000009);
+	assert(major==0x00030003);
+	assert(minor==0x00000000);
 	assert(SAPI()._version==0);
 }
 

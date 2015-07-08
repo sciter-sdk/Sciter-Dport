@@ -79,7 +79,6 @@ extern(Windows)
 		reserved3 = 14, 
 		UT_COLOR = 15, // color in int
 		UT_URL   = 16,  // url in string
-		UT_SYMBOL = 0xFFFF, // for T_STRINGs designates symbol string ( so called NAME_TOKEN - CSS or JS identifier )
 	}
 
 	enum VALUE_UNIT_TYPE_DATE
@@ -98,6 +97,15 @@ extern(Windows)
 		UT_OBJECT_NATIVE = 3,   // type T_OBJECT of native Type with data slot (LPVOID)
 		UT_OBJECT_FUNCTION = 4, // type T_OBJECT of type Function
 		UT_OBJECT_ERROR = 5,    // type T_OBJECT of type Error
+	}
+
+	// Sciter or TIScript specific
+	enum VALUE_UNIT_TYPE_STRING
+	{
+		UT_STRING_STRING = 0,		// string
+		UT_STRING_ERROR  = 1,		// is an error string
+		UT_STRING_SECURE = 2,		// secure string ("wiped" on destroy)
+		UT_STRING_SYMBOL = 0xffff	// symbol in tiscript sense
 	}
 
 	// we should NOT impose here enum types in place of UINTs cause the above enum's dont defines all the possible values (mainly 0)

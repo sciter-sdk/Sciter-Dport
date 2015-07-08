@@ -31,7 +31,7 @@ void UnittestWindow(void function(HWINDOW) cbk, string html = null)// add html s
 									&frame, null, null, null);
 
 	if(html)
-		.SciterLoadHtml(wnd, cast(ubyte*)html.ptr, html.length, null) || assert(false);
+		.SciterLoadHtml(wnd, cast(ubyte*)html.ptr, cast(int)html.length, null) || assert(false);
 
 	import core.sys.windows.windows;
 	cbk(wnd);

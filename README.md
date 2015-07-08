@@ -1,4 +1,4 @@
-ACTUAL SCITER VERSION: 3.2.0.9
+ACTUAL SCITER VERSION: 3.3.0.0
 
 OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 

@@ -107,7 +107,7 @@ public:
 	UINT on_engine_destroyed() { return 0; }
 	UINT on_posted_notification(LPSCN_POSTED_NOTIFICATION lpab) { return 0; }
 
-private:
+protected:
 	HWINDOW m_hwnd;
 
 	static extern(Windows) UINT callback(LPSCITER_CALLBACK_NOTIFICATION pnm, LPVOID param)

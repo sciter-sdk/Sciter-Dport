@@ -363,9 +363,11 @@ extern(Windows)
 										//   4. call sciter::video_destination::start_streaming(...) providing needed parameters
 										//      call sciter::video_destination::render_frame(...) as soon as they are available
 										//      call sciter::video_destination::stop_streaming() to stop the rendering (a.k.a. end of movie reached)
-
-
-
+		
+		PAGINATION_STARTS  = 0xE0,     // behavior:pager starts pagination
+		PAGINATION_PAGE    = 0xE1,     // behavior:pager paginated page no, reason -> page no
+		PAGINATION_ENDS    = 0xE2,     // behavior:pager end pagination, reason -> total pages
+		
 		FIRST_APPLICATION_EVENT_CODE = 0x100
 		// all custom event codes shall be greater
 		// than this number. All codes below this will be used

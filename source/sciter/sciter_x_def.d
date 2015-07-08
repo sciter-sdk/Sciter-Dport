@@ -170,9 +170,11 @@ extern(Windows)// needed for the functions alias'es
 		SCITER_SET_SCRIPT_RUNTIME_FEATURES = 8, // value - combination of SCRIPT_RUNTIME_FEATURES flags.
 		SCITER_SET_GFX_LAYER = 9,		// hWnd = NULL, value - GFX_LAYER
 		SCITER_SET_DEBUG_MODE = 10,		// hWnd, value - TRUE/FALSE
-		SCITER_SET_UX_THEMING = 11		// hWnd = NULL, value - BOOL, TRUE - the engine will use "unisex" theme that is common for all platforms. 
+		SCITER_SET_UX_THEMING = 11,		// hWnd = NULL, value - BOOL, TRUE - the engine will use "unisex" theme that is common for all platforms. 
 										// That UX theme is not using OS primitives for rendering input elements. Use it if you want exactly
 										// the same (modulo fonts) look-n-feel on all platforms.
+
+		SCITER_ALPHA_WINDOW  = 12,		// hWnd, value - TRUE/FALSE - window uses per pixel alpha (e.g. WS_EX_LAYERED/UpdateLayeredWindow() window)
 	}
 	//EXTERN_C BOOL SCAPI SciterSetOption(HWINDOW hWnd, UINT option, UINT_PTR value );
 	//EXTERN_C VOID SCAPI SciterGetPPI(HWINDOW hWndSciter, UINT* px, UINT* py);

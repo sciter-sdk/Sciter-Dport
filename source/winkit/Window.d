@@ -38,10 +38,10 @@ public:
 	LONG_PTR SetWindowLongPtr(in int nIndex, in LONG_PTR dwNewLong)
 		{ return .SetWindowLongPtr(m_hWnd, nIndex, dwNewLong); }
 
-	DWORD GetStyle()
+	size_t GetStyle()
 		{ return .GetWindowLongPtr(m_hWnd, GWL_STYLE); }
 
-	DWORD GetStyleEx()
+	size_t GetStyleEx()
 		{ return .GetWindowLongPtr(m_hWnd, GWL_EXSTYLE); }
 
 	BOOL ModifyStyle(DWORD dwRemove, DWORD dwAdd)
