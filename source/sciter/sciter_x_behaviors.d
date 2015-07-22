@@ -159,8 +159,10 @@ extern(Windows)
 	
 	enum FOCUS_EVENTS : UINT
 	{
-		FOCUS_LOST = 0,
-		FOCUS_GOT = 1,
+		FOCUS_LOST = 0, // non-bubbling event, target is new focus element
+		FOCUS_GOT = 1,  // non-bubbling event, target is old focus element
+		FOCUS_IN = 2,   // bubbling event/notification, target is an element that got focus
+		FOCUS_OUT = 3,  // bubbling event/notification, target is an element that lost focus
 	}
 
 	struct FOCUS_PARAMS
@@ -291,13 +293,15 @@ extern(Windows)
 		VISIUAL_STATUS_CHANGED = 0x11, // broadcast notification, sent to all elements of some container being shown or hidden
 		DISABLED_STATUS_CHANGED = 0x12,// broadcast notification, sent to all elements of some container that got new value of :disabled state
 
-		POPUP_DISMISSING = 0x13,       // popup is about to be closed
+		POPUP_DISMISSING = 0x13,		// popup is about to be closed
 
-		CONTENT_CHANGED = 0x15,        // content has been changed, is posted to the element that gets content changed,  reason is combination of CONTENT_CHANGE_BITS.
-		// target == NULL means the window got new document and this event is dispatched only to the window.
+		CONTENT_CHANGED = 0x15,			// content has been changed, is posted to the element that gets content changed,  reason is combination of CONTENT_CHANGE_BITS.
+										// target == NULL means the window got new document and this event is dispatched only to the window.
+		CLICK = 0x16,					// generic click
+		CHANGE = 0x17,					// generic change
 
 		// "grey" event codes  - notfications from behaviors from this SDK
-		HYPERLINK_CLICK = 0x80,        // hyperlink click
+		HYPERLINK_CLICK = 0x80,			// hyperlink click
 
 		//TABLE_HEADER_CLICK,            // click on some cell in table header,
 		//                               //     target = the cell,

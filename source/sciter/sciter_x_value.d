@@ -108,6 +108,11 @@ extern(Windows)
 		UT_STRING_SYMBOL = 0xffff	// symbol in tiscript sense
 	}
 
+	// Native functor
+	alias NATIVE_FUNCTOR_INVOKE = void function(VOID* tag, UINT argc, const VALUE* argv, VALUE* retval);// retval may contain error definition
+	alias NATIVE_FUNCTOR_RELEASE = void function(VOID* tag);
+
+
 	// we should NOT impose here enum types in place of UINTs cause the above enum's dont defines all the possible values (mainly 0)
 	/+EXTERN_C UINT VALAPI ValueInit( VALUE* pval );
 	EXTERN_C UINT VALAPI ValueClear( VALUE* pval );

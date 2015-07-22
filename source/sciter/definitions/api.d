@@ -28,7 +28,7 @@ unittest
 	UINT major = SciterVersion(TRUE);
 	UINT minor = SciterVersion(FALSE);
 	assert(major==0x00030003);
-	assert(minor==0x00000000);
+	assert(minor==0x00000001);
 	assert(SAPI()._version==0);
 }
 
@@ -245,7 +245,7 @@ UINT ValueGetValueOfKey ( const VALUE* pval, const VALUE* pkey, VALUE* pretval) 
 UINT ValueToString ( VALUE* pval, UINT how ) { return SAPI().ValueToString ( pval,how ); }
 UINT ValueFromString ( VALUE* pval, LPCWSTR str, UINT strLength, UINT how ) { return SAPI().ValueFromString ( pval, str,strLength,how ); }
 UINT ValueInvoke ( VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) { return SAPI().ValueInvoke ( pval, pthis, argc, argv, pretval, url); }
-UINT ValueNativeFunctorSet ( VALUE* pval, NATIVE_FUNCTOR_VALUE* pnfv) { return SAPI().ValueNativeFunctorSet ( pval, pnfv); }
+UINT ValueNativeFunctorSet ( VALUE* pval, NATIVE_FUNCTOR_INVOKE* pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, VOID* tag) { return SAPI().ValueNativeFunctorSet (pval, pinvoke, prelease, tag); }
 BOOL ValueIsNativeFunctor ( const VALUE* pval) { return SAPI().ValueIsNativeFunctor (pval); }
 
 // conversion between script (managed) value and the VALUE ( com::variant alike thing )

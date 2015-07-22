@@ -225,7 +225,7 @@ extern(Windows)
 		UINT function( VALUE* pval, /*VALUE_STRING_CVT_TYPE*/ UINT how ) ValueToString;
 		UINT function( VALUE* pval, LPCWSTR str, UINT strLength, /*VALUE_STRING_CVT_TYPE*/ UINT how ) ValueFromString;
 		UINT function( VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) ValueInvoke;
-		UINT function( VALUE* pval, NATIVE_FUNCTOR_VALUE* pnfv) ValueNativeFunctorSet;
+		UINT function( VALUE* pval, NATIVE_FUNCTOR_INVOKE*  pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, VOID* tag) ValueNativeFunctorSet;
 		BOOL function( const VALUE* pval) ValueIsNativeFunctor;
 
 		// tiscript VM API

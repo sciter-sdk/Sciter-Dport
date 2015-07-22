@@ -42,33 +42,33 @@ extern(Windows)
 	}
 
 
-	/+EXTERN_C SCDOM_RESULT SCAPI Sciter_UseElement(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI Sciter_UnuseElement(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetRootElement(HWINDOW hwnd, HELEMENT *phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetFocusElement(HWINDOW hwnd, HELEMENT *phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterFindElement(HWINDOW hwnd, POINT pt, HELEMENT* phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetChildrenCount(HELEMENT he, UINT* count);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetNthChild(HELEMENT he, UINT n, HELEMENT* phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetParentElement(HELEMENT he, HELEMENT* p_parent_he);
-	//OBSOLETE EXTERN_C SCDOM_RESULT SCAPI SciterGetElementHtml(HELEMENT he, LPCBYTE* utf8bytes, BOOL outer);+/
+	/+SCDOM_RESULT SCAPI Sciter_UseElement(HELEMENT he);
+	SCDOM_RESULT SCAPI Sciter_UnuseElement(HELEMENT he);
+	SCDOM_RESULT SCAPI SciterGetRootElement(HWINDOW hwnd, HELEMENT *phe);
+	SCDOM_RESULT SCAPI SciterGetFocusElement(HWINDOW hwnd, HELEMENT *phe);
+	SCDOM_RESULT SCAPI SciterFindElement(HWINDOW hwnd, POINT pt, HELEMENT* phe);
+	SCDOM_RESULT SCAPI SciterGetChildrenCount(HELEMENT he, UINT* count);
+	SCDOM_RESULT SCAPI SciterGetNthChild(HELEMENT he, UINT n, HELEMENT* phe);
+	SCDOM_RESULT SCAPI SciterGetParentElement(HELEMENT he, HELEMENT* p_parent_he);
+	//OBSOLETE SCDOM_RESULT SCAPI SciterGetElementHtml(HELEMENT he, LPCBYTE* utf8bytes, BOOL outer);+/
 	alias LPCBYTE_RECEIVER = void function(LPCBYTE bytes, UINT num_bytes, LPVOID param);
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterGetElementHtmlCB(HELEMENT he, BOOL outer, LPCBYTE_RECEIVER* rcv, LPVOID rcv_param);
-	//OBSOLETE EXTERN_C SCDOM_RESULT SCAPI SciterGetElementText(HELEMENT he, LPWSTR* utf16);+/
+	/+SCDOM_RESULT SCAPI SciterGetElementHtmlCB(HELEMENT he, BOOL outer, LPCBYTE_RECEIVER* rcv, LPVOID rcv_param);
+	//OBSOLETE SCDOM_RESULT SCAPI SciterGetElementText(HELEMENT he, LPWSTR* utf16);+/
 	alias LPCWSTR_RECEIVER = void function(LPCWSTR str, UINT str_length, LPVOID param);
 	alias LPCSTR_RECEIVER = void function(LPCSTR str, UINT str_length, LPVOID param);
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterGetElementTextCB(HELEMENT he, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetElementText(HELEMENT he, LPCWSTR utf16, UINT length);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetAttributeCount(HELEMENT he, LPUINT p_count);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetNthAttributeNameCB(HELEMENT he, UINT n, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetNthAttributeValueCB(HELEMENT he, UINT n, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetAttributeByNameCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetAttributeByName(HELEMENT he, LPCSTR name, LPCWSTR value);
-	EXTERN_C SCDOM_RESULT SCAPI SciterClearAttributes(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementIndex(HELEMENT he, LPUINT p_index);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementType(HELEMENT he, LPCSTR* p_type);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementTypeCB(HELEMENT he, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetStyleAttributeCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetStyleAttribute(HELEMENT he, LPCSTR name, LPCWSTR value);+/
+	/+SCDOM_RESULT SCAPI SciterGetElementTextCB(HELEMENT he, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterSetElementText(HELEMENT he, LPCWSTR utf16, UINT length);
+	SCDOM_RESULT SCAPI SciterGetAttributeCount(HELEMENT he, LPUINT p_count);
+	SCDOM_RESULT SCAPI SciterGetNthAttributeNameCB(HELEMENT he, UINT n, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterGetNthAttributeValueCB(HELEMENT he, UINT n, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterGetAttributeByNameCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterSetAttributeByName(HELEMENT he, LPCSTR name, LPCWSTR value);
+	SCDOM_RESULT SCAPI SciterClearAttributes(HELEMENT he);
+	SCDOM_RESULT SCAPI SciterGetElementIndex(HELEMENT he, LPUINT p_index);
+	SCDOM_RESULT SCAPI SciterGetElementType(HELEMENT he, LPCSTR* p_type);
+	SCDOM_RESULT SCAPI SciterGetElementTypeCB(HELEMENT he, LPCSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterGetStyleAttributeCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterSetStyleAttribute(HELEMENT he, LPCSTR name, LPCWSTR value);+/
 
 
 	enum ELEMENT_AREAS : UINT
@@ -90,7 +90,7 @@ extern(Windows)
 
 		SCROLLABLE_AREA = 0x60,	// scroll_area - scrollable area in content box 
 	}
-	//EXTERN_C SCDOM_RESULT SCAPI SciterGetElementLocation(HELEMENT he, LPRECT p_location, UINT areas /*ELEMENT_AREAS*/);
+	//SCDOM_RESULT SCAPI SciterGetElementLocation(HELEMENT he, LPRECT p_location, UINT areas /*ELEMENT_AREAS*/);
 
 
 
@@ -101,36 +101,36 @@ extern(Windows)
 	}
 
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterScrollToView(HELEMENT he, UINT SciterScrollFlags);
-	EXTERN_C SCDOM_RESULT SCAPI SciterUpdateElement(HELEMENT he, BOOL andForceRender);
-	EXTERN_C SCDOM_RESULT SCAPI SciterRefreshElementArea(HELEMENT he, RECT rc);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetCapture(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterReleaseCapture(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementHwnd(HELEMENT he, HWINDOW* p_hwnd, BOOL rootWindow);
-	EXTERN_C SCDOM_RESULT SCAPI SciterCombineURL(HELEMENT he, LPWSTR szUrlBuffer, UINT UrlBufferSize);+/
+	/+SCDOM_RESULT SCAPI SciterScrollToView(HELEMENT he, UINT SciterScrollFlags);
+	SCDOM_RESULT SCAPI SciterUpdateElement(HELEMENT he, BOOL andForceRender);
+	SCDOM_RESULT SCAPI SciterRefreshElementArea(HELEMENT he, RECT rc);
+	SCDOM_RESULT SCAPI SciterSetCapture(HELEMENT he);
+	SCDOM_RESULT SCAPI SciterReleaseCapture(HELEMENT he);
+	SCDOM_RESULT SCAPI SciterGetElementHwnd(HELEMENT he, HWINDOW* p_hwnd, BOOL rootWindow);
+	SCDOM_RESULT SCAPI SciterCombineURL(HELEMENT he, LPWSTR szUrlBuffer, UINT UrlBufferSize);+/
 	alias BOOL function(HELEMENT he, LPVOID param) SciterElementCallback;
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterSelectElements(
+	/+SCDOM_RESULT SCAPI SciterSelectElements(
 													 HELEMENT  he, 
 													 LPCSTR    CSS_selectors,
 													 SciterElementCallback* 
 													 callback, 
 													 LPVOID    param);
 
-	EXTERN_C SCDOM_RESULT SCAPI SciterSelectElementsW(
+	SCDOM_RESULT SCAPI SciterSelectElementsW(
 													  HELEMENT  he, 
 													  LPCWSTR   CSS_selectors,
 													  SciterElementCallback* 
 													  callback, 
 													  LPVOID    param);
 
-	EXTERN_C SCDOM_RESULT SCAPI SciterSelectParent(
+	SCDOM_RESULT SCAPI SciterSelectParent(
 												   HELEMENT  he, 
 												   LPCSTR    selector,
 												   UINT      depth,
 												   /*out*/ HELEMENT* heFound);
 
-	EXTERN_C SCDOM_RESULT SCAPI SciterSelectParentW(
+	SCDOM_RESULT SCAPI SciterSelectParentW(
 													HELEMENT  he, 
 													LPCWSTR   selector,
 													UINT      depth,
@@ -147,12 +147,12 @@ extern(Windows)
 	}
 
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterSetElementHtml(HELEMENT he, const BYTE* html, UINT htmlLength, UINT where);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementUID(HELEMENT he, UINT* puid);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementByUID(HWINDOW hwnd, UINT uid, HELEMENT* phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterShowPopup(HELEMENT hePopup, HELEMENT heAnchor, UINT placement);
-	EXTERN_C SCDOM_RESULT SCAPI SciterShowPopupAt(HELEMENT hePopup, POINT pos, BOOL animate);
-	EXTERN_C SCDOM_RESULT SCAPI SciterHidePopup(HELEMENT he);+/
+	/+SCDOM_RESULT SCAPI SciterSetElementHtml(HELEMENT he, const BYTE* html, UINT htmlLength, UINT where);
+	SCDOM_RESULT SCAPI SciterGetElementUID(HELEMENT he, UINT* puid);
+	SCDOM_RESULT SCAPI SciterGetElementByUID(HWINDOW hwnd, UINT uid, HELEMENT* phe);
+	SCDOM_RESULT SCAPI SciterShowPopup(HELEMENT hePopup, HELEMENT heAnchor, UINT placement);
+	SCDOM_RESULT SCAPI SciterShowPopupAt(HELEMENT hePopup, POINT pos, BOOL animate);
+	SCDOM_RESULT SCAPI SciterHidePopup(HELEMENT he);+/
 	alias BOOL function(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms) ElementEventProc;
 	alias ElementEventProc LPELEMENT_EVENT_PROC;
 
@@ -195,22 +195,23 @@ extern(Windows)
 		STATE_IS_RTL           = 0x20000000,  // the element or one of its containers has dir=rtl declared
 	}
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterGetElementState( HELEMENT he, UINT* pstateBits);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetElementState( HELEMENT he, UINT stateBitsToSet, UINT stateBitsToClear, BOOL updateView);
-	EXTERN_C SCDOM_RESULT SCAPI SciterCreateElement( LPCSTR tagname, LPCWSTR textOrNull, /*out*/ HELEMENT *phe );
-	EXTERN_C SCDOM_RESULT SCAPI SciterCloneElement( HELEMENT he, /*out*/ HELEMENT *phe );
-	EXTERN_C SCDOM_RESULT SCAPI SciterInsertElement( HELEMENT he, HELEMENT hparent, UINT index );
-	EXTERN_C SCDOM_RESULT SCAPI SciterDetachElement( HELEMENT he );
-	EXTERN_C SCDOM_RESULT SCAPI SciterDeleteElement(HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetTimer( HELEMENT he, UINT milliseconds, UINT_PTR timer_id );
-	EXTERN_C SCDOM_RESULT SCAPI SciterDetachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag );
-	EXTERN_C SCDOM_RESULT SCAPI SciterAttachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag );
-	EXTERN_C SCDOM_RESULT SCAPI SciterWindowAttachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag, UINT subscription );
-	EXTERN_C SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag );
-	EXTERN_C SCDOM_RESULT SCAPI SciterSendEvent(HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason, /*out*/ BOOL* handled);
-	EXTERN_C SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason);
-	EXTERN_C SCDOM_RESULT SCAPI SciterCallBehaviorMethod(HELEMENT he, struct METHOD_PARAMS* params);
-	EXTERN_C SCDOM_RESULT SCAPI SciterRequestElementData( HELEMENT he, LPCWSTR url, UINT dataType, HELEMENT initiator );+/
+	/+SCDOM_RESULT SCAPI SciterGetElementState( HELEMENT he, UINT* pstateBits);
+	SCDOM_RESULT SCAPI SciterSetElementState( HELEMENT he, UINT stateBitsToSet, UINT stateBitsToClear, BOOL updateView);
+	SCDOM_RESULT SCAPI SciterCreateElement( LPCSTR tagname, LPCWSTR textOrNull, /*out*/ HELEMENT *phe );
+	SCDOM_RESULT SCAPI SciterCloneElement( HELEMENT he, /*out*/ HELEMENT *phe );
+	SCDOM_RESULT SCAPI SciterInsertElement( HELEMENT he, HELEMENT hparent, UINT index );
+	SCDOM_RESULT SCAPI SciterDetachElement( HELEMENT he );
+	SCDOM_RESULT SCAPI SciterDeleteElement(HELEMENT he);
+	SCDOM_RESULT SCAPI SciterSetTimer( HELEMENT he, UINT milliseconds, UINT_PTR timer_id );
+	SCDOM_RESULT SCAPI SciterDetachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag );
+	SCDOM_RESULT SCAPI SciterAttachEventHandler( HELEMENT he, LPELEMENT_EVENT_PROC pep, LPVOID tag );
+	SCDOM_RESULT SCAPI SciterWindowAttachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag, UINT subscription );
+	SCDOM_RESULT SCAPI SciterWindowDetachEventHandler( HWINDOW hwndLayout, LPELEMENT_EVENT_PROC pep, LPVOID tag );
+	SCDOM_RESULT SCAPI SciterSendEvent(HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason, /*out*/ BOOL* handled);
+	SCDOM_RESULT SCAPI SciterPostEvent( HELEMENT he, UINT appEventCode, HELEMENT heSource, UINT reason);
+	SCDOM_RESULT SCAPI SciterFireEvent( const struct BEHAVIOR_EVENT_PARAMS* evt, BOOL post, BOOL *handled);
+	SCDOM_RESULT SCAPI SciterCallBehaviorMethod(HELEMENT he, struct METHOD_PARAMS* params);
+	SCDOM_RESULT SCAPI SciterRequestElementData( HELEMENT he, LPCWSTR url, UINT dataType, HELEMENT initiator );+/
 
 	enum REQUEST_TYPE
 	{
@@ -220,7 +221,7 @@ extern(Windows)
 		POST_SYNC   // synchronous POST 
 	}
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterHttpRequest(
+	/+SCDOM_RESULT SCAPI SciterHttpRequest(
 													HELEMENT        he,           // element to deliver data 
 													LPCWSTR         url,          // url 
 													UINT            dataType,     // data type, see SciterResourceType.
@@ -229,20 +230,20 @@ extern(Windows)
 													UINT            nParams       // number of parameters 
 													);
 
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetScrollInfo(HELEMENT he, LPPOINT scrollPos, LPRECT viewRect, LPSIZE contentSize );
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetScrollPos(HELEMENT he, POINT scrollPos, BOOL smooth );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementIntrinsicWidths( HELEMENT he, INT* pMinWidth, INT* pMaxWidth );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementIntrinsicHeight( HELEMENT he, INT forWidth, INT* pHeight );
-	EXTERN_C SCDOM_RESULT SCAPI SciterIsElementVisible( HELEMENT he, BOOL* pVisible);
-	EXTERN_C SCDOM_RESULT SCAPI SciterIsElementEnabled( HELEMENT he, BOOL* pEnabled);+/
+	SCDOM_RESULT SCAPI SciterGetScrollInfo(HELEMENT he, LPPOINT scrollPos, LPRECT viewRect, LPSIZE contentSize );
+	SCDOM_RESULT SCAPI SciterSetScrollPos(HELEMENT he, POINT scrollPos, BOOL smooth );
+	SCDOM_RESULT SCAPI SciterGetElementIntrinsicWidths( HELEMENT he, INT* pMinWidth, INT* pMaxWidth );
+	SCDOM_RESULT SCAPI SciterGetElementIntrinsicHeight( HELEMENT he, INT forWidth, INT* pHeight );
+	SCDOM_RESULT SCAPI SciterIsElementVisible( HELEMENT he, BOOL* pVisible);
+	SCDOM_RESULT SCAPI SciterIsElementEnabled( HELEMENT he, BOOL* pEnabled);+/
 	alias int function(HELEMENT he1, HELEMENT he2, LPVOID param) ELEMENT_COMPARATOR;
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterSortElements(HELEMENT he, UINT firstIndex, UINT lastIndex, ELEMENT_COMPARATOR* cmpFunc, LPVOID cmpFuncParam);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSwapElements(HELEMENT he1, HELEMENT he2);
-	EXTERN_C SCDOM_RESULT SCAPI SciterTraverseUIEvent(UINT evt, LPVOID eventCtlStruct, BOOL* bOutProcessed );
-	EXTERN_C SCDOM_RESULT SCAPI SciterCallScriptingMethod( HELEMENT he, LPCSTR name, const VALUE* argv, UINT argc, VALUE* retval );
-	EXTERN_C SCDOM_RESULT SCAPI SciterCallScriptingFunction( HELEMENT he, LPCSTR name, const VALUE* argv, UINT argc, VALUE* retval );
-	EXTERN_C SCDOM_RESULT SCAPI SciterEvalElementScript( HELEMENT he, LPCWSTR script, UINT scriptLength, VALUE* retval );
-	EXTERN_C SCDOM_RESULT SCAPI SciterAttachHwndToElement(HELEMENT he, HWINDOW hwnd);+/
+	/+SCDOM_RESULT SCAPI SciterSortElements(HELEMENT he, UINT firstIndex, UINT lastIndex, ELEMENT_COMPARATOR* cmpFunc, LPVOID cmpFuncParam);
+	SCDOM_RESULT SCAPI SciterSwapElements(HELEMENT he1, HELEMENT he2);
+	SCDOM_RESULT SCAPI SciterTraverseUIEvent(UINT evt, LPVOID eventCtlStruct, BOOL* bOutProcessed );
+	SCDOM_RESULT SCAPI SciterCallScriptingMethod( HELEMENT he, LPCSTR name, const VALUE* argv, UINT argc, VALUE* retval );
+	SCDOM_RESULT SCAPI SciterCallScriptingFunction( HELEMENT he, LPCSTR name, const VALUE* argv, UINT argc, VALUE* retval );
+	SCDOM_RESULT SCAPI SciterEvalElementScript( HELEMENT he, LPCWSTR script, UINT scriptLength, VALUE* retval );
+	SCDOM_RESULT SCAPI SciterAttachHwndToElement(HELEMENT he, HWINDOW hwnd);+/
 
 	enum CTL_TYPE : UINT
 	{
@@ -299,25 +300,25 @@ extern(Windows)
 		CTL_IMAGE,            ///< image/object.  
 	}
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterControlGetType( HELEMENT he, /*CTL_TYPE*/ UINT *pType );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetValue( HELEMENT he, VALUE* pval );
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetValue( HELEMENT he, const VALUE* pval );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetExpando( HELEMENT he, VALUE* pval, BOOL forceCreation );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, tiscript_value* pval, BOOL forceCreation );
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, tiscript_value* pval);
-	EXTERN_C SCDOM_RESULT SCAPI SciterGetHighlightedElement(HWINDOW hwnd, HELEMENT* phe);
-	EXTERN_C SCDOM_RESULT SCAPI SciterSetHighlightedElement(HWINDOW hwnd, HELEMENT he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeAddRef(HNODE hn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeRelease(HNODE hn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeCastFromElement(HELEMENT he, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeCastToElement(HNODE hn, HELEMENT* he);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeFirstChild(HNODE hn, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeLastChild(HNODE hn, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeNextSibling(HNODE hn, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodePrevSibling(HNODE hn, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeParent(HNODE hnode, HELEMENT* pheParent);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeNthChild(HNODE hnode, UINT n, HNODE* phn);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeChildrenCount(HNODE hnode, UINT* pn);+/
+	/+SCDOM_RESULT SCAPI SciterControlGetType( HELEMENT he, /*CTL_TYPE*/ UINT *pType );
+	SCDOM_RESULT SCAPI SciterGetValue( HELEMENT he, VALUE* pval );
+	SCDOM_RESULT SCAPI SciterSetValue( HELEMENT he, const VALUE* pval );
+	SCDOM_RESULT SCAPI SciterGetExpando( HELEMENT he, VALUE* pval, BOOL forceCreation );
+	SCDOM_RESULT SCAPI SciterGetObject( HELEMENT he, tiscript_value* pval, BOOL forceCreation );
+	SCDOM_RESULT SCAPI SciterGetElementNamespace(  HELEMENT he, tiscript_value* pval);
+	SCDOM_RESULT SCAPI SciterGetHighlightedElement(HWINDOW hwnd, HELEMENT* phe);
+	SCDOM_RESULT SCAPI SciterSetHighlightedElement(HWINDOW hwnd, HELEMENT he);
+	SCDOM_RESULT SCAPI SciterNodeAddRef(HNODE hn);
+	SCDOM_RESULT SCAPI SciterNodeRelease(HNODE hn);
+	SCDOM_RESULT SCAPI SciterNodeCastFromElement(HELEMENT he, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodeCastToElement(HNODE hn, HELEMENT* he);
+	SCDOM_RESULT SCAPI SciterNodeFirstChild(HNODE hn, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodeLastChild(HNODE hn, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodeNextSibling(HNODE hn, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodePrevSibling(HNODE hn, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodeParent(HNODE hnode, HELEMENT* pheParent);
+	SCDOM_RESULT SCAPI SciterNodeNthChild(HNODE hnode, UINT n, HNODE* phn);
+	SCDOM_RESULT SCAPI SciterNodeChildrenCount(HNODE hnode, UINT* pn);+/
 
 	enum NODE_TYPE : UINT
 	{
@@ -326,9 +327,9 @@ extern(Windows)
 		NT_COMMENT 
 	}
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterNodeType(HNODE hnode, UINT* pNodeType /*NODE_TYPE*/);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeGetText(HNODE hnode, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeSetText(HNODE hnode, LPCWSTR text, UINT textLength);+/
+	/+SCDOM_RESULT SCAPI SciterNodeType(HNODE hnode, UINT* pNodeType /*NODE_TYPE*/);
+	SCDOM_RESULT SCAPI SciterNodeGetText(HNODE hnode, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param);
+	SCDOM_RESULT SCAPI SciterNodeSetText(HNODE hnode, LPCWSTR text, UINT textLength);+/
 
 	enum NODE_INS_TARGET : UINT
 	{
@@ -338,8 +339,8 @@ extern(Windows)
 		NIT_PREPEND,
 	}
 
-	/+EXTERN_C SCDOM_RESULT SCAPI SciterNodeInsert(HNODE hnode, UINT where /*NODE_INS_TARGET*/, HNODE what);
-	EXTERN_C SCDOM_RESULT SCAPI SciterNodeRemove(HNODE hnode, BOOL finalize);
-	EXTERN_C SCDOM_RESULT SCAPI SciterCreateTextNode(LPCWSTR text, UINT textLength, HNODE* phnode);
-	EXTERN_C SCDOM_RESULT SCAPI SciterCreateCommentNode(LPCWSTR text, UINT textLength, HNODE* phnode);+/
+	/+SCDOM_RESULT SCAPI SciterNodeInsert(HNODE hnode, UINT where /*NODE_INS_TARGET*/, HNODE what);
+	SCDOM_RESULT SCAPI SciterNodeRemove(HNODE hnode, BOOL finalize);
+	SCDOM_RESULT SCAPI SciterCreateTextNode(LPCWSTR text, UINT textLength, HNODE* phnode);
+	SCDOM_RESULT SCAPI SciterCreateCommentNode(LPCWSTR text, UINT textLength, HNODE* phnode);+/
 }
