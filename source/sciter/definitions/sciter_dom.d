@@ -244,8 +244,10 @@ public:
 	element opIndex(uint idx)
 	{
 		HELEMENT hre;
-		.SciterGetNthChild(he,idx,&hre) == SCDOM_OK || assert(false);
-		return element(hre);
+		.SciterGetNthChild(he,idx,&hre);
+		if(hre)
+			return element(hre);
+		return element.init;
 	}
 
 public:
@@ -885,11 +887,16 @@ public:
 		element el_it = this;
 		while(true)
 		{
-			el_it = el_it.parent();
-			if(!el_it.is_valid())
-				break;
 			if(el_it==parent_test)
 				return true;
+
+			HELEMENT hp = el_it.parent();
+			if(hp==0)
+				break;
+
+			el_it = hp;
+			if(!el_it.is_valid())
+				break;
 		}
 		return false;
 	}
@@ -908,7 +915,7 @@ public:
 		return name;
 	}
 
-	string get_path()
+	/*string get_path()
 	{
 		assert(is_valid());
 
@@ -928,5 +935,5 @@ public:
 	static element[] from_path(HWINDOW hSciterWnd, string path)
 	{
 		return element[].init;
-	}
+	}*/
 }
