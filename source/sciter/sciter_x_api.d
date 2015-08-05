@@ -49,7 +49,6 @@ extern(Windows)
 		BOOL    function(HWINDOW hWnd, UINT option, UINT_PTR value ) SciterSetOption;
 		VOID    function(HWINDOW hWndSciter, UINT* px, UINT* py) SciterGetPPI;
 		BOOL    function(HWINDOW hwnd, VALUE* pval ) SciterGetViewExpando;
-		BOOL    function(HWINDOW hWndSciter, URL_DATA_RECEIVER receiver, LPVOID param, LPCSTR url) SciterEnumUrlData;
 	version(Windows)
 	{
 		BOOL	 function(HWINDOW hWndSciter, ID2D1RenderTarget* prt) SciterRenderD2D;
@@ -66,27 +65,6 @@ extern(Windows)
 						LPVOID                param,     // param to be passed "as is" to the pfOutput
 						DEBUG_OUTPUT_PROC     pfOutput   // output function, output stream alike thing.
 						) SciterSetupDebugOutput;
-		BOOL	function(
-						HWINDOW						hwnd,      // HWINDOW of the sciter
-						LPVOID						param,     // param to be passed "as is" to these functions:
-						SCITER_DEBUG_BP_HIT_CB		onBreakpointHit,  // breakpoint hit event receiver
-						SCITER_DEBUG_DATA_CB		onDataRead        // receiver of requested data
-						) SciterDebugSetupClient;
-		BOOL	function(
-						HWINDOW		hwnd,      // HWINDOW of the sciter
-						LPCWSTR		fileUrl,                    
-						UINT		lineNo
-						) SciterDebugAddBreakpoint;
-		BOOL	function(
-						 HWINDOW	hwnd,      // HWINDOW of the sciter
-						LPCWSTR		fileUrl,                    
-						UINT		lineNo
-						) SciterDebugRemoveBreakpoint;
-		BOOL	function(
-						HWINDOW                     hwnd,      // HWINDOW of the sciter
-						LPVOID                      param,     // param to be passed "as is" to the pfOutput
-						SCITER_DEBUG_BREAKPOINT_CB  receiver
-						) SciterDebugEnumBreakpoints;
 
 		//|
 		//| DOM Element API 

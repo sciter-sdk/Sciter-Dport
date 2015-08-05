@@ -28,7 +28,7 @@ unittest
 	UINT major = SciterVersion(TRUE);
 	UINT minor = SciterVersion(FALSE);
 	assert(major==0x00030003);
-	assert(minor==0x00000001);
+	assert(minor==0x00000002);
 	assert(SAPI()._version==0);
 }
 
@@ -104,7 +104,6 @@ version(Windows)
 BOOL    SciterSetOption (HWINDOW hWnd, SCITER_RT_OPTIONS option, UINT_PTR value ) { return SAPI().SciterSetOption (hWnd,option,value ); }
 VOID    SciterGetPPI (HWINDOW hWndSciter, UINT* px, UINT* py) { SAPI().SciterGetPPI (hWndSciter,px,py); }
 BOOL    SciterGetViewExpando ( HWINDOW hwnd, VALUE* pval ) { return SAPI().SciterGetViewExpando ( hwnd, pval ); }
-BOOL    SciterEnumUrlData (HWINDOW hWndSciter, URL_DATA_RECEIVER receiver, LPVOID param, LPCSTR url) { return SAPI().SciterEnumUrlData (hWndSciter,receiver,param,url); }
 version(Windows)
 {
 	BOOL    SciterRenderD2D (HWINDOW hWndSciter, ID2D1RenderTarget* prt) { return SAPI().SciterRenderD2D (hWndSciter,prt); }

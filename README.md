@@ -1,4 +1,4 @@
-ACTUAL SCITER VERSION: 3.3.0.1
+ACTUAL SCITER VERSION: 3.3.0.2
 
 OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
@@ -124,13 +124,4 @@ void main()
 		}
 	}
 }
-```
-
-Inspecting a HWND using inspector32.dll
-=======================================
-
-Sciter inspector32.dll DLL let's you at runtime inspect your HTML content through a separate inspector window. What you need to do is put the DLL together with your .exe and call the following functions from your D code:
-```D
-import sciter.definitions.dbg;
-InspectWindow(yourHWNDvariable);
 ```
