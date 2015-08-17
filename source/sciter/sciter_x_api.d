@@ -89,7 +89,7 @@ extern(Windows)
 		SCDOM_RESULT function(HELEMENT he, LPUINT p_index) SciterGetElementIndex;
 		SCDOM_RESULT function(HELEMENT he, LPCSTR* p_type) SciterGetElementType;
 		SCDOM_RESULT function(HELEMENT he, LPCSTR_RECEIVER rcv, LPVOID rcv_param) SciterGetElementTypeCB;
-		SCDOM_RESULT function(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param) SciterGetStyleAttributeCB;
+		SCDOM_RESULT function(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER rcv, LPVOID rcv_param) SciterGetStyleAttributeCB;
 		SCDOM_RESULT function(HELEMENT he, LPCSTR name, LPCWSTR value) SciterSetStyleAttribute;
 		SCDOM_RESULT function(HELEMENT he, LPRECT p_location, UINT areas /*ELEMENT_AREAS*/) SciterGetElementLocation;
 		SCDOM_RESULT function(HELEMENT he, UINT SciterScrollFlags) SciterScrollToView;

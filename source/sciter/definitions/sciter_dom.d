@@ -161,12 +161,12 @@ public:
 	wstring text()
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER rcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
 
-		auto res = .SciterNodeGetText(hn, rcv, null);
+		auto res = .SciterNodeGetText(hn, frcv, null);
 		res == SCDOM_OK || res == SCDOM_OK_NOT_HANDLED || assert(false);
 		return str_rcv;
 	}
@@ -380,6 +380,18 @@ public:
 		return res;
 	}
 
+
+	wstring get_style_attribute(string name)
+	{
+		static wstring str_rcv;
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		{
+			str_rcv = str[0..str_length].idup;
+		};
+
+		.SciterGetStyleAttributeCB(he, (name ~ '\0').ptr, frcv, null) == SCDOM_OK || assert(false);
+		return str_rcv;
+	}
 
 	void set_style_attribute(string name, wstring value)
 	{

@@ -23,6 +23,9 @@ public:
 	LRESULT SendMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0)
 		{ return .SendMessage(m_hWnd, Msg, wParam, lParam); }
 
+	LRESULT PostMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0)
+		{ return .PostMessage(m_hWnd, Msg, wParam, lParam); }
+
 	BOOL ShowWindow(in int nCmdShow = SW_SHOW)
 		{ return .ShowWindow(m_hWnd, nCmdShow); }
 

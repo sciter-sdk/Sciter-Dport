@@ -14,7 +14,7 @@ import sciter.sciter_x_types;
 import sciter.definitions.api;
 
 
-VOID SciterSetupDebugOutput ( HWINDOW hwndOrNull, LPVOID param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput ( hwndOrNull,param,pfOutput); }
+VOID SciterSetupDebugOutput ( HWINDOW hwndOrNull, LPVOID param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput (hwndOrNull,param,pfOutput); }
 
 
 abstract class debug_output

@@ -28,7 +28,7 @@ unittest
 	UINT major = SciterVersion(TRUE);
 	UINT minor = SciterVersion(FALSE);
 	assert(major==0x00030003);
-	assert(minor==0x00000002);
+	assert(minor==0x00000003);
 	assert(SAPI()._version==0);
 }
 
@@ -138,7 +138,7 @@ SCDOM_RESULT SciterClearAttributes(HELEMENT he) { return SAPI().SciterClearAttri
 SCDOM_RESULT SciterGetElementIndex(HELEMENT he, LPUINT p_index) { return SAPI().SciterGetElementIndex(he,p_index); }
 SCDOM_RESULT SciterGetElementType(HELEMENT he, LPCSTR* p_type) { return SAPI().SciterGetElementType(he,p_type); }
 SCDOM_RESULT SciterGetElementTypeCB(HELEMENT he, LPCSTR_RECEIVER rcv, LPVOID rcv_param) { return SAPI().SciterGetElementTypeCB(he,rcv,rcv_param); }
-SCDOM_RESULT SciterGetStyleAttributeCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER* rcv, LPVOID rcv_param) { return SAPI().SciterGetStyleAttributeCB(he,name,rcv,rcv_param); }
+SCDOM_RESULT SciterGetStyleAttributeCB(HELEMENT he, LPCSTR name, LPCWSTR_RECEIVER rcv, LPVOID rcv_param) { return SAPI().SciterGetStyleAttributeCB(he,name,rcv,rcv_param); }
 SCDOM_RESULT SciterSetStyleAttribute(HELEMENT he, LPCSTR name, LPCWSTR value) { return SAPI().SciterSetStyleAttribute(he,name,value); }
 SCDOM_RESULT SciterGetElementLocation(HELEMENT he, LPRECT p_location, UINT areas /*ELEMENT_AREAS*/) { return SAPI().SciterGetElementLocation(he,p_location,areas); }
 SCDOM_RESULT SciterScrollToView(HELEMENT he, UINT SciterScrollFlags) { return SAPI().SciterScrollToView(he,SciterScrollFlags); }
