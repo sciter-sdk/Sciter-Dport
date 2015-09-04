@@ -59,7 +59,7 @@ public:
 
 		path ~= '\0';
 		bool found = !!SAPI().SciterGetArchiveItem(har, path.ptr, &pb, &blen);
-		assert(found);
+		//assert(found);
 
 		if(found==false)
 			return null;
