@@ -1,9 +1,8 @@
-ACTUAL SCITER VERSION: 3.3.0.4
+ACTUAL SCITER VERSION: 3.3.0.5
 
 OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
-About
-=====
+##About
 
 This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://www.terrainformatica.com/sciter/main.whtm
 
@@ -17,8 +16,82 @@ Platforms supported until now: **Windows 32bits only**
 License: GNU GENERAL PUBLIC LICENSE Version 2
 
 
-Package content
-===============
+##Structs and classes
+
+This is a table of the available D classes/structs and their mapping over the types of the oficial SDK C++ headers:
+
+<table>
+	<tr>
+		<th>D type</th>
+		<th>C++ equivalent type</th>
+	</tr>
+
+	<tr>
+	    <td>
+            <i>module sciter.definitions.sciter_dom;</i><br>
+            <b>struct node</b><br>
+            <b>struct element</b>
+	    </td>
+
+	    <td>
+            <i>#include "sciter-x-dom.hpp"</i><br>
+            <b>class sciter::dom::node</b><br>
+            <b>class sciter::dom::element</b>
+	    </td>
+	</tr>
+
+    <tr>
+	    <td>
+            <i>module sciter.definitions.sciter_value;</i><br>
+            <b>struct json_value</b>
+	    </td>
+
+	    <td>
+            <i>#include "value.hpp"</i><br>
+            <b>sciter::value or VALUE</b>
+	    </td>
+	</tr>
+
+    <tr>
+	    <td>
+            <i>module sciter.definitions.dbg;</i><br>
+            <b>abstract class debug_output</b><br>
+	    </td>
+
+	    <td>
+            <i>#include "sciter-x-debug.h"</i><br>
+            <b>class sciter::debug_output</b><br>
+	    </td>
+	</tr>
+
+    <tr>
+	    <td>
+            <i>module sciter.definitions.host;</i><br>
+            <b>class SciterArchive</b><br>
+            <b>abstract class SciterWindowHost</b>
+	    </td>
+
+	    <td>
+            <i>#include "sciter-x-host-callback.h"</i><br>
+            <b>class sciter::archive</b><br>
+            <b>class sciter::host&lt;BASE&gt;</b>
+	    </td>
+	</tr>
+
+    <tr>
+	    <td>
+            <i>module sciter.definitions.behavior;</i><br>
+            <b>abstract class EventHandler</b>
+	    </td>
+
+	    <td>
+            <i>#include "sciter-x-behavior.h"</i><br>
+            <b>class sciter::event_handler</b>
+	    </td>
+	</tr>
+</table>
+
+##Package content
 
 ```
 dub.json					-> DUB package manifest
@@ -30,25 +103,7 @@ sciter32-import-lib.lib		-> **win32** only: DLL import lib
 /source/winkit				-> **win32** only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on..
 ```
 
-Mapping over the oficial SDK headers
-------------------------------------
-
-```
-/source/sciter/definitions/dbg.d
-- equivalent file -> sciter-x-debug.h
-- classes ported: 
-	sciter::debug_output				-> abstract class debug_output
-	sciter::script_debugger_client		-> abstract class script_debugger_client
-```
-```
-/source/sciter/definitions/sciter_value.d
-- equivalent file -> value.hpp
-- classes ported: 
-	sciter::value						-> struct json_value
-```
-
-Features
---------
+##Features
 
 json_value supports construction through associative arrays, for example:
 
