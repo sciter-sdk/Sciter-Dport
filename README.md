@@ -1,10 +1,10 @@
-ACTUAL SCITER VERSION: 3.3.0.5
+ACTUAL SCITER VERSION: 3.3.0.6
 
 OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
 ##About
 
-This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://www.terrainformatica.com/sciter/main.whtm
+This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://sciter.com/download/
 
 The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D)
 
@@ -105,7 +105,108 @@ sciter32-import-lib.lib		-> **win32** only: DLL import lib
 
 ##Features
 
-json_value supports construction through associative arrays, for example:
+**host <-> UI communication idioms support**
+
+As can be read [here](http://sciter.com/sciter-ui-application-architecture/), there are 3 commons idioms for information flow between the host application and TIScript UI code, all of which are supported in this D port. Here is how you would implement each one:
+
+*1. get-requests*
+ 
+To handle UI-to-logic calls you first define/extend a EventHandler class in the native side and attaches it to your SciterWindowHost native implementation.
+
+The Setup() function below first creates the SciterWindowHost instance and calls host.setup_callback() to identify the native HWINDOW attached to it. Then it simply instantiates the EventHandler and uses host.attach_evh() to attach it to the host in order to start receiving events.
+
+```D
+import sciter.definitions.host;
+
+class MyHost : SciterWindowHost { ... }
+
+void Setup(HWINDOW wnd)
+{
+	auto host = new MyHost();
+	host.setup_callback(wnd);
+
+	auto evh = new MyHostEvh();
+	host.attach_evh(evh);
+}
+
+```
+
+Each time script executes code like this:
+
+```JavaScript
+var ret = view.Host_DoSomething(param1, param2);
+```
+
+..will invoke the on_script_call() method of your native EventHandler:
+
+
+```D
+import std.conv;
+import sciter.definitions.behavior;
+import sciter.definitions.behavior;
+
+class MyHostEvh : EventHandler
+{
+	override bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms)
+	{
+		switch(to!string(prms.name))
+		{
+		case "Host_DoSomething":
+			// TIScript values passed by UI side
+			json_value param1 = json_value(prms.argv[0]);
+			json_value param2 = json_value(prms.argv[1]);
+			 
+			prms.result = json_value("Meow!");// TIScript return value for UI side
+			return true;
+		}
+	}
+}
+```
+
+*2. application events*
+
+Application can generate some events by itself to the UI script layer. With your native SciterWindowHost in place, you simply call it's call_function() method:
+
+```D
+MyHost host = ...;
+json_value ret = host.call_function("View_DoSomething", json_value(true), json_value(1234), json_value("from native side"));// call_function() is a variadic function
+```
+
+*3. post-requests*
+
+UI-to-logic post/asynchronous request allows script to call native side method and receive the result in a later time, asynchronously, preventing the UI thread from blocking. Call to native code includes reference to script function that will be executed when the requested data is available.
+
+Your script side:
+
+```JavaScript
+view.Host_AsyncProcess(function(meow) {
+		$(body).text = "Host processing done: " + meow;
+});
+```
+
+Your native EventHandler shaw be something like:
+
+```D
+class PostEvh : EventHandler
+{
+	override bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms)
+	{
+		json_value jv_callback = prms.argv[0];
+
+		// TODO:
+		// do expensive work in another thread
+		// or you can save the jv_callback in a global variable and call it in a later time
+
+		jv_callback.call(
+			json_value("Meow! from host")
+		);
+		return true;
+	}
+}
+```
+
+
+**json_value supports construction through associative arrays, for example:**
 
 ```D
 void Foo()
@@ -123,19 +224,16 @@ void Foo()
 ```
 
 
-Library usage (win32)
-=====================
+#Library usage (win32)
 
-1. Configuring linker: sciter32-import-lib.lib import lib
----------------------------------------------------------
+## 1. Configuring linker: sciter32-import-lib.lib import lib
 
 You need to add the file 'sciter32-import-lib.lib' to the linker input in order to it find the functions definitions of the Sciter DLL. This is the import lib that you pass to the linker for making your executable statically link to the sciter32.dll exports.
 
 This file was generated using 'coffimplib' app (ftp://ftp.digitalmars.com/coffimplib.zip and  http://www.digitalmars.com/ctg/coffimplib.html).
 
 
-2. Compiling your code
-----------------------
+## 2. Compiling your code
 
 Requirements:
 

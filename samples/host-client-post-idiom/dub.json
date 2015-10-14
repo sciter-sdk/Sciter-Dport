@@ -1,0 +1,13 @@
+﻿{
+	"name": "host-client-post-idiom",
+	"license": "GPL-3.0",
+	"copyright": "Copyright © 2015, midi",
+	"authors": ["midi"],
+	
+	"dependencies": {
+		"sciter-dport": {
+			"version": "~master",
+			"path": "../../"
+		}
+	}
+}

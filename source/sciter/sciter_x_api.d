@@ -4,7 +4,7 @@
 // 
 // sciter-dport is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // sciter-dport is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+// You should have received a copy of the GNU General Public License along with sciter-dport. If not, see http://www.gnu.org/licenses/.
 
 module sciter.sciter_x_api;
 
@@ -59,9 +59,9 @@ extern(Windows)
 		BOOL    function(HWINDOW hWndSciter, LPCWSTR baseUrl) SciterSetHomeURL;
 	version(OSX)
 		HWINDOW function( LPRECT frame ) SciterCreateNSView;// returns NSView*
-		HWINDOW	function(UINT creationFlags,LPRECT frame, SciterWindowDelegate* delegt, LPVOID delegateParam, HWINDOW parent) SciterCreateWindow;
+		HWINDOW	function(UINT creationFlags, LPRECT frame, SciterWindowDelegate* delegt, LPVOID delegateParam, HWINDOW parent) SciterCreateWindow;
 		VOID	function(
-						 HWINDOW               hwndOrNull,// HWINDOW or null if this is global output handler
+						HWINDOW               hwndOrNull,// HWINDOW or null if this is global output handler
 						LPVOID                param,     // param to be passed "as is" to the pfOutput
 						DEBUG_OUTPUT_PROC     pfOutput   // output function, output stream alike thing.
 						) SciterSetupDebugOutput;

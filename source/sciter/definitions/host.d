@@ -4,7 +4,7 @@
 // 
 // sciter-dport is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // sciter-dport is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+// You should have received a copy of the GNU General Public License along with sciter-dport. If not, see http://www.gnu.org/licenses/.
 
 module sciter.definitions.host;
 
@@ -78,6 +78,8 @@ abstract class SciterWindowHost
 
 	void attach_evh(EventHandler evh)
 	{
+		assert(m_hwnd, "Call setup_callback() first");
+
 		.SciterWindowAttachEventHandler(m_hwnd, &EventHandler.element_proc, cast(void*) evh, EVENT_GROUPS.HANDLE_ALL) == SCDOM_OK || assert(false);
 	}
 	
@@ -123,7 +125,6 @@ protected:
         {
 			case SC_LOAD_DATA:				return this.on_load_data(cast(LPSCN_LOAD_DATA) pnm);
 			case SC_DATA_LOADED:			return this.on_data_loaded(cast(LPSCN_DATA_LOADED)pnm);
-			//case SC_DOCUMENT_COMPLETE: return on_document_complete();
 			case SC_ATTACH_BEHAVIOR:		return this.on_attach_behavior(cast(LPSCN_ATTACH_BEHAVIOR)pnm);
 			case SC_ENGINE_DESTROYED:		return this.on_engine_destroyed();
 			case SC_POSTED_NOTIFICATION:	return this.on_posted_notification(cast(LPSCN_POSTED_NOTIFICATION)pnm);

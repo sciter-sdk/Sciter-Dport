@@ -4,7 +4,7 @@
 // 
 // sciter-dport is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // sciter-dport is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+// You should have received a copy of the GNU General Public License along with sciter-dport. If not, see http://www.gnu.org/licenses/.
 
 module sciter.sciter_x_def;
 
@@ -249,50 +249,4 @@ extern(Windows)// needed for the functions alias'es
 	//                                           LPVOID                param,     // param to be passed "as is" to the pfOutput
 	//                                           DEBUG_OUTPUT_PROC     pfOutput   // output function, output stream alike thing.
 	//                                           );
-
-	enum TISCRIPT_DEBUG_COMMANDS : UINT
-	{
-		SCRIPT_DEBUG_CONTINUE = 1,
-		SCRIPT_DEBUG_STEP_INTO,
-		SCRIPT_DEBUG_STEP_OVER,
-		SCRIPT_DEBUG_STEP_OUT,
-		//SCRIPT_DEBUG_GET_CONTEXT, // will cause onDataReady() call 
-	}
-
-	enum TISCRIPT_DEBUG_DATA_REQUESTS : UINT
-	{
-		SCRIPT_DEBUG_CONTEXT = 0x100,
-		SCRIPT_DEBUG_NAMESPACES = 0x200,
-		SCRIPT_DEBUG_STACKTRACE = 0x300,
-	}
-
-	alias UINT function(LPCWSTR inFile, UINT atLine,  const VALUE* envData, LPVOID param) SCITER_DEBUG_BP_HIT_CB; // breakpoint hit event receiver
-	alias VOID function(UINT onCmd, const VALUE* data, LPVOID param) SCITER_DEBUG_DATA_CB; // requested data ready receiver
-
-	//EXTERN_C BOOL SCAPI SciterDebugSetupClient(
-	//                                           HWINDOW                        hwnd,      // HWINDOW of the sciter
-	//                                           LPVOID                      param,     // param to be passed "as is" to these functions:
-	//                                           SCITER_DEBUG_BP_HIT_CB      onBreakpointHit,  // breakpoint hit event receiver
-	//                                           SCITER_DEBUG_DATA_CB        onDataRead        // receiver of requested data
-	//                                           );
-	//
-	//EXTERN_C BOOL SCAPI SciterDebugAddBreakpoint(
-	//                                             HWINDOW     hwnd,      // HWINDOW of the sciter
-	//                                             LPCWSTR  fileUrl,                    
-	//                                             UINT     lineNo
-	//                                             );
-	//
-	//EXTERN_C BOOL SCAPI SciterDebugRemoveBreakpoint(
-	//                                                HWINDOW     hwnd,      // HWINDOW of the sciter
-	//                                                LPCWSTR  fileUrl,                    
-	//                                                UINT     lineNo
-	//                                                );
-
-	alias BOOL function(LPCWSTR fileUrl, UINT lineNo, LPVOID param) SCITER_DEBUG_BREAKPOINT_CB;
-
-	//EXTERN_C BOOL SCAPI SciterDebugEnumBreakpoints(
-	//                                               HWINDOW                        hwnd,      // HWINDOW of the sciter
-	//                                               LPVOID                      param,     // param to be passed "as is" to the pfOutput
-	//                                               SCITER_DEBUG_BREAKPOINT_CB  receiver
-	//                                               );
 }

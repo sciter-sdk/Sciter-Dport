@@ -4,7 +4,7 @@
 // 
 // sciter-dport is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // sciter-dport is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+// You should have received a copy of the GNU General Public License along with sciter-dport. If not, see http://www.gnu.org/licenses/.
 
 module sciter.definitions.sciter_value;
 
@@ -45,7 +45,18 @@ struct json_value
 {
 public:
 	VALUE data;
-	alias data this;// a.k.a. implicit cast operator to VALUE
+	//alias data this;// a.k.a. implicit cast operator to VALUE
+    alias toVALUE this;// a.k.a. implicit cast operator to VALUE
+
+	@property VALUE toVALUE()
+    {
+        // increase ref-count for converting json_value to VALUE
+		VALUE vcopy;
+		.ValueInit(&vcopy);
+		.ValueCopy(&vcopy, &data);
+		return vcopy;
+    }
+
 
 	this(this)
 	{
@@ -56,7 +67,8 @@ public:
 	this(ref json_value src){ .ValueInit(&data); .ValueCopy(&data, &src.data); }
 	this(ref VALUE srcv)	{ .ValueInit(&data); .ValueCopy(&data, &srcv); }// move semantics? dont know, so better not even mess with it, cause this is working fine
 	this(VALUE srcv)		{ .ValueInit(&data); .ValueCopy(&data, &srcv); }
-
+	~this() { .ValueClear(&data); }
+	
 	// TODO: port assignment operator (operation not very fitted for D?)
 	//value& operator = (const value& src) { ValueCopy(this,&src); return *this; }
 	//value& operator = (const VALUE& src) { ValueCopy(this,&src); return *this; }
@@ -82,7 +94,6 @@ public:
 		foreach(key; assocarr.keys)
 			set_item( json_value(key), assocarr[key] );
 	}
-	~this()				{ .ValueClear(&data); }
 
 	static json_value from_array(T)(in T[] arr)// could not make it a this() constructor because of ambiguity - midi
 	{
@@ -92,13 +103,14 @@ public:
 		return jv;
 	}
 
-	VALUE copy()// added by sciter-dport - midi
+	// new replacement: toVALUE() + implicity cast operator see line 49
+	/*VALUE copy()// added by sciter-dport - midi
 	{
 		VALUE vcopy;
 		.ValueInit(&vcopy);
 		.ValueCopy(&vcopy, &data);
 		return vcopy;
-	}
+	}*/
 
 	/*override bool opEquals(Object o) const
 	{
@@ -158,8 +170,11 @@ public:
 	bool is_bytes() const { return data.t == VALUE_TYPE.T_BYTES; }
 	bool is_object() const { return data.t == VALUE_TYPE.T_OBJECT; }
 	bool is_dom_element() const { return data.t == VALUE_TYPE.T_DOM_OBJECT; }
+	bool is_native_function() const { return !!ValueIsNativeFunctor(&data); }
 	bool is_null() const { return data.t == VALUE_TYPE.T_NULL; }
-	//static value nullval() { value t = new value; t.data.t = VALUE_TYPE.T_NULL; return t; }// renamed from null()
+
+	static json_value nullval() { json_value t; t.data.t = VALUE_TYPE.T_NULL; return t; }// sciter-dport: null is a reserved D identifier,
+																								// so I renamed this functions from null() to nullval() - midi
 
 	bool get(bool defv) 
 	{
@@ -337,7 +352,7 @@ public:
 	}
 	VALUE call(json_value[] args...)
 	{
-		return call(args);
+		return call(cast(VALUE[])args);
 	}
 
 	void isolate()

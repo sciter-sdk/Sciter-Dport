@@ -4,7 +4,7 @@
 // 
 // sciter-dport is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 // sciter-dport is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-// You should have received a copy of the GNU General Public License along with Foobar. If not, see http://www.gnu.org/licenses/.
+// You should have received a copy of the GNU General Public License along with sciter-dport. If not, see http://www.gnu.org/licenses/.
 
 module sciter.definitions.behavior;
 
@@ -58,7 +58,15 @@ abstract class EventHandler
 	// }
 	// will end up with on_script_call(he, "my-method" , 2, argv, retval );
 	// where argv[0] will be 1 and argv[1] will be "one".
-	bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms) { return false; }
+	bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms)
+	out
+	{
+		import sciter.definitions.sciter_value;
+	}
+	body
+	{
+		return false;
+	}
 
 	// Calls from TIScript. Override this if you want your own methods accessible directly from tiscript engine.
 	// Use tiscript::args to access parameters.

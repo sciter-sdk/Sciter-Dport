@@ -4,6 +4,10 @@ READMElinux.md
 
 
 # Garbage
+.vs
+*.exe
+sciter32.dll
+
 /source_trash
 /include-reference
 /include-referenceOLD
