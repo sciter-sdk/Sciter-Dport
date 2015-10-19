@@ -4,11 +4,13 @@ OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
 ##About
 
-This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://sciter.com/download/
+This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://sciter.com/download/.
 
 The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D)
 
 Has unittest coverage so, in DMD, compile it with the -unittest flag to run them.
+
+For more Sciter related content visit my site at: http://misoftware.rs/
 
 Platforms supported until now: **Windows 32bits only**
 *(Linux GTX support is on the way)*
@@ -137,7 +139,7 @@ Each time script executes code like this:
 var ret = view.Host_DoSomething(param1, param2);
 ```
 
-..will invoke the on_script_call() method of your native EventHandler:
+it will invoke the on_script_call() method of your native EventHandler:
 
 
 ```D

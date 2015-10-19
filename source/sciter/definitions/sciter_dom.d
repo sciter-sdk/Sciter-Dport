@@ -9,8 +9,9 @@
 module sciter.definitions.sciter_dom;
 
 import std.array;
-import std.conv;
 import std.algorithm.iteration;
+import std.conv;
+import std.string;
 
 import sciter.tiscript;
 import sciter.sciter_x_types;
@@ -448,7 +449,7 @@ public:
 
 	HELEMENT get_element_by_id(string id)
 	{
-		return find_first( std.string.format("[id='%s']"w, id) );
+		return find_first( std.string.format("[id='%s']", id) );
 	}
 
 	HELEMENT find_first(string selector)// find first element satisfying given CSS selector

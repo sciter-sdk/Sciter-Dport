@@ -22,6 +22,9 @@ public:
 
 	void Create(SIZE sz, wstring title, HWND parent = NULL, DWORD dwStyle = WS_OVERLAPPEDWINDOW, DWORD dwExStyle = 0)// frames
 	{
+		if(!s_cls)
+			s_cls = RegisterClass();
+
 		HWND hWnd = CreateWindowEx(
 			dwExStyle,			// extended style
 			cast(LPCWSTR) s_cls,// class
@@ -40,6 +43,9 @@ public:
 	
 	void Create(POINT pt, SIZE sz, HWND parent, DWORD dwStyle = WS_CHILD | WS_VISIBLE, DWORD dwExStyle = 0)// childs
 	{
+		if(!s_cls)
+			s_cls = RegisterClass();
+
 		HWND hWnd = CreateWindowEx(
 			dwExStyle,			// extended style
 			cast(LPCWSTR) s_cls,// class
@@ -73,10 +79,10 @@ public:
 private:
 	ATOM s_cls;
 
-	static this()
+	/*static this()
 	{
 		s_cls = RegisterClass();
-	}
+	}*/
 
 	ATOM RegisterClass()
 	{
@@ -89,15 +95,15 @@ private:
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= hInstance;
-		wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(101));
+		wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(100));
 		//wcex.hCursor		= .LoadCursor(null, IDC_ARROW);
 		wcex.hbrBackground	= cast(HBRUSH)(COLOR_WINDOW+1);
-		wcex.lpszMenuName	= null; //MAKEINTRESOURCE(IDC_LIXOOO);
+		wcex.lpszMenuName	= null;
 		wcex.lpszClassName	= to!wstring(FRAME_WNDCLS).ptr;
 		wcex.hIconSm		= null;
 		return .RegisterClassEx(&wcex);
 	}
-
+	
 // messaging
 	MSG m_CurrentMsg;
 

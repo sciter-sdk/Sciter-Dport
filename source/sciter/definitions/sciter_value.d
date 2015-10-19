@@ -43,11 +43,12 @@ Obs:
 
 struct json_value
 {
-public:
-	VALUE data;
-	//alias data this;// a.k.a. implicit cast operator to VALUE
-    alias toVALUE this;// a.k.a. implicit cast operator to VALUE
+private:
+	VALUE data;// don't directly access this, instead use the implicit cast operators
 
+public:
+    alias toVALUE this;// a.k.a. implicit cast operator to VALUE
+	
 	@property VALUE toVALUE()
     {
         // increase ref-count for converting json_value to VALUE
@@ -55,6 +56,11 @@ public:
 		.ValueInit(&vcopy);
 		.ValueCopy(&vcopy, &data);
 		return vcopy;
+    }
+
+	@property const(VALUE*) toVALUEptr()
+    {
+		return &data;
     }
 
 
@@ -77,9 +83,9 @@ public:
 	this(int v)			{ .ValueInit(&data); .ValueIntDataSet(&data, v, VALUE_TYPE.T_INT, 0); }
 	this(double v)		{ .ValueInit(&data); .ValueFloatDataSet(&data, v, VALUE_TYPE.T_FLOAT, 0); }
 
-	this(wstring s)		{ .ValueInit(&data); .ValueStringDataSet(&data, s.ptr, cast(uint)s.length, 0); }
-	this(string s)		{ wstring sw = to!wstring(s); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, cast(uint)sw.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL); }
-	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, cast(uint)bs.length, VALUE_TYPE.T_BYTES, 0); }
+	this(wstring str)	{ .ValueInit(&data); .ValueStringDataSet(&data, str.ptr, str.length, VALUE_UNIT_TYPE_STRING.UT_STRING_STRING); }
+	this(string symbol)	{ wstring sw = to!wstring(symbol); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, sw.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL); }
+	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, bs.length, VALUE_TYPE.T_BYTES, 0); }
 	
 	this(in json_value[] arr)	{ .ValueInit(&data); foreach(i, ref a; arr) set_item(cast(uint)i, a); }
 	this(T)(in T[string] assocarr)

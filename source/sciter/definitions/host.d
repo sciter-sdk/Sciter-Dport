@@ -87,18 +87,18 @@ abstract class SciterWindowHost
 	{
 		assert(m_hwnd, "Call setup_callback() first");
 
-		json_value ret;
-		.SciterCall(m_hwnd, (name ~ '\0').ptr, cast(UINT/*x64 issue*/) params.length, params.ptr, &ret.data) || assert(false);
-		return ret;
+		VALUE ret;
+		.SciterCall(m_hwnd, (name ~ '\0').ptr, cast(UINT/*x64 issue*/) params.length, params.ptr, &ret) || assert(false);
+		return json_value(ret);
 	}
 
 	json_value eval_script(wstring script)
 	{
 		assert(m_hwnd, "Call setup_callback() first");
 
-		json_value ret;
-		.SciterEval(m_hwnd, script.ptr, cast(UINT/*x64 issue*/) script.length, &ret.data) || assert(false);
-		return ret;
+		VALUE ret;
+		.SciterEval(m_hwnd, script.ptr, cast(UINT/*x64 issue*/) script.length, &ret) || assert(false);
+		return json_value(ret);
 	}
 
 public:
