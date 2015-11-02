@@ -9,7 +9,7 @@
 module winkit.MessageBox;
 
 import winkit.Window;
-import win32.core;
+import core.sys.windows.core;
 
 
 public void Show(wstring msg, Window wnd_owner)

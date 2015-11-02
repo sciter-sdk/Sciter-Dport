@@ -8,7 +8,7 @@
 
 module winkit.Window;
 
-import win32.core;
+import core.sys.windows.core;
 
 
 struct Window

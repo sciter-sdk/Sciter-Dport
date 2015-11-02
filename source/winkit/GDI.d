@@ -8,7 +8,7 @@
 
 module winkit.GDI;
 
-import win32.core;
+import core.sys.windows.core;
 
 
 int Width(RECT rc)

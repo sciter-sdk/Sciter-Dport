@@ -15,8 +15,8 @@ mixin template WindowImplMixin(bool isSciter = false)
 public:
 	import std.conv;
 	import std.traits;
+	import core.sys.windows.core;
 	import winkit.Window;
-	import win32.core;
 
 	Window wnd;
 
