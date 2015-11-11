@@ -25,7 +25,7 @@ abstract class EventHandler
 		{
 			assert(is_attached==false || terminating==true, "Destroying an EventHandler which is attached!");
 		}
-
+		
 		private bool is_attached;
 		void attached(HELEMENT) { is_attached = true; }
 		void detached(HELEMENT) { is_attached = false; }
@@ -33,24 +33,24 @@ abstract class EventHandler
 		void attached(HELEMENT) { }
 		void detached(HELEMENT) { }
 	}
-
+	
 	bool subscription(HELEMENT he, ref UINT event_groups)
 	{
 		event_groups = EVENT_GROUPS.HANDLE_ALL;
 		return true;
 	}
-
+	
 	bool on_mouse  (HELEMENT he, MOUSE_PARAMS* prms ) { return false; }
 	bool on_key    (HELEMENT he, KEY_PARAMS* prms ) { return false; }
 	bool on_focus  (HELEMENT he, FOCUS_PARAMS* prms ) { return false; }
 	bool on_draw   (HELEMENT he, DRAW_PARAMS* prms ) { return false; /*do default draw*/ }
-
+	
 	bool on_timer  (HELEMENT he ) { return false; /*stop this timer*/ }
 	bool on_timer  (HELEMENT he, UINT_PTR extTimerId ) { return false; /*stop this timer*/ }
 	void on_size   (HELEMENT he ) { }
-
+	
 	bool on_method_call (HELEMENT he, UINT methodID) { return false; /*not handled*/ }
-
+	
 	// calls from CSSS! script and TIScript (if it was not handled by method below). Override this if you want your own methods to the CSSS! namespace.
 	// Follwing declaration:
 	// #my-active-on {
@@ -58,42 +58,34 @@ abstract class EventHandler
 	// }
 	// will end up with on_script_call(he, "my-method" , 2, argv, retval );
 	// where argv[0] will be 1 and argv[1] will be "one".
-	bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms)
-	out
-	{
-		import sciter.definitions.sciter_value;
-	}
-	body
-	{
-		return false;
-	}
-
+	bool on_script_call(HELEMENT he, SCRIPTING_METHOD_PARAMS* prms) { return false; }
+	
 	// Calls from TIScript. Override this if you want your own methods accessible directly from tiscript engine.
 	// Use tiscript::args to access parameters.
 	bool on_script_call(HELEMENT he, TISCRIPT_METHOD_PARAMS* prms) { return false; }
-
+	
 	// notification events from builtin behaviors - synthesized events: BUTTON_CLICK, VALUE_CHANGED
 	// see enum BEHAVIOR_EVENTS
 	bool on_event(HELEMENT he, BEHAVIOR_EVENT_PARAMS* prms) { return false; }
-
+	
 	// notification event: data requested by HTMLayoutRequestData just delivered
 	bool on_data_arrived (HELEMENT he, DATA_ARRIVED_PARAMS* prms) { return false; }
-
+	
 	bool on_scroll(HELEMENT he, SCROLL_PARAMS* prms) { return false; }
-
+	
 	bool on_gesture(HELEMENT he, GESTURE_PARAMS* prms ) { return false; }
-
+	
 	extern(Windows) static BOOL element_proc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms)
 	{
 		EventHandler evh = cast(EventHandler)tag;
-
+		
 		/*debug
 		{
 			static i = 0;
 			import std.stdio;
 			stderr.writeln("element_proc ", i++);
 		}*/
-
+		
 		switch( cast(EVENT_GROUPS)evtg )
 		{
 			case EVENT_GROUPS.SUBSCRIPTIONS_REQUEST:
@@ -101,7 +93,7 @@ abstract class EventHandler
 					UINT* p = cast(UINT*) prms;
 					return evh.subscription( he, *p );
 				}
-			
+
 			case EVENT_GROUPS.HANDLE_INITIALIZATION:
 				{
 					INITIALIZATION_PARAMS* p = cast(INITIALIZATION_PARAMS*)prms;

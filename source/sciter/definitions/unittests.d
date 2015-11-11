@@ -36,10 +36,9 @@ void UnittestWindow(void function(HWINDOW) cbk, string html = null)// add html s
 	import core.sys.windows.windows;
 	cbk(wnd);
 	ShowWindow(wnd, 1);
-
-	MSG msg;
 	PostQuitMessage(0);
 
+	MSG msg;
 	while( GetMessageA(&msg, null, 0, 0) )
 	{
 		TranslateMessage(&msg);

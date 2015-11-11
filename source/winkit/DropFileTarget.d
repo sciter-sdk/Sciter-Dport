@@ -12,7 +12,7 @@ module winkit.DropFileTarget;
 mixin template DropFileTarget()
 {
 public:
-	import win32.shellapi;
+	import core.sys.windows.shellapi;
 
 	//-----------------------------------------------------------------------------
 	// Function name	: RegisterDropTarget

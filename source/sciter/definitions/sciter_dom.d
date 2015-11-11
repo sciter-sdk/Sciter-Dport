@@ -30,8 +30,7 @@ unittest
 		</div>
 		</html>";
 
-	UnittestWindow((HWINDOW h)
-	{
+	UnittestWindow((HWINDOW h) {
 		element el_root = element.root_element(h);
 		assert(el_root);
 

@@ -72,14 +72,14 @@ abstract class SciterWindowHost
 	void setup_callback(HWINDOW hwnd)
 	{
 		assert(hwnd);
+		assert(m_hwnd==HWINDOW.init, "You already called setup_callback()");
 		m_hwnd = hwnd;
 		.SciterSetCallback(hwnd, &callback, cast(void*)this);
 	}
-
+	
 	void attach_evh(EventHandler evh)
 	{
 		assert(m_hwnd, "Call setup_callback() first");
-
 		.SciterWindowAttachEventHandler(m_hwnd, &EventHandler.element_proc, cast(void*) evh, EVENT_GROUPS.HANDLE_ALL) == SCDOM_OK || assert(false);
 	}
 	
@@ -91,7 +91,7 @@ abstract class SciterWindowHost
 		.SciterCall(m_hwnd, (name ~ '\0').ptr, cast(UINT/*x64 issue*/) params.length, params.ptr, &ret) || assert(false);
 		return json_value(ret);
 	}
-
+	
 	json_value eval_script(wstring script)
 	{
 		assert(m_hwnd, "Call setup_callback() first");
@@ -100,7 +100,7 @@ abstract class SciterWindowHost
 		.SciterEval(m_hwnd, script.ptr, cast(UINT/*x64 issue*/) script.length, &ret) || assert(false);
 		return json_value(ret);
 	}
-
+	
 public:
 	// overridable
 	UINT on_load_data(LPSCN_LOAD_DATA pnmld) { return 0; }

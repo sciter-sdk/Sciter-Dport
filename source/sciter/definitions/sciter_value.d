@@ -19,10 +19,11 @@ public import sciter.sciter_x_value;
 unittest
 {
 	json_value jv = json_value(3);
-	assert(jv.to_string()=="3");
+	assert(jv.to_json_string()=="3");
 
 	json_value jarr = json_value.from_array([1,2,3]);
-	assert(jarr.to_string(VALUE_STRING_CVT_TYPE.CVT_JSON_LITERAL)=="[1, 2, 3]");
+	assert(jarr.to_json_string(VALUE_STRING_CVT_TYPE.CVT_JSON_LITERAL)=="[1, 2, 3]");
+	assert(jarr.get_item(2).get(0)==3);
 
 	json_value jassoc1 = [
 		"key1" : 1,
@@ -32,7 +33,7 @@ unittest
 		"key1" : json_value(1),
 		"key2" : json_value(2),
 	];
-	assert(jassoc1.to_string() == jassoc2.to_string());
+	assert(jassoc1.to_json_string() == jassoc2.to_json_string());
 }
 
 
@@ -179,8 +180,8 @@ public:
 	bool is_native_function() const { return !!ValueIsNativeFunctor(&data); }
 	bool is_null() const { return data.t == VALUE_TYPE.T_NULL; }
 
-	static json_value nullval() { json_value t; t.data.t = VALUE_TYPE.T_NULL; return t; }// sciter-dport: null is a reserved D identifier,
-																								// so I renamed this functions from null() to nullval() - midi
+	static json_value nullval() { json_value t; t.data.t = VALUE_TYPE.T_NULL; return t; }	// sciter-dport: null is a reserved D identifier,
+																							// so I renamed this functions from null() to nullval() - midi
 
 	bool get(bool defv) 
 	{
@@ -205,10 +206,9 @@ public:
 		LPCWSTR ret_pstr;
 		UINT ret_length;
 		if(.ValueStringData(&data, &ret_pstr, &ret_length) == VALUE_RESULT.HV_OK)
-			return to!wstring(ret_pstr[0..ret_length]);
+			return ret_pstr[0..ret_length].idup;
 		return defv;
 	}
-
 	wchar[] get_chars()// tested and you do can use this to modify the internal buffer of the string maintained by Sciter
 	{
 		LPCWSTR ret_pstr;
@@ -234,14 +234,14 @@ public:
 		}
 	}
 
-	static VALUE from_string(wstring s, VALUE_STRING_CVT_TYPE ct = VALUE_STRING_CVT_TYPE.CVT_SIMPLE)
+	static VALUE from_json_string(wstring s, VALUE_STRING_CVT_TYPE ct = VALUE_STRING_CVT_TYPE.CVT_SIMPLE)
 	{
 		VALUE v;
 		.ValueFromString(&v, s.ptr, cast(uint)s.length, ct);
 		return v;
 	}
-
-	wstring to_string(VALUE_STRING_CVT_TYPE ct_how = VALUE_STRING_CVT_TYPE.CVT_JSON_LITERAL)// aka to JSON
+	
+	wstring to_json_string(VALUE_STRING_CVT_TYPE ct_how = VALUE_STRING_CVT_TYPE.CVT_JSON_LITERAL)
 	{
 		if( ct_how == VALUE_STRING_CVT_TYPE.CVT_SIMPLE && is_string() )
 			return get_chars().idup;
@@ -249,10 +249,9 @@ public:
 		json_value v = data;
 		.ValueToString(&v.data, ct_how);// as in SDK: ValueToString converts value to T_STRING inplace
 										// trickie thing, grr, who owns this VALUE now? guess me
-		auto r = v.get_chars();
 		return v.get_chars().idup;
 	}
-
+	
 	void clear()
 	{
 		.ValueClear(&data);
@@ -266,13 +265,13 @@ public:
 	}
 
 
-	/*value get_item(int n)
+	json_value get_item(int n)
 	{
-		value r = new value;
-		.ValueNthElementValue(&data, n, &r.data);
-		return r;
-	}*/
-
+		json_value val;
+		.ValueNthElementValue(&data, n, &val.data);
+		return val;
+	}
+	
 	/*
 	const value operator[](int n) const { return get_item(n); }
 	value_idx_a operator[](int n);
@@ -309,17 +308,17 @@ public:
 	{
 		.ValueNthElementValueSet(&data, n, &v.data);
 	}
-
+	
 	void append(immutable json_value v) 
 	{
 		.ValueNthElementValueSet(&data, length(), &v.data);
 	}
-
+	
 	void set_item(immutable json_value key, immutable json_value v)
 	{
 		.ValueSetValueToKey(&data, &key.data, &v.data);
 	}
-
+	
 	VALUE get_item(json_value key)
 	{
 		VALUE r;
@@ -327,27 +326,28 @@ public:
 		return r;
 	}
 
+	void set_object_data(void* pv)
+	{
+		assert(data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_NATIVE);
+		.ValueBinaryDataSet(&data, cast(LPCBYTES)pv, 1, VALUE_TYPE.T_OBJECT, 0);//shouldnt be dereferencing pv?
+	}
 	void* get_object_data()
 	{
 		LPCBYTES pv; UINT dummy;
 		.ValueBinaryData(&data,&pv,&dummy) == VALUE_RESULT.HV_OK || assert(false);
 		return cast(void*)pv;
 	}
-
-
+	
+	
 	bool is_object_native() const   { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_NATIVE; }
 	bool is_object_array() const    { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_ARRAY; }
 	bool is_object_function() const { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_FUNCTION; }
 	bool is_object_object() const   { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_OBJECT; }
 	bool is_object_class() const    { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_CLASS; }
 	bool is_object_error() const    { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_ERROR; }
-
-	void set_object_data(void* pv)
-	{
-		assert(data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_NATIVE);
-		.ValueBinaryDataSet(&data, cast(LPCBYTES)pv, 1, VALUE_TYPE.T_OBJECT, 0);//shouldnt be dereferencing pv?
-	}
-
+	
+	
+	
 	// T_OBJECT/UT_OBJECT_FUNCTION only, call TS function
 	// 'self' here is what will be known as 'this' inside the function, can be undefined for invocations of global functions 
 	VALUE call(VALUE[] args, json_value self = json_value.init, wstring url_or_script_name = null)
@@ -395,22 +395,4 @@ public:
 
 
 	// TODO: port proxy acessors classes (what are they for?)
-
-	void Debug()
-	{
-		if( is_array )
-		{
-			assert(length>0);
-
-			for(int i=0; i>length; i++)
-			{
-
-			}
-		}
-		else if( is_object || is_map )
-		{
-			assert(length>0);
-
-		}
-	}
 }

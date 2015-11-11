@@ -4,11 +4,11 @@ OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
 ##About
 
-This library is a port of Sciter headers to the D language. The originals C headers can be found in the Sciter SDK downloadable here: http://sciter.com/download/.
+This library is a port of Sciter headers to the D language. [Sciter](http://sciter.com/download/) is a multi-platform HTML engine. So with this library you can create D desktop application using not just HTML, but all the features of Sciter: CSS3, SVG, scripintg, AJAX, ...
 
-The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D)
+For quick starting, you can download a [Sciter Bootstrap](http://misoftware.rs/Bootstrap/Download) package for the D language, which comes with this library already configured.
 
-Has unittest coverage so, in DMD, compile it with the -unittest flag to run them.
+The code is very well tested, and constantly used in real world applications, so be assured that it will save you hours and hours of debugging time, AVs and data corruptions (all which I had to face myself =D). Has unittest coverage so, in DMD, compile it with the -unittest flag to run them.
 
 For more Sciter related content visit my site at: http://misoftware.rs/
 

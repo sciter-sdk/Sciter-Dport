@@ -50,7 +50,7 @@ extern(Windows)// needed for the functions alias'es
 		HWINDOW hwnd;
 	}
 	alias SCITER_CALLBACK_NOTIFICATION* LPSCITER_CALLBACK_NOTIFICATION;
-	alias UINT function(LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID callbackParam) LPSciterHostCallback;
+	alias LPSciterHostCallback = UINT function(LPSCITER_CALLBACK_NOTIFICATION pns, LPVOID callbackParam);
 
 
 	struct SCN_LOAD_DATA
@@ -179,35 +179,19 @@ extern(Windows)// needed for the functions alias'es
 	//EXTERN_C BOOL SCAPI SciterSetOption(HWINDOW hWnd, UINT option, UINT_PTR value );
 	//EXTERN_C VOID SCAPI SciterGetPPI(HWINDOW hWndSciter, UINT* px, UINT* py);
 	//EXTERN_C BOOL SCAPI SciterGetViewExpando( HWINDOW hwnd, VALUE* pval );
-
-
-	struct URL_DATA
-	{
-		LPCSTR				requestedUrl;   // requested URL
-		LPCSTR				realUrl;        // real URL data arrived from (after possible redirections)
-		SciterResourceType	requestedType;  // requested data category: html, script, image, etc.
-		LPCSTR				httpHeaders;    // if any
-		LPCSTR				mimeType;       // mime type reported by server (if any)
-		LPCSTR				encoding;       // data encoding (if any)
-		LPCBYTE				data;
-		UINT				dataLength;
-	}
-	alias VOID function(const URL_DATA* pUrlData, LPVOID param) URL_DATA_RECEIVER;
-
-	//EXTERN_C BOOL SCAPI SciterEnumUrlData(HWINDOW hWndSciter, URL_DATA_RECEIVER* receiver, LPVOID param, LPCSTR url);
 	//EXTERN_C BOOL SCAPI SciterRenderD2D(HWINDOW hWndSciter, ID2D1RenderTarget* prt);
 	//EXTERN_C BOOL SCAPI     SciterD2DFactory(ID2D1Factory ** ppf);
 	//EXTERN_C BOOL SCAPI     SciterDWFactory(IDWriteFactory ** ppf);
 	//EXTERN_C BOOL SCAPI     SciterGraphicsCaps(LPUINT pcaps);
 	//EXTERN_C BOOL SCAPI     SciterSetHomeURL(HWINDOW hWndSciter, LPCWSTR baseUrl);
-
-
+	
+	
 	version(Windows)
-		alias LRESULT function(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, BOOL* handled) SciterWindowDelegate;
+		alias SciterWindowDelegate = LRESULT function(HWINDOW hwnd, UINT msg, WPARAM wParam, LPARAM lParam, LPVOID pParam, BOOL* handled);
 	version(linux)
-		alias void* SciterWindowDelegate;
+		alias SciterWindowDelegate = void*;
 	version(OSX)
-		alias void* SciterWindowDelegate;
+		alias SciterWindowDelegate = void*;
 
 
 	enum SCITER_CREATE_WINDOW_FLAGS : UINT
@@ -238,11 +222,11 @@ extern(Windows)// needed for the functions alias'es
 	enum OUTPUT_SEVERITY : UINT
 	{
 		OS_INFO,
-		OS_WARNING,  
+		OS_WARNING,
 		OS_ERROR,
 	}
 
-	alias VOID function(LPVOID param, UINT subsystem /*OUTPUT_SUBSYTEMS*/, UINT severity, LPCWSTR text, UINT text_length) DEBUG_OUTPUT_PROC;
+	alias DEBUG_OUTPUT_PROC = VOID function(LPVOID param, UINT subsystem /*OUTPUT_SUBSYTEMS*/, UINT severity /*OUTPUT_SEVERITY*/, LPCWSTR text, UINT text_length);
 
 	//EXTERN_C VOID SCAPI SciterSetupDebugOutput(
 	//                                           HWINDOW                  hwndOrNull,// HWINDOW or null if this is global output handler
