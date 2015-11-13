@@ -925,17 +925,17 @@ public:
 		return false;
 	}
 
-	string get_tagname()
+	wstring get_tagname()
 	{
 		assert(is_valid());
 
-		string name = get_tag();
+		wstring name = get_tag().to!wstring;
 		wstring id = get_attribute("id");
 		wstring classes = get_attribute("class");
 		if(id)
-			name ~= '#' ~ to!string(id);
+			name ~= '#' ~ id;
 		if(classes)
-			name ~= '.' ~ to!string(classes.splitter(' ').join("."));
+			name ~= '.' ~ classes.splitter(' ').join(".");
 		return name;
 	}
 
