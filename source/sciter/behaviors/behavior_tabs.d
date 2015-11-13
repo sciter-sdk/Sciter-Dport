@@ -18,8 +18,8 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.behavior_tabs;
+module sciter.behaviors.behavior_tabs;
 
 
-import sciter.definitions.behavior;
+import sciter.behavior;
 

@@ -18,12 +18,12 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.definitions.host;
+module sciter.host;
 
-import sciter.sciter_x_types;
-import sciter.definitions.api;
-import sciter.definitions.behavior;
-import sciter.definitions.sciter_value;
+import sciter.interop.sciter_x_types;
+import sciter.api;
+import sciter.behavior;
+import sciter.sciter_value;
 
 
 class SciterArchive
@@ -51,7 +51,7 @@ public:
 	void open(const(ubyte)[] data)
 	{
 		close();
-		har = SAPI().SciterOpenArchive(data.ptr, cast(UINT/*x64 issue*/) data.length);
+		har = SAPI().SciterOpenArchive(data.ptr, cast(uint/*x64 issue*/) data.length);
 		assert(har);
 	}
 	
@@ -67,7 +67,7 @@ public:
 	{
 		assert(har);
 		LPCBYTE pb;
-		UINT blen;
+		uint blen;
 
 		path ~= '\0';
 		bool found = !!SAPI().SciterGetArchiveItem(har, path.ptr, &pb, &blen);
@@ -100,7 +100,7 @@ abstract class SciterWindowHost
 		assert(m_hwnd, "Call setup_callback() first");
 
 		VALUE ret;
-		.SciterCall(m_hwnd, (name ~ '\0').ptr, cast(UINT/*x64 issue*/) params.length, params.ptr, &ret) || assert(false);
+		.SciterCall(m_hwnd, (name ~ '\0').ptr, cast(uint/*x64 issue*/) params.length, params.ptr, &ret) || assert(false);
 		return json_value(ret);
 	}
 	
@@ -109,29 +109,29 @@ abstract class SciterWindowHost
 		assert(m_hwnd, "Call setup_callback() first");
 
 		VALUE ret;
-		.SciterEval(m_hwnd, script.ptr, cast(UINT/*x64 issue*/) script.length, &ret) || assert(false);
+		.SciterEval(m_hwnd, script.ptr, cast(uint/*x64 issue*/) script.length, &ret) || assert(false);
 		return json_value(ret);
 	}
 	
 public:
 	// overridable
-	UINT on_load_data(LPSCN_LOAD_DATA pnmld) { return 0; }
-	UINT on_data_loaded(LPSCN_DATA_LOADED pnmld) { return 0; }
-	UINT on_attach_behavior(LPSCN_ATTACH_BEHAVIOR lpab) { return 0; }
-	UINT on_engine_destroyed() { return 0; }
-	UINT on_posted_notification(LPSCN_POSTED_NOTIFICATION lpab) { return 0; }
+	uint on_load_data(LPSCN_LOAD_DATA pnmld) { return 0; }
+	uint on_data_loaded(LPSCN_DATA_LOADED pnmld) { return 0; }
+	uint on_attach_behavior(LPSCN_ATTACH_BEHAVIOR lpab) { return 0; }
+	uint on_engine_destroyed() { return 0; }
+	uint on_posted_notification(LPSCN_POSTED_NOTIFICATION lpab) { return 0; }
 
 protected:
 	HWINDOW m_hwnd;
 
-	static extern(Windows) UINT callback(LPSCITER_CALLBACK_NOTIFICATION pnm, LPVOID param)
+	static extern(Windows) uint callback(LPSCITER_CALLBACK_NOTIFICATION pnm, void* param)
 	{
 		assert(param);
 		SciterWindowHost self = cast(SciterWindowHost)(param);
 		return self.handle_notification(pnm);
 	}
 
-	UINT handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm)
+	uint handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm)
 	{
 		switch(pnm.code)
         {

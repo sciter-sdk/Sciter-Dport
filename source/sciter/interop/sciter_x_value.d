@@ -18,19 +18,15 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.sciter_x_value;
+module sciter.interop.sciter_x_value;
 
 // Contents:
 // sciter-x-value.h		- ported here
 // value.h				- ported here the extern declarations, there is no value.di file, its all located here
 //
-// By importing just this file, SCITER_VALUE is aliased to the basic VALUE
 // This port has no json::value, but rather an equivalent 'struct json_value' at 'sciter.sciter_value'
 
-alias VALUE SCITER_VALUE;
-
-
-import sciter.sciter_x_types;
+import sciter.interop.sciter_x_types;
 
 
 extern(Windows)
@@ -45,16 +41,16 @@ extern(Windows)
 
 	struct VALUE
 	{
-		UINT     t;// enum VALUE_TYPE
-		UINT     u;
-		UINT64   d;
+		uint     t;// enum VALUE_TYPE
+		uint     u;
+		long     d;
 	}
 
 	alias double FLOAT_VALUE;
 	alias LPCBYTE LPCBYTES;
 
 
-	enum VALUE_TYPE : UINT
+	enum VALUE_TYPE : uint
 	{
 		T_UNDEFINED = 0,
 		T_NULL = 1,
@@ -106,7 +102,7 @@ extern(Windows)
 		UT_OBJECT_ARRAY  = 0,   // type T_OBJECT of type Array
 		UT_OBJECT_OBJECT = 1,   // type T_OBJECT of type Object
 		UT_OBJECT_CLASS  = 2,   // type T_OBJECT of type Type (class or namespace)
-		UT_OBJECT_NATIVE = 3,   // type T_OBJECT of native Type with data slot (LPVOID)
+		UT_OBJECT_NATIVE = 3,   // type T_OBJECT of native Type with data slot (void*)
 		UT_OBJECT_FUNCTION = 4, // type T_OBJECT of type Function
 		UT_OBJECT_ERROR = 5,    // type T_OBJECT of type Error
 	}
@@ -121,37 +117,37 @@ extern(Windows)
 	}
 
 	// Native functor
-	alias NATIVE_FUNCTOR_INVOKE = void function(VOID* tag, UINT argc, const VALUE* argv, VALUE* retval);// retval may contain error definition
-	alias NATIVE_FUNCTOR_RELEASE = void function(VOID* tag);
+	alias NATIVE_FUNCTOR_INVOKE = void function(void* tag, uint argc, const VALUE* argv, VALUE* retval);// retval may contain error definition
+	alias NATIVE_FUNCTOR_RELEASE = void function(void* tag);
 
 
-	// we should NOT impose here enum types in place of UINTs cause the above enum's dont defines all the possible values (mainly 0)
-	/+EXTERN_C UINT VALAPI ValueInit( VALUE* pval );
-	EXTERN_C UINT VALAPI ValueClear( VALUE* pval );
-	EXTERN_C UINT VALAPI ValueCompare( const VALUE* pval1, const VALUE* pval2 );
-	EXTERN_C UINT VALAPI ValueCopy( VALUE* pdst, const VALUE* psrc );
-	EXTERN_C UINT VALAPI ValueIsolate( VALUE* pdst );
-	EXTERN_C UINT VALAPI ValueType( const VALUE* pval, UINT* pType, UINT* pUnits );
-	EXTERN_C UINT VALAPI ValueStringData( const VALUE* pval, LPCWSTR* pChars, UINT* pNumChars );
-	EXTERN_C UINT VALAPI ValueStringDataSet( VALUE* pval, LPCWSTR chars, UINT numChars, UINT units );
-	EXTERN_C UINT VALAPI ValueIntData( const VALUE* pval, INT* pData );
-	EXTERN_C UINT VALAPI ValueIntDataSet( VALUE* pval, INT data, UINT type, UINT units );
-	EXTERN_C UINT VALAPI ValueInt64Data( const VALUE* pval, INT64* pData );
-	EXTERN_C UINT VALAPI ValueInt64DataSet( VALUE* pval, INT64 data, UINT type, UINT units );
-	EXTERN_C UINT VALAPI ValueFloatData( const VALUE* pval, FLOAT_VALUE* pData );
-	EXTERN_C UINT VALAPI ValueFloatDataSet( VALUE* pval, FLOAT_VALUE data, UINT type, UINT units );
-	EXTERN_C UINT VALAPI ValueBinaryData( const VALUE* pval, LPCBYTE* pBytes, UINT* pnBytes );
-	EXTERN_C UINT VALAPI ValueBinaryDataSet( VALUE* pval, LPCBYTE pBytes, UINT nBytes, UINT type, UINT units );
-	EXTERN_C UINT VALAPI ValueElementsCount( const VALUE* pval, INT* pn);
-	EXTERN_C UINT VALAPI ValueNthElementValue( const VALUE* pval, INT n, VALUE* pretval);
-	EXTERN_C UINT VALAPI ValueNthElementValueSet( VALUE* pval, INT n, const VALUE* pval_to_set);+/
-	alias BOOL function(LPVOID param, const VALUE* pkey, const VALUE* pval) KeyValueCallback;
-	/+EXTERN_C UINT VALAPI ValueNthElementKey( const VALUE* pval, INT n, VALUE* pretval);
-	EXTERN_C UINT VALAPI ValueEnumElements( VALUE* pval, KeyValueCallback* penum, LPVOID param);
-	EXTERN_C UINT VALAPI ValueSetValueToKey( VALUE* pval, const VALUE* pkey, const VALUE* pval_to_set);
-	EXTERN_C UINT VALAPI ValueGetValueOfKey( const VALUE* pval, const VALUE* pkey, VALUE* pretval);+/
+	// we should NOT impose here enum types in place of uints cause the above enum's dont defines all the possible values (mainly 0)
+	/+EXTERN_C uint VALAPI ValueInit( VALUE* pval );
+	EXTERN_C uint VALAPI ValueClear( VALUE* pval );
+	EXTERN_C uint VALAPI ValueCompare( const VALUE* pval1, const VALUE* pval2 );
+	EXTERN_C uint VALAPI ValueCopy( VALUE* pdst, const VALUE* psrc );
+	EXTERN_C uint VALAPI ValueIsolate( VALUE* pdst );
+	EXTERN_C uint VALAPI ValueType( const VALUE* pval, uint* pType, uint* pUnits );
+	EXTERN_C uint VALAPI ValueStringData( const VALUE* pval, LPCWSTR* pChars, uint* pNumChars );
+	EXTERN_C uint VALAPI ValueStringDataSet( VALUE* pval, LPCWSTR chars, uint numChars, uint units );
+	EXTERN_C uint VALAPI ValueIntData( const VALUE* pval, INT* pData );
+	EXTERN_C uint VALAPI ValueIntDataSet( VALUE* pval, INT data, uint type, uint units );
+	EXTERN_C uint VALAPI ValueInt64Data( const VALUE* pval, INT64* pData );
+	EXTERN_C uint VALAPI ValueInt64DataSet( VALUE* pval, INT64 data, uint type, uint units );
+	EXTERN_C uint VALAPI ValueFloatData( const VALUE* pval, FLOAT_VALUE* pData );
+	EXTERN_C uint VALAPI ValueFloatDataSet( VALUE* pval, FLOAT_VALUE data, uint type, uint units );
+	EXTERN_C uint VALAPI ValueBinaryData( const VALUE* pval, LPCBYTE* pBytes, uint* pnBytes );
+	EXTERN_C uint VALAPI ValueBinaryDataSet( VALUE* pval, LPCBYTE pBytes, uint nBytes, uint type, uint units );
+	EXTERN_C uint VALAPI ValueElementsCount( const VALUE* pval, INT* pn);
+	EXTERN_C uint VALAPI ValueNthElementValue( const VALUE* pval, INT n, VALUE* pretval);
+	EXTERN_C uint VALAPI ValueNthElementValueSet( VALUE* pval, INT n, const VALUE* pval_to_set);+/
+	alias BOOL function(void* param, const VALUE* pkey, const VALUE* pval) KeyValueCallback;
+	/+EXTERN_C uint VALAPI ValueNthElementKey( const VALUE* pval, INT n, VALUE* pretval);
+	EXTERN_C uint VALAPI ValueEnumElements( VALUE* pval, KeyValueCallback* penum, void* param);
+	EXTERN_C uint VALAPI ValueSetValueToKey( VALUE* pval, const VALUE* pkey, const VALUE* pval_to_set);
+	EXTERN_C uint VALAPI ValueGetValueOfKey( const VALUE* pval, const VALUE* pkey, VALUE* pretval);+/
 
-	enum VALUE_STRING_CVT_TYPE : UINT
+	enum VALUE_STRING_CVT_TYPE : uint
 	{
 		CVT_SIMPLE,        ///< simple conversion of terminal values 
 		CVT_JSON_LITERAL,  ///< json literal parsing/emission 
@@ -159,9 +155,9 @@ extern(Windows)
 		CVT_XJSON_LITERAL, ///< x-json parsing/emission, date is emitted as ISO8601 date literal, currency is emitted in the form DDDD$CCC
 	}
 
-	/+EXTERN_C UINT VALAPI ValueToString( VALUE* pval, /*VALUE_STRING_CVT_TYPE*/ UINT how );
-	EXTERN_C UINT VALAPI ValueFromString( VALUE* pval, LPCWSTR str, UINT strLength, /*VALUE_STRING_CVT_TYPE*/ UINT how );
-	EXTERN_C UINT VALAPI ValueInvoke( VALUE* pval, VALUE* pthis, UINT argc, const VALUE* argv, VALUE* pretval, LPCWSTR url);
-	EXTERN_C UINT VALAPI ValueNativeFunctorSet( VALUE* pval, struct NATIVE_FUNCTOR_VALUE* pnfv);
+	/+EXTERN_C uint VALAPI ValueToString( VALUE* pval, /*VALUE_STRING_CVT_TYPE*/ uint how );
+	EXTERN_C uint VALAPI ValueFromString( VALUE* pval, LPCWSTR str, uint strLength, /*VALUE_STRING_CVT_TYPE*/ uint how );
+	EXTERN_C uint VALAPI ValueInvoke( VALUE* pval, VALUE* pthis, uint argc, const VALUE* argv, VALUE* pretval, LPCWSTR url);
+	EXTERN_C uint VALAPI ValueNativeFunctorSet( VALUE* pval, struct NATIVE_FUNCTOR_VALUE* pnfv);
 	EXTERN_C BOOL VALAPI ValueIsNativeFunctor( const VALUE* pval);+/
 }

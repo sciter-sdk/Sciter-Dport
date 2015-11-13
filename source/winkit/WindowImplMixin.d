@@ -20,7 +20,7 @@
 
 module winkit.WindowImplMixin;
 
-//import sciter.definitions.api;
+//import sciter.api;
 
 mixin template WindowImplMixin(bool isSciter = false)
 {
@@ -79,7 +79,7 @@ public:
 	{
 		static if(isSciter)
 		{
-			import sciter.definitions.api;
+			import sciter.api;
 			return SciterProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
 		} else {
 			return DefWindowProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);

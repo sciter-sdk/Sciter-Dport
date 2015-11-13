@@ -18,22 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.definitions.sciter_dom;
+module sciter.sciter_dom;
 
 import std.array;
 import std.algorithm.iteration;
 import std.conv;
 import std.string;
 
-import sciter.tiscript;
-import sciter.sciter_x_types;
-import sciter.sciter_x_behaviors;
-import sciter.definitions.api;
+import sciter.interop.tiscript;
+import sciter.interop.sciter_x_types;
+import sciter.interop.sciter_x_behaviors;
+import sciter.api;
 
 
 unittest
 {
-	import sciter.definitions.unittests;
+	import sciter.unittests;
 
 	string html = r"
 		<html>
@@ -83,14 +83,14 @@ public:
 	}
 	void opAssign(HELEMENT h)
 	{
-		.SciterNodeCastFromElement(h,&hn);
+		.SciterNodeCastFromElement(h, &hn);
 		set(hn);
 	}
 
 	node opIndex(uint idx)
 	{
 		HNODE hrn;
-		.SciterNodeNthChild(hn,idx,&hrn) == SCDOM_OK || assert(false);
+		.SciterNodeNthChild(hn, idx, &hrn) == SCDOM_OK || assert(false);
 		return node(hrn);
 	}
 
@@ -105,37 +105,37 @@ public:
 	bool is_text() const
 	{
 		NODE_TYPE nodeType;
-		.SciterNodeType(hn, &cast(UINT)nodeType) == SCDOM_OK || assert(false);
+		.SciterNodeType(hn, &cast(uint)nodeType) == SCDOM_OK || assert(false);
 		return nodeType == NODE_TYPE.NT_TEXT;
 	}
 	bool is_comment() const
 	{
 		NODE_TYPE nodeType;
-		.SciterNodeType(hn, &cast(UINT)nodeType) == SCDOM_OK || assert(false);
+		.SciterNodeType(hn, &cast(uint)nodeType) == SCDOM_OK || assert(false);
 		return nodeType == NODE_TYPE.NT_COMMENT;
 	}
 	bool is_element() const
 	{
 		NODE_TYPE nodeType;
-		.SciterNodeType(hn, &cast(UINT)nodeType) == SCDOM_OK || assert(false);
+		.SciterNodeType(hn, &cast(uint)nodeType) == SCDOM_OK || assert(false);
 		return nodeType == NODE_TYPE.NT_ELEMENT;
 	}
 
 	void remove()
 	{
-		.SciterNodeRemove(hn,TRUE) == SCDOM_OK || assert(false);
+		.SciterNodeRemove(hn, true) == SCDOM_OK || assert(false);
 		.SciterNodeRelease(hn);
 		hn = HNODE.init;
 	}
 	void detach()
 	{
-		.SciterNodeRemove(hn,FALSE) == SCDOM_OK || assert(false);
+		.SciterNodeRemove(hn, false) == SCDOM_OK || assert(false);
 	}
 
-	UINT children_count() const
+	uint children_count() const
 	{
-		UINT n;
-		.SciterNodeChildrenCount(hn,&n) == SCDOM_OK || assert(false);
+		uint n;
+		.SciterNodeChildrenCount(hn, &n) == SCDOM_OK || assert(false);
 		return n;
 	}
 	HELEMENT parent() 
@@ -148,32 +148,32 @@ public:
 	HNODE next_sibling()
 	{
 		HNODE hrn;
-		.SciterNodeNextSibling(hn,&hrn) == SCDOM_OK || assert(false);
+		.SciterNodeNextSibling(hn, &hrn) == SCDOM_OK || assert(false);
 		return hrn;
 	}
 	HNODE prev_sibling()
 	{
 		HNODE hrn;
-		.SciterNodePrevSibling(hn,&hrn) == SCDOM_OK || assert(false);
+		.SciterNodePrevSibling(hn, &hrn) == SCDOM_OK || assert(false);
 		return hrn;
 	}
 	HNODE first_child()
 	{
 		HNODE hrn;
-		.SciterNodeFirstChild(hn,&hrn) == SCDOM_OK || assert(false);
+		.SciterNodeFirstChild(hn, &hrn) == SCDOM_OK || assert(false);
 		return hrn;
 	}
 	HNODE last_child()
 	{
 		HNODE hrn;
-		.SciterNodeLastChild(hn,&hrn) == SCDOM_OK || assert(false);
+		.SciterNodeLastChild(hn, &hrn) == SCDOM_OK || assert(false);
 		return hrn;
 	}
 
 	wstring text()
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -235,7 +235,7 @@ public:
 	this(this) { use(he); }
 	this(VALUE data)
 	{
-		import sciter.definitions.sciter_value;
+		import sciter.sciter_value;
 
 		json_value jv = data;
 		assert(jv.is_object());
@@ -279,7 +279,7 @@ public:
 
 	public
 	{
-		import sciter.definitions.behavior;
+		import sciter.behavior;
 
 		void attach_event_handler(EventHandler evh) const
 		{
@@ -293,13 +293,13 @@ public:
 	}
 	
 
-	UINT children_count() const
+	uint children_count() const
 	{
-		UINT count;
+		uint count;
 		.SciterGetChildrenCount(he, &count);
 		return count;
 	}
-	HELEMENT child( UINT index ) const
+	HELEMENT child( uint index ) const
 	{
 		HELEMENT child;
 		.SciterGetNthChild(he, index, &child);
@@ -313,16 +313,16 @@ public:
 		return hparent;
 	}
 
-	UINT index() const
+	uint index() const
 	{
-		UINT idx;
+		uint idx;
 		.SciterGetElementIndex(he, &idx) == SCDOM_OK || assert(false);
 		return idx;
 	}
 
-	UINT get_attribute_count() const
+	uint get_attribute_count() const
 	{
-		UINT n;
+		uint n;
 		.SciterGetAttributeCount(he, &n) == SCDOM_OK || assert(false);
 		return n;
 	}
@@ -330,7 +330,7 @@ public:
 	wstring get_attribute(uint n) const
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -342,7 +342,7 @@ public:
 	string get_attribute_name(uint n) const
 	{
 		static string str_rcv;
-		LPCSTR_RECEIVER frcv = function(LPCSTR str, UINT str_length, LPVOID param)
+		LPCSTR_RECEIVER frcv = function(LPCSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -354,7 +354,7 @@ public:
 	wstring get_attribute(string name, wstring def_value = null) const
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -396,7 +396,7 @@ public:
 	wstring get_style_attribute(string name)
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER frcv = function(LPCWSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -439,14 +439,14 @@ public:
 	private
 	{
 		static HELEMENT s_select_first;
-		extern(Windows) static BOOL select_elements_callback_first(HELEMENT he, LPVOID param)
+		extern(Windows) static BOOL select_elements_callback_first(HELEMENT he, void* param)
 		{
 			s_select_first = he;
 			return true; /*stop enumeration*/
 		}
 
 		static HELEMENT[] s_select_all;
-		extern(Windows) static BOOL select_elements_callback_all(HELEMENT he, LPVOID param)
+		extern(Windows) static BOOL select_elements_callback_all(HELEMENT he, void* param)
 		{
 			s_select_all ~= he;
 			return false;
@@ -493,7 +493,7 @@ public:
 
 	void update(bool render_now = false)
 	{
-		.SciterUpdateElement(he, render_now ? TRUE : FALSE) == SCDOM_OK || assert(false);
+		.SciterUpdateElement(he, render_now ? true : false) == SCDOM_OK || assert(false);
 	}
 
 	void refresh(RECT rc) 
@@ -515,7 +515,7 @@ public:
 	}
 	HELEMENT next_sibling() 
 	{
-		UINT idx = index() + 1;
+		uint idx = index() + 1;
 		element pel = parent();
 
 		if( !pel.is_valid() )
@@ -527,7 +527,7 @@ public:
 	}
 	HELEMENT prev_sibling() 
 	{
-		UINT idx = index() - 1;
+		uint idx = index() - 1;
 		element pel = parent();
 
 		if( !pel.is_valid() )
@@ -553,7 +553,7 @@ public:
 	}
 
 
-	RECT get_location(UINT area = ELEMENT_AREAS.ROOT_RELATIVE | ELEMENT_AREAS.CONTENT_BOX)
+	RECT get_location(uint area = ELEMENT_AREAS.ROOT_RELATIVE | ELEMENT_AREAS.CONTENT_BOX)
 	{
 		RECT rc;
 		.SciterGetElementLocation(he, &rc, area) == SCDOM_OK || assert(false);
@@ -571,7 +571,7 @@ public:
 
 	void scroll_to_view(bool toTopOfView = false)
 	{
-		.SciterScrollToView(he, toTopOfView ? TRUE : FALSE) == SCDOM_OK || assert(false);
+		.SciterScrollToView(he, toTopOfView ? true : false) == SCDOM_OK || assert(false);
 	}
 
 	void get_scroll_info(out POINT scroll_pos, out RECT view_rect, out SIZE content_size)
@@ -580,7 +580,7 @@ public:
 	}
 	void set_scroll_pos(POINT scroll_pos)
 	{
-		.SciterSetScrollPos(he, scroll_pos, TRUE) == SCDOM_OK || assert(false);
+		.SciterSetScrollPos(he, scroll_pos, true) == SCDOM_OK || assert(false);
 	}
 
 	void get_intrinsic_widths(out int min_width, out int max_width)
@@ -596,7 +596,7 @@ public:
 	{
 		static string str_rcv;
 		debug str_rcv = "string_must_be_set_by_sciter_API";
-		LPCSTR_RECEIVER frcv = function(LPCSTR str, UINT str_length, LPVOID param)
+		LPCSTR_RECEIVER frcv = function(LPCSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -619,14 +619,14 @@ public:
 		.SciterAttachHwndToElement(he, child) == SCDOM_OK || assert(false);
 	}
 
-	UINT get_element_uid()
+	uint get_element_uid()
 	{
-		UINT uid;
+		uint uid;
 		.SciterGetElementUID(he, &uid) == SCDOM_OK || assert(false);
 		return uid;
 	}
 
-	static HELEMENT element_by_uid(HWINDOW hSciterWnd, UINT uid)
+	static HELEMENT element_by_uid(HWINDOW hSciterWnd, uint uid)
 	{
 		HELEMENT h;
 		.SciterGetElementByUID(hSciterWnd, uid, &h);// == SCDOM_OK || assert(false);
@@ -652,7 +652,7 @@ public:
 	string get_html(bool outer = true)
 	{
 		static string str_rcv;
-		LPCBYTE_RECEIVER rcv = function(LPCBYTE bytes, UINT num_bytes, LPVOID param)
+		LPCBYTE_RECEIVER rcv = function(LPCBYTE bytes, uint num_bytes, void* param)
 		{
 			str_rcv = cast(string) bytes[0..num_bytes].idup;
 		};
@@ -678,7 +678,7 @@ public:
 	wstring get_text()
 	{
 		static wstring str_rcv;
-		LPCWSTR_RECEIVER rcv = function(LPCWSTR str, UINT str_length, LPVOID param)
+		LPCWSTR_RECEIVER rcv = function(LPCWSTR str, uint str_length, void* param)
 		{
 			str_rcv = str[0..str_length].idup;
 		};
@@ -694,40 +694,40 @@ public:
 
 
 	// State funcs flags are all the ones from eElemetStateBits enum - midi
-	UINT get_state()
+	uint get_state()
 	{
-		UINT state;
+		uint state;
 		.SciterGetElementState(he,&state) == SCDOM_OK || assert(false);
 		return state;
 	}
-	bool get_state(UINT bits)
+	bool get_state(uint bits)
 	{
-		UINT state;
+		uint state;
 		.SciterGetElementState(he,&state) == SCDOM_OK || assert(false);
 		return (state & bits) != 0;
 	}
-	void set_state(UINT bitsToSet /*ELEMENT_STATE_BITS*/, UINT bitsToClear = 0 /*ELEMENT_STATE_BITS*/, bool update = true)
+	void set_state(uint bitsToSet /*ELEMENT_STATE_BITS*/, uint bitsToClear = 0 /*ELEMENT_STATE_BITS*/, bool update = true)
 	{
-		.SciterSetElementState(he,bitsToSet,bitsToClear, update?TRUE:FALSE) == SCDOM_OK || assert(false);
+		.SciterSetElementState(he,bitsToSet,bitsToClear, update) == SCDOM_OK || assert(false);
 	}
 	bool enabled() // deeply enabled
 	{
 		BOOL b;
 		.SciterIsElementEnabled(he,&b) == SCDOM_OK || assert(false);
-		return b != FALSE;
+		return b != false;
 	}
 	bool visible() // deeply visible
 	{
 		BOOL b;
 		.SciterIsElementVisible(he,&b) == SCDOM_OK || assert(false);
-		return b != FALSE;
+		return b != false;
 	}
 
-	void start_timer(UINT ms, UINT timer_id = 0)
+	void start_timer(uint ms, uint timer_id = 0)
 	{
 		.SciterSetTimer(he,ms,timer_id) == SCDOM_OK || assert(false);
 	}
-	void stop_timer(UINT timer_id = 0)
+	void stop_timer(uint timer_id = 0)
 	{
 		assert(he);
 		.SciterSetTimer(he,0,timer_id) == SCDOM_OK || assert(false);
@@ -747,7 +747,7 @@ public:
 		return he;
 	}
 
-	void insert(HELEMENT e, UINT index)
+	void insert(HELEMENT e, uint index)
 	{
 		.SciterInsertElement( e, he, index ) == SCDOM_OK || assert(false);
 	}
@@ -760,13 +760,13 @@ public:
 		.SciterSwapElements(he, ewith) == SCDOM_OK || assert(false);
 	}
 
-	bool send_event(UINT event_code, UINT reason = 0, HELEMENT heSource = HELEMENT.init)
+	bool send_event(uint event_code, uint reason = 0, HELEMENT heSource = HELEMENT.init)
 	{
 		BOOL handled;
 		.SciterSendEvent(he, event_code, heSource? heSource: he, reason, &handled) == SCDOM_OK || assert(false);
-		return handled != FALSE;
+		return handled != false;
 	}
-	void post_event(UINT event_code, UINT reason = 0, HELEMENT heSource = HELEMENT.init)
+	void post_event(uint event_code, uint reason = 0, HELEMENT heSource = HELEMENT.init)
 	{
 		.SciterPostEvent(he, event_code, heSource? heSource: he, reason) == SCDOM_OK || assert(false);
 	}
@@ -787,7 +787,7 @@ public:
 	{
 		load_data(url, SciterResourceType.RT_DATA_HTML, initiator);
 	}
-	void load_data(wstring url, UINT dataType, HELEMENT initiator = HELEMENT.init)
+	void load_data(wstring url, uint dataType, HELEMENT initiator = HELEMENT.init)
 	{
 		.SciterRequestElementData(he, (url ~ '\0').ptr, dataType, initiator) == SCDOM_OK || assert(false);
 	}
@@ -796,7 +796,7 @@ public:
 	{
 		virtual int compare(const sciter::dom::element& e1, const sciter::dom::element& e2) = 0;
 
-		static INT CALLBACK scmp( HELEMENT he1, HELEMENT he2, LPVOID param )
+		static INT CALLBACK scmp( HELEMENT he1, HELEMENT he2, void* param )
 		{
 			sciter::dom::element::comparator* self = 
 			static_cast<sciter::dom::element::comparator*>(param);
@@ -845,7 +845,7 @@ public:
 	CTL_TYPE get_ctl_type()
 	{
 		CTL_TYPE t;
-		.SciterControlGetType(he, &cast(UINT)t) == SCDOM_OK || assert(false);
+		.SciterControlGetType(he, &cast(uint)t) == SCDOM_OK || assert(false);
 		return t;
 	}
 

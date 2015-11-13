@@ -18,22 +18,22 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.sciter_x_behaviors;
+module sciter.interop.sciter_x_behaviors;
 
 /*
 From: sciter-x-behavior.h
 only the top part 
 */
 
-import sciter.sciter_x_types;
-import sciter.sciter_x_dom;
-import sciter.sciter_x_value;
-import sciter.tiscript;
+import sciter.interop.sciter_x_types;
+import sciter.interop.sciter_x_dom;
+import sciter.interop.sciter_x_value;
+import sciter.interop.tiscript;
 
 
 extern(Windows)
 {
-	enum EVENT_GROUPS : UINT
+	enum EVENT_GROUPS : uint
 	{
 		HANDLE_INITIALIZATION = 0x0000, /** attached/detached */
 		HANDLE_MOUSE = 0x0001,          /** mouse events */
@@ -59,31 +59,31 @@ extern(Windows)
 		SUBSCRIPTIONS_REQUEST        = 0xFFFFFFFF, /** special value for getting subscription flags */
 	}
 	
-	alias BOOL /*__stdcall*/ function(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms) LPElementEventProc;
-	alias BOOL /*__stdcall*/ function(LPCSTR, HELEMENT, LPElementEventProc*, LPVOID*) SciterBehaviorFactory;
+	alias BOOL /*__stdcall*/ function(void* tag, HELEMENT he, uint evtg, void* prms) LPElementEventProc;
+	alias BOOL /*__stdcall*/ function(LPCSTR, HELEMENT, LPElementEventProc*, void**) SciterBehaviorFactory;
 	
-	enum PHASE_MASK : UINT
+	enum PHASE_MASK : uint
 	{
 		BUBBLING = 0,
 		SINKING  = 0x8000,
 		HANDLED  = 0x10000
 	}
 
-	enum MOUSE_BUTTONS : UINT
+	enum MOUSE_BUTTONS : uint
 	{
 		MAIN_MOUSE_BUTTON = 1,
 		PROP_MOUSE_BUTTON = 2,
 		MIDDLE_MOUSE_BUTTON = 4,
 	}
 
-	enum KEYBOARD_STATES : UINT
+	enum KEYBOARD_STATES : uint
 	{
 		CONTROL_KEY_PRESSED = 0x1,
 		SHIFT_KEY_PRESSED = 0x2,
 		ALT_KEY_PRESSED = 0x4
 	}
 	
-	enum INITIALIZATION_EVENTS : UINT
+	enum INITIALIZATION_EVENTS : uint
 	{
 		BEHAVIOR_DETACH = 0,
 		BEHAVIOR_ATTACH = 1
@@ -94,14 +94,14 @@ extern(Windows)
 		/*UINT*/INITIALIZATION_EVENTS cmd;
 	}
 
-	enum DRAGGING_TYPE : UINT
+	enum DRAGGING_TYPE : uint
 	{
 		NO_DRAGGING,
 		DRAGGING_MOVE,
 		DRAGGING_COPY,
 	}
 		
-	enum MOUSE_EVENTS : UINT
+	enum MOUSE_EVENTS : uint
 	{
 		MOUSE_ENTER = 0,
 		MOUSE_LEAVE,
@@ -122,19 +122,19 @@ extern(Windows)
 
 	struct MOUSE_PARAMS
 	{
-		UINT      cmd;
+		uint      cmd;
 		HELEMENT  target;
 		POINT     pos;
 		POINT     pos_view; 
-		UINT      button_state;
-		UINT      alt_state;
-		UINT      cursor_type;
+		uint      button_state;
+		uint      alt_state;
+		uint      cursor_type;
 		BOOL      is_on_icon;
 		HELEMENT  dragging;
-		UINT      dragging_mode;
+		uint      dragging_mode;
 	}
 
-	enum CURSOR_TYPE : UINT
+	enum CURSOR_TYPE : uint
 	{
 		CURSOR_ARROW,
 		CURSOR_IBEAM,
@@ -154,7 +154,7 @@ extern(Windows)
 		CURSOR_DRAG_COPY,
 	}
 	
-	enum KEY_EVENTS : UINT
+	enum KEY_EVENTS : uint
 	{
 		KEY_DOWN = 0,
 		KEY_UP,
@@ -163,13 +163,13 @@ extern(Windows)
 
 	struct KEY_PARAMS
 	{
-		UINT      cmd;
+		uint      cmd;
 		HELEMENT  target; 
-		UINT      key_code;
-		UINT      alt_state;
+		uint      key_code;
+		uint      alt_state;
 	}
 	
-	enum FOCUS_EVENTS : UINT
+	enum FOCUS_EVENTS : uint
 	{
 		FOCUS_LOST = 0, // non-bubbling event, target is new focus element
 		FOCUS_GOT = 1,  // non-bubbling event, target is old focus element
@@ -179,13 +179,13 @@ extern(Windows)
 
 	struct FOCUS_PARAMS
 	{
-		UINT      cmd;
+		uint      cmd;
 		HELEMENT  target;
 		BOOL      by_mouse_click;
 		BOOL      cancel;
 	}
 	
-	enum SCROLL_EVENTS : UINT
+	enum SCROLL_EVENTS : uint
 	{
 		SCROLL_HOME = 0,
 		SCROLL_END,
@@ -201,13 +201,13 @@ extern(Windows)
 
 	struct SCROLL_PARAMS
 	{
-		UINT      cmd;
+		uint      cmd;
 		HELEMENT  target;
-		INT       pos;
+		int       pos;
 		BOOL      vertical;
 	}
 
-	enum GESTURE_CMD : UINT
+	enum GESTURE_CMD : uint
 	{
 		GESTURE_REQUEST = 0,
 		GESTURE_ZOOM,
@@ -217,14 +217,14 @@ extern(Windows)
 		GESTURE_TAP2,
 	}
 	
-	enum GESTURE_STATE : UINT
+	enum GESTURE_STATE : uint
 	{
 		GESTURE_STATE_BEGIN   = 1,
 		GESTURE_STATE_INERTIA = 2,
 		GESTURE_STATE_END     = 4,
 	}
 
-	enum GESTURE_TYPE_FLAGS : UINT
+	enum GESTURE_TYPE_FLAGS : uint
 	{
 		GESTURE_FLAG_ZOOM               = 0x0001,
 		GESTURE_FLAG_ROTATE             = 0x0002,
@@ -239,17 +239,17 @@ extern(Windows)
 
 	struct GESTURE_PARAMS
 	{
-		UINT      cmd;
+		uint      cmd;
 		HELEMENT  target;
 		POINT     pos;
 		POINT     pos_view;
-		UINT      flags;
-		UINT      delta_time;
+		uint      flags;
+		uint      delta_time;
 		SIZE      delta_xy;
 		double    delta_v;
 	}
 
-	enum DRAW_EVENTS : UINT
+	enum DRAW_EVENTS : uint
 	{
 		DRAW_BACKGROUND = 0,
 		DRAW_CONTENT = 1,
@@ -260,19 +260,19 @@ extern(Windows)
 
 	struct DRAW_PARAMS
 	{
-		UINT				cmd;
+		uint				cmd;
 		SCITER_GRAPHICS*	gfx;
 		RECT				area;
-		UINT				reserved;
+		uint				reserved;
 	}
 
-	enum CONTENT_CHANGE_BITS : UINT	// for CONTENT_CHANGED reason
+	enum CONTENT_CHANGE_BITS : uint	// for CONTENT_CHANGED reason
 	{
 		CONTENT_ADDED = 0x01,
 		CONTENT_REMOVED = 0x02,
 	}
 
-	enum BEHAVIOR_EVENTS : UINT
+	enum BEHAVIOR_EVENTS : uint
 	{
 		BUTTON_CLICK = 0,              // click on button
 		BUTTON_PRESS = 1,              // mouse down or key down in button
@@ -393,14 +393,14 @@ extern(Windows)
 		// HTMLayoutSend/PostEvent API.
 	}
 
-	enum EVENT_REASON : UINT
+	enum EVENT_REASON : uint
 	{
 		BY_MOUSE_CLICK,
 		BY_KEY_CLICK,
 		SYNTHESIZED,
 	}
 
-	enum EDIT_CHANGED_REASON : UINT
+	enum EDIT_CHANGED_REASON : uint
 	{
 		BY_INS_CHAR,
 		BY_INS_CHARS,
@@ -410,11 +410,11 @@ extern(Windows)
 
 	struct BEHAVIOR_EVENT_PARAMS
 	{
-		UINT     cmd;
+		uint     cmd;
 		HELEMENT heTarget;
 		HELEMENT he;
 		UINT_PTR reason;
-		SCITER_VALUE data;
+		VALUE data;
 	}
 
 	struct TIMER_PARAMS
@@ -422,7 +422,7 @@ extern(Windows)
 		UINT_PTR timerId;
 	}
 	
-	enum BEHAVIOR_METHOD_IDENTIFIERS : UINT
+	enum BEHAVIOR_METHOD_IDENTIFIERS : uint
 	{
 		DO_CLICK = 0,
 		GET_TEXT_VALUE = 1,
@@ -449,7 +449,7 @@ extern(Windows)
 	{
 		LPCSTR        name;
 		VALUE*		  argv;
-		UINT          argc;
+		uint          argc;
 		VALUE		  result;	// plz note, Sciter will internally call ValueClear to this VALUE,
 								// that is, it own this data, so always assign a copy with a positive ref-count of your VALUE to this variable
 								// you will know that if you get an "Access Violation" error
@@ -466,23 +466,23 @@ extern(Windows)
 	// GET_VALUE/SET_VALUE methods params
 	struct VALUE_PARAMS 
 	{
-		UINT         methodID;
-		SCITER_VALUE val;
+		uint methodID;
+		VALUE val;
 	}
 	// IS_EMPTY method params
 	struct IS_EMPTY_PARAMS
 	{
-		UINT methodID;
-		UINT is_empty; // !0 - is empty
+		uint methodID;
+		uint is_empty; // !0 - is empty
 	}
 
 	struct DATA_ARRIVED_PARAMS
 	{
 		HELEMENT  initiator;
 		LPCBYTE   data;
-		UINT      dataSize;
-		UINT      dataType;
-		UINT      status;
+		uint      dataSize;
+		uint      dataType;
+		uint      status;
 		LPCWSTR   uri;
 	}
 }

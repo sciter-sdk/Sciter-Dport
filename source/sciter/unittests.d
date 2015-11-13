@@ -21,10 +21,10 @@
 /+
 Module exclusive for complex unitesting Sciter features
 +/
-module sciter.definitions.unittests;
+module sciter.unittests;
 
-import sciter.sciter_x_types;
-import sciter.definitions.api;
+import sciter.interop.sciter_x_types;
+import sciter.api;
 
 
 version(Windows)

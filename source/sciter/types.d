@@ -18,7 +18,16 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.sciter_x;
+module sciter.types;
 
-public import sciter.sciter_x_def;
-public import sciter.sciter_x_api;
+import std.typecons;
+version(Linux)
+{
+	public import sciter.sciter_x_types;
+}
+
+
+alias HELEMENT = Typedef!(size_t, 0, "helement");
+alias HNODE = Typedef!(size_t, 0, "hnode");
+alias HRANGE = Typedef!(size_t, 0, "hrange");
+alias HSARCHIVE = Typedef!(size_t, 0, "hsarchive");

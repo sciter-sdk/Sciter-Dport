@@ -18,13 +18,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.definitions.behavior;
+module sciter.behavior;
 
-import sciter.tiscript;
-import sciter.sciter_x;
-import sciter.sciter_x_types;
-public import sciter.definitions.types;
-public import sciter.sciter_x_behaviors;
+import sciter.interop.sciter_x;
+import sciter.interop.sciter_x_types;
+import sciter.interop.tiscript;
+public import sciter.interop.sciter_x_behaviors;
+public import sciter.types;
 
 
 abstract class EventHandler
@@ -46,7 +46,7 @@ abstract class EventHandler
 		void detached(HELEMENT) { }
 	}
 	
-	bool subscription(HELEMENT he, ref UINT event_groups)
+	bool subscription(HELEMENT he, ref uint event_groups)
 	{
 		event_groups = EVENT_GROUPS.HANDLE_ALL;
 		return true;
@@ -61,7 +61,7 @@ abstract class EventHandler
 	bool on_timer  (HELEMENT he, UINT_PTR extTimerId ) { return false; /*stop this timer*/ }
 	void on_size   (HELEMENT he ) { }
 	
-	bool on_method_call (HELEMENT he, UINT methodID) { return false; /*not handled*/ }
+	bool on_method_call (HELEMENT he, uint methodID) { return false; /*not handled*/ }
 	
 	// calls from CSSS! script and TIScript (if it was not handled by method below). Override this if you want your own methods to the CSSS! namespace.
 	// Follwing declaration:
@@ -87,7 +87,7 @@ abstract class EventHandler
 	
 	bool on_gesture(HELEMENT he, GESTURE_PARAMS* prms ) { return false; }
 	
-	extern(Windows) static BOOL element_proc(LPVOID tag, HELEMENT he, UINT evtg, LPVOID prms)
+	extern(Windows) static BOOL element_proc(void* tag, HELEMENT he, uint evtg, void* prms)
 	{
 		EventHandler evh = cast(EventHandler)tag;
 		
@@ -102,7 +102,7 @@ abstract class EventHandler
 		{
 			case EVENT_GROUPS.SUBSCRIPTIONS_REQUEST:
 				{
-					UINT* p = cast(UINT*) prms;
+					uint* p = cast(uint*) prms;
 					return evh.subscription( he, *p );
 				}
 

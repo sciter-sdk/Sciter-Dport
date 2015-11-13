@@ -18,25 +18,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.tiscript;
-import sciter.sciter_x_types;
+// port of 'sciter-x-debug.h'
+module sciter.dbg;
+
+public import sciter.interop.sciter_x;
+import sciter.interop.sciter_x_types;
+import sciter.api;
 
 
-struct tiscript_VM;
-alias tiscript_value = UINT64;
-alias HVM = tiscript_VM*;
-//alias value = tiscript_value;// do not use these, instead use the original names
-//alias VM = tiscript_VM;
+void SciterSetupDebugOutput ( HWINDOW hwndOrNull, void* param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput (hwndOrNull,param,pfOutput); }
 
 
-struct tiscript_pvalue
+abstract class debug_output
 {
-	tiscript_value	val;
-	tiscript_VM*	vm;
-	void*			d1;
-	void*			d2;
+	public this()
+	{
+	}
+
+	public this(HWINDOW hwnd)
+	{
+		SciterSetupDebugOutput(hwnd, cast(void*) this, &_output_debug);
+	}
+
+	public void setup(HWINDOW hwnd)
+	{
+		SciterSetupDebugOutput(hwnd, cast(void*) this, &_output_debug);
+	}
+
+	abstract void output(OUTPUT_SUBSYTEM subsystem, OUTPUT_SEVERITY severity, wstring text);
+
+	extern(Windows) static void _output_debug(void* param, uint subsystem, uint severity, LPCWSTR text, uint text_length)
+	{
+		debug_output _this = cast(debug_output) param;
+		_this.output(cast(OUTPUT_SUBSYTEM) subsystem, cast(OUTPUT_SEVERITY) severity, text[0..text_length].idup);
+	}
 }
-
-
-// to be completed ..
-struct tiscript_native_interface;

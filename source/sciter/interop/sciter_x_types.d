@@ -18,51 +18,34 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.sciter_x_types;
+module sciter.interop.sciter_x_types;
 
-public import sciter.definitions.types;
+public import sciter.types;
 
 
 version(all)
 {
 	alias ubyte BYTE;
-	alias char BOOL;
-	alias int INT;
-	alias uint UINT;
-	alias UINT* LPUINT;
+	alias int BOOL;
 	alias const(BYTE)* LPCBYTE;
-
-	alias ulong UINT64;
-	alias long INT64;
 	alias size_t UINT_PTR;
-
+	
 	alias wchar WCHAR;
 	alias wchar* LPWSTR;
 	alias const(wchar*) LPCWSTR;
 	alias const(char*) LPCSTR;
-	alias void VOID;
-	alias void* LPVOID;
-
-	enum : int
-	{
-		FALSE = 0,
-		TRUE = 1,
-	}
-
 
 	struct POINT
 	{
 		int x;
 		int y;
 	}
-	alias POINT* LPPOINT;
 
 	struct SIZE
 	{
 		int cx;
 		int cy;
 	}
-	alias SIZE* LPSIZE;
 
 	struct RECT
 	{
@@ -71,38 +54,37 @@ version(all)
 		int right;
 		int bottom;
 	}
-	alias RECT* LPRECT;
-
-	alias void* ID2D1RenderTarget;
-	alias void* ID2D1Factory;
-	alias void* IDWriteFactory;
 }
 
 
 version(Windows)
 {
-	import core.sys.windows.windows;
-
-	alias UINT_PTR WPARAM;
-    alias LONG_PTR LPARAM;
-    alias LONG_PTR LRESULT;
-
-	struct MSG {
+	alias void* HWND;
+	alias HWND HWINDOW;
+	
+	alias size_t WPARAM;
+    alias size_t LPARAM;
+    alias size_t LRESULT;
+	
+	alias void* ID2D1RenderTarget;
+	alias void* ID2D1Factory;
+	alias void* IDWriteFactory;
+	
+	struct MSG
+	{
 		HWND        hwnd;
-		UINT        message;
+		uint        message;
 		WPARAM      wParam;
 		LPARAM      lParam;
-		DWORD       time;
+		uint        time;
 		POINT       pt;
 	}
 
-	struct FILETIME {
-		DWORD dwLowDateTime;
-		DWORD dwHighDateTime;
+	struct FILETIME
+	{
+		uint dwLowDateTime;
+		uint dwHighDateTime;
 	}
-
-    alias void* HWND;
-	alias HWND HWINDOW;
 }
 version(OSX)
 {

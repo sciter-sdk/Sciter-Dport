@@ -30,7 +30,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 
 	<tr>
 	    <td>
-            <i>module sciter.definitions.sciter_dom;</i><br>
+            <i>module sciter.sciter_dom;</i><br>
             <b>struct node</b><br>
             <b>struct element</b>
 	    </td>
@@ -44,7 +44,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 
     <tr>
 	    <td>
-            <i>module sciter.definitions.sciter_value;</i><br>
+            <i>module sciter.sciter_value;</i><br>
             <b>struct json_value</b>
 	    </td>
 
@@ -56,7 +56,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 
     <tr>
 	    <td>
-            <i>module sciter.definitions.dbg;</i><br>
+            <i>module sciter.dbg;</i><br>
             <b>abstract class debug_output</b><br>
 	    </td>
 
@@ -68,7 +68,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 
     <tr>
 	    <td>
-            <i>module sciter.definitions.host;</i><br>
+            <i>module sciter.host;</i><br>
             <b>class SciterArchive</b><br>
             <b>abstract class SciterWindowHost</b>
 	    </td>
@@ -82,7 +82,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 
     <tr>
 	    <td>
-            <i>module sciter.definitions.behavior;</i><br>
+            <i>module sciter.behavior;</i><br>
             <b>abstract class EventHandler</b>
 	    </td>
 
@@ -100,8 +100,8 @@ dub.json					-> DUB package manifest
 sciter32-import-lib.lib		-> **win32** only: DLL import lib
 /samples					-> contains sample of complete GUI aplications making use of this library; samples starting with 'u' are universal ones and the same source code should compile in all supported platforms
 /source						-> source code of this library, you should add this path to the compiler 'include path'
-/source/sciter				-> .d files directly in this folder are basically header files with only declarations, not definitions, that is, the .h files ported to D
-/source/sciter/definitions	-> .d files here are the actual definitions of everything, from support classes, to the actual API functions
+/source/sciter				-> D definitions of classes wraping the Sciter API
+/source/sciter/interop		-> D types for Sciter ABI
 /source/winkit				-> **win32** only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on..
 ```
 

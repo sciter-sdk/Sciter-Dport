@@ -18,14 +18,14 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-module sciter.definitions.sciter_value;
+module sciter.sciter_value;
 
 import std.conv;
 
-import sciter.sciter_x;
-import sciter.sciter_x_types;
-import sciter.definitions.api;
-public import sciter.sciter_x_value;
+import sciter.interop.sciter_x;
+import sciter.interop.sciter_x_types;
+import sciter.api;
+public import sciter.interop.sciter_x_value;
 
 
 unittest
@@ -51,7 +51,7 @@ unittest
 
 /*
 Obs:
-.ValueXXX() functions return UINT type, result code is VALUE_RESULT enumeration
+.ValueXXX() functions return uint type, result code is VALUE_RESULT enumeration
 */
 
 struct json_value
@@ -96,9 +96,9 @@ public:
 	this(int v)			{ .ValueInit(&data); .ValueIntDataSet(&data, v, VALUE_TYPE.T_INT, 0); }
 	this(double v)		{ .ValueInit(&data); .ValueFloatDataSet(&data, v, VALUE_TYPE.T_FLOAT, 0); }
 
-	this(wstring str)	{ .ValueInit(&data); .ValueStringDataSet(&data, str.ptr, str.length, VALUE_UNIT_TYPE_STRING.UT_STRING_STRING); }
-	this(string symbol)	{ wstring sw = to!wstring(symbol); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, sw.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL); }
-	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, bs.length, VALUE_TYPE.T_BYTES, 0); }
+	this(wstring str)	{ .ValueInit(&data); .ValueStringDataSet(&data, str.ptr, cast(uint) str.length, VALUE_UNIT_TYPE_STRING.UT_STRING_STRING); }
+	this(string symbol)	{ wstring sw = to!wstring(symbol); .ValueInit(&data); .ValueStringDataSet(&data, sw.ptr, cast(uint) sw.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SYMBOL); }
+	this(in BYTE[] bs)	{ .ValueInit(&data); .ValueBinaryDataSet(&data, bs.ptr, cast(uint) bs.length, VALUE_TYPE.T_BYTES, 0); }
 	
 	this(in json_value[] arr)	{ .ValueInit(&data); foreach(i, ref a; arr) set_item(cast(uint)i, a); }
 	this(T)(in T[string] assocarr)
@@ -159,7 +159,7 @@ public:
 	static json_value secure_string(wstring s)// what is a secure string? - midi
 	{
 		json_value jv;
-		.ValueStringDataSet(&jv.data, s.ptr, s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SECURE);
+		.ValueStringDataSet(&jv.data, s.ptr, cast(uint) s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_SECURE);
 		return jv;
 	}
 
@@ -170,7 +170,7 @@ public:
         json_value jv;
         if(!s)
 			return jv;
-		.ValueStringDataSet(&jv.data, s.ptr, s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_ERROR);
+		.ValueStringDataSet(&jv.data, s.ptr, cast(uint) s.length, VALUE_UNIT_TYPE_STRING.UT_STRING_ERROR);
         return jv;
 	}
 	
@@ -216,7 +216,7 @@ public:
 	wstring get(wstring defv)
 	{
 		LPCWSTR ret_pstr;
-		UINT ret_length;
+		uint ret_length;
 		if(.ValueStringData(&data, &ret_pstr, &ret_length) == VALUE_RESULT.HV_OK)
 			return ret_pstr[0..ret_length].idup;
 		return defv;
@@ -224,14 +224,14 @@ public:
 	wchar[] get_chars()// tested and you do can use this to modify the internal buffer of the string maintained by Sciter
 	{
 		LPCWSTR ret_pstr;
-		UINT ret_length;
+		uint ret_length;
 		.ValueStringData(&data, &ret_pstr, &ret_length) == VALUE_RESULT.HV_OK || assert(false);
 		return (cast(LPWSTR)ret_pstr) [0..ret_length];
 	}
 	const(BYTE[]) get_bytes()// same as get_chars()
 	{
 		LPCBYTE ret_ptr;
-		UINT ret_length;
+		uint ret_length;
 		.ValueBinaryData(&data, &ret_ptr, &ret_length);
 		return (ret_ptr)[0..ret_length];
 	}
@@ -241,7 +241,7 @@ public:
 		FILETIME get_date()
 		{ 
 			FILETIME v;
-			.ValueInt64Data(&data,cast(INT64*)&v);
+			.ValueInt64Data(&data,cast(long*) &v);
 			return v;
 		}
 	}
@@ -296,7 +296,7 @@ public:
 	{
 		// return true to continue enumeration
 		virtual bool on(const value& key, const value& val) = 0;
-		static BOOL CALLBACK _callback( LPVOID param, const VALUE* pkey, const VALUE* pval )
+		static BOOL CALLBACK _callback( void* param, const VALUE* pkey, const VALUE* pval )
 		{
 			enum_cb* cb = (enum_cb*)param;
 			return cb->on( *(value*)pkey, *(value*)pval );
@@ -345,7 +345,7 @@ public:
 	}
 	void* get_object_data()
 	{
-		LPCBYTES pv; UINT dummy;
+		LPCBYTES pv; uint dummy;
 		.ValueBinaryData(&data,&pv,&dummy) == VALUE_RESULT.HV_OK || assert(false);
 		return cast(void*)pv;
 	}
