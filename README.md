@@ -15,7 +15,7 @@ For more Sciter related content visit my site at: http://misoftware.rs/
 Platforms supported until now: **Windows 32bits only**
 *(Linux GTX support is on the way)*
 
-License: GNU GENERAL PUBLIC LICENSE Version 2
+License: MIT License
 
 
 ##Structs and classes
