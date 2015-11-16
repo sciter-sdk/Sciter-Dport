@@ -20,7 +20,7 @@ License: MIT License
 
 ##Structs and classes
 
-This is a table of the available D classes/structs and their mapping over the types of the oficial SDK C++ headers:
+This is a table of the available D classes/structs and their mapping over the types of the official SDK C++ headers:
 
 <table>
 	<tr>

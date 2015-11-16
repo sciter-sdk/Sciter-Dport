@@ -36,11 +36,11 @@ import sciter.interop.tiscript;
 
 unittest
 {
-	// you need this port version to be the same version of Sciter SDK (else for sure it will crash)
+	// from time to time, Sciter changes its ABI; here we test the minimum Sciter version this library is compatible with
 	uint major = SciterVersion(true);
 	uint minor = SciterVersion(false);
 	assert(major==0x00030003);
-	assert(minor==0x00000006);
+	assert(minor>=0x00000006);
 	assert(SAPI()._version==0);
 }
 
@@ -128,7 +128,7 @@ version(OSX)
 {
 	HWINDOW	SciterCreateNSView ( LPRECT frame ) { return SAPI().SciterCreateNSView ( frame ); }
 }
-HWINDOW SciterCreateWindow( uint creationFlags /*SCITER_CREATE_WINDOW_FLAGS*/, RECT* frame, SciterWindowDelegate delegate_ = null, void* delegateParam = null, HWINDOW parent = null) { return SAPI().SciterCreateWindow (creationFlags, frame, delegate_, delegateParam, parent); }
+HWINDOW SciterCreateWindow( uint creationFlags /*SCITER_CREATE_WINDOW_FLAGS*/, RECT* frame = null, SciterWindowDelegate delegate_ = null, void* delegateParam = null, HWINDOW parent = null) { return SAPI().SciterCreateWindow (creationFlags, frame, delegate_, delegateParam, parent); }
 
 SCDOM_RESULT Sciter_UseElement(HELEMENT he) { return SAPI().Sciter_UseElement(he); }
 SCDOM_RESULT Sciter_UnuseElement(HELEMENT he) { return SAPI().Sciter_UnuseElement(he); }
@@ -263,5 +263,4 @@ BOOL ValueIsNativeFunctor ( const VALUE* pval) { return SAPI().ValueIsNativeFunc
 BOOL Sciter_v2V(HVM vm, const tiscript_value script_value, VALUE* out_value, BOOL isolate) { return SAPI().Sciter_v2V(vm,script_value,out_value, isolate); }
 BOOL Sciter_V2v(HVM vm, const VALUE* value, tiscript_value* out_script_value) { return SAPI().Sciter_V2v(vm,value,out_script_value); }
 
-// added by midi, not present in official SDK
 UINT_PTR SciterPostCallback(HWINDOW hwnd, UINT_PTR wparam, UINT_PTR lparam, uint timeoutms) { return SAPI().SciterPostCallback(hwnd, wparam, lparam, timeoutms); }

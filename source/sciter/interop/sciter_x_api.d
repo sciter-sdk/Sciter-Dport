@@ -57,7 +57,7 @@ extern(Windows)
 		void    function(HWINDOW hwnd) SciterUpdateWindow;
 	version(Windows)
 		BOOL	function(MSG* lpMsg) SciterTranslateMessage;
-		BOOL    function(HWINDOW hWnd, uint option, uint value ) SciterSetOption;
+		BOOL    function(HWINDOW hWnd, uint option, UINT_PTR value ) SciterSetOption;
 		void    function(HWINDOW hWndSciter, uint* px, uint* py) SciterGetPPI;
 		BOOL    function(HWINDOW hwnd, VALUE* pval ) SciterGetViewExpando;
 	version(Windows)
