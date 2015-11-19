@@ -20,14 +20,13 @@
 
 module winkit.WindowImplMixin;
 
-//import sciter.api;
 
 mixin template WindowImplMixin(bool isSciter = false)
 {
 public:
 	import std.conv;
 	import std.traits;
-	import core.sys.windows.core;
+	import winkit.WinAPI;
 	import winkit.Window;
 
 	Window wnd;
@@ -37,7 +36,7 @@ public:
 		if(!s_cls)
 			s_cls = RegisterClass();
 
-		HWND hWnd = CreateWindowEx(
+		HWND hWnd = CreateWindowExW(
 			dwExStyle,			// extended style
 			cast(LPCWSTR) s_cls,// class
 			title.ptr,			// window title
@@ -46,7 +45,7 @@ public:
 			sz.cx, sz.cy,		// size
 			parent,
 			null,
-			.GetModuleHandle(null),
+			.GetModuleHandleW(null),
 			null
 		);
 
@@ -58,7 +57,7 @@ public:
 		if(!s_cls)
 			s_cls = RegisterClass();
 
-		HWND hWnd = CreateWindowEx(
+		HWND hWnd = CreateWindowExW(
 			dwExStyle,			// extended style
 			cast(LPCWSTR) s_cls,// class
 			null,				// window title
@@ -67,7 +66,7 @@ public:
 			sz.cx, sz.cy,		// size
 			parent,
 			null,
-			.GetModuleHandle(null),
+			.GetModuleHandleW(null),
 			null
 		);
 
@@ -82,7 +81,7 @@ public:
 			import sciter.api;
 			return SciterProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
 		} else {
-			return DefWindowProc(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
+			return DefWindowProcW(m_CurrentMsg.hwnd, m_CurrentMsg.message, m_CurrentMsg.wParam, m_CurrentMsg.lParam);
 		}
 	}
 
@@ -100,20 +99,20 @@ private:
 	{
 		enum FRAME_WNDCLS	= "WinkitWindowClass-" ~ fullyQualifiedName!ProcessWindowMessage;
 
-		auto hInstance = .GetModuleHandle(null);
-		WNDCLASSEX wcex;
+		auto hInstance = .GetModuleHandleW(null);
+		WNDCLASSEXW wcex;
 		wcex.style			= CS_HREDRAW | CS_VREDRAW;
 		wcex.lpfnWndProc	= &StartWndProc;
 		wcex.cbClsExtra		= 0;
 		wcex.cbWndExtra		= 0;
 		wcex.hInstance		= hInstance;
-		wcex.hIcon			= LoadIcon(hInstance, MAKEINTRESOURCE(100));
+		wcex.hIcon			= LoadIconW(hInstance, MAKEINTRESOURCEW(100));
 		//wcex.hCursor		= .LoadCursor(null, IDC_ARROW);
 		wcex.hbrBackground	= cast(HBRUSH)(COLOR_WINDOW+1);
 		wcex.lpszMenuName	= null;
 		wcex.lpszClassName	= to!wstring(FRAME_WNDCLS).ptr;
 		wcex.hIconSm		= null;
-		return .RegisterClassEx(&wcex);
+		return .RegisterClassExW(&wcex);
 	}
 	
 // messaging

@@ -20,7 +20,7 @@
 
 module winkit.Window;
 
-import core.sys.windows.core;
+import winkit.WinAPI;
 
 
 struct Window
@@ -33,10 +33,10 @@ public:
 
 public:
 	LRESULT SendMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0)
-		{ return .SendMessage(m_hWnd, Msg, wParam, lParam); }
+		{ return .SendMessageW(m_hWnd, Msg, wParam, lParam); }
 
 	LRESULT PostMessage(UINT Msg, WPARAM wParam = 0, LPARAM lParam = 0)
-		{ return .PostMessage(m_hWnd, Msg, wParam, lParam); }
+		{ return .PostMessageW(m_hWnd, Msg, wParam, lParam); }
 
 	BOOL ShowWindow(in int nCmdShow = SW_SHOW)
 		{ return .ShowWindow(m_hWnd, nCmdShow); }
@@ -48,39 +48,39 @@ public:
 		{ return .InvalidateRect(m_hWnd, null, TRUE); }
 
 	LONG_PTR GetWindowLongPtr(in int nIndex)
-		{ return .GetWindowLongPtr(m_hWnd, nIndex); }
+		{ return GetWindowLongPtrW(m_hWnd, nIndex); }
 
-	LONG_PTR SetWindowLongPtr(in int nIndex, in LONG_PTR dwNewLong)
-		{ return .SetWindowLongPtr(m_hWnd, nIndex, dwNewLong); }
+	LONG_PTR SetWindowLongPtr(in int nIndex, in int dwNewLong)
+		{ return SetWindowLongPtrW(m_hWnd, nIndex, dwNewLong); }
 
 	size_t GetStyle()
-		{ return .GetWindowLongPtr(m_hWnd, GWL_STYLE); }
+		{ return GetWindowLongPtrW(m_hWnd, GWL_STYLE); }
 
 	size_t GetStyleEx()
-		{ return .GetWindowLongPtr(m_hWnd, GWL_EXSTYLE); }
+		{ return GetWindowLongPtrW(m_hWnd, GWL_EXSTYLE); }
 
 	BOOL ModifyStyle(DWORD dwRemove, DWORD dwAdd)
 	{
-		DWORD dwStyle = .GetWindowLong(m_hWnd, GWL_STYLE);
+		DWORD dwStyle = .GetWindowLongPtrW(m_hWnd, GWL_STYLE);
 		DWORD dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
 		if(dwStyle == dwNewStyle)
 			return FALSE;
 
-		.SetWindowLong(m_hWnd, GWL_STYLE, dwNewStyle);
+		.SetWindowLongPtrW(m_hWnd, GWL_STYLE, dwNewStyle);
 		return TRUE;
 	}
 
 	BOOL ModifyStyleEx(DWORD dwRemove, DWORD dwAdd)
 	{
-		DWORD dwStyle = .GetWindowLong(m_hWnd, GWL_EXSTYLE);
+		DWORD dwStyle = .GetWindowLongPtrW(m_hWnd, GWL_EXSTYLE);
 		DWORD dwNewStyle = (dwStyle & ~dwRemove) | dwAdd;
 		if(dwStyle == dwNewStyle)
 			return FALSE;
 
-		.SetWindowLong(m_hWnd, GWL_EXSTYLE, dwNewStyle);
+		.SetWindowLongPtrW(m_hWnd, GWL_EXSTYLE, dwNewStyle);
 		return TRUE;
 	}
-
+	
 	HWND GetParent()
 		{ return .GetParent(m_hWnd); }
 

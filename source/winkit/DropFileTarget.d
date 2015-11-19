@@ -24,7 +24,7 @@ module winkit.DropFileTarget;
 mixin template DropFileTarget()
 {
 public:
-	import core.sys.windows.shellapi;
+	import winkit.WinAPI;
 
 	//-----------------------------------------------------------------------------
 	// Function name	: RegisterDropTarget
@@ -62,14 +62,14 @@ private:
 	void OnDropFiles(HDROP hDropInfo)
 	{
 		// Get the count of the files dropped
-		int nNumFiles = DragQueryFile(hDropInfo, 0xFFFFFFFF, null, 0);
+		int nNumFiles = DragQueryFileW(hDropInfo, 0xFFFFFFFF, null, 0);
 
 		// Get the path size
-		UINT sz = DragQueryFile(hDropInfo, 0, null, 0)+1;
+		UINT sz = DragQueryFileW(hDropInfo, 0, null, 0)+1;
 
 		// Get the path of a single file that has been dropped
-		TCHAR[] buffFilename = new TCHAR[sz];
-		DragQueryFile(hDropInfo, 0, buffFilename.ptr, sz);
+		wchar[] buffFilename = new wchar[sz];
+		DragQueryFileW(hDropInfo, 0, buffFilename.ptr, sz);
 		buffFilename.length = sz-1;// removes the \0
 
 		// Release the memory that the system allocated for use in transferring file 

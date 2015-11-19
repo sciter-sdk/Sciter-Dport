@@ -21,10 +21,10 @@
 module winkit.MessageBox;
 
 import winkit.Window;
-import core.sys.windows.core;
+import winkit.WinAPI;
 
 
 public void Show(wstring msg, Window wnd_owner)
 {
-	MessageBox(wnd_owner, (msg ~ '\0').ptr, null, MB_OK | MB_ICONEXCLAMATION);
+	MessageBoxW(wnd_owner, (msg ~ '\0').ptr, null, MB_OK | MB_ICONEXCLAMATION);
 }

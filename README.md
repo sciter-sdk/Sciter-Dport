@@ -226,7 +226,7 @@ void Foo()
 ```
 
 
-#Library usage (win32)
+#Library usage - Win32
 
 ## 1. Configuring linker: sciter32-import-lib.lib import lib
 
@@ -279,4 +279,14 @@ void main()
 		}
 	}
 }
+```
+
+#Library usage - Linux
+
+Requirements:
+
+Sciter for Linux requires GTK3, so make sure to install GTK3 developer package:
+
+```bash
+sudo apt-get install libgtk-3-dev
 ```
