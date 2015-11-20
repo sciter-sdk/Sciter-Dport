@@ -1,8 +1,11 @@
 import sciter.interop.sciter_x_types;
 import sciter.api;
+import gtkc.gtk;
 
 void main()
 {
+	gtk_init(null, null);
+	
 	RECT frame;
 	frame.right = 800;
 	frame.bottom = 600;
@@ -16,18 +19,5 @@ void main()
 		
 	SciterLoadFile(wnd, "minimal.html");
 	
-	
-	version(Windows)
-	{
-		import winkit.WinAPI;
-		
-		ShowWindow(wnd, 1);
-		
-		MSG msg;
-		while( GetMessageW(&msg, null, 0, 0) )
-		{
-			TranslateMessage(&msg);
-			DispatchMessageW(&msg);
-		}
-	}
+	gtk_main();
 }

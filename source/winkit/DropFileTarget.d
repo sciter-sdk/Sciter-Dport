@@ -24,8 +24,6 @@ module winkit.DropFileTarget;
 mixin template DropFileTarget()
 {
 public:
-	import winkit.WinAPI;
-
 	//-----------------------------------------------------------------------------
 	// Function name	: RegisterDropTarget
 	// Description	    : Registers whether a window accepts dropped files
@@ -36,6 +34,8 @@ public:
 	//-----------------------------------------------------------------------------
 	void RegisterDropTarget(BOOL bAccept = TRUE)
 	{
+		import winkit.WinAPI;
+
 		assert(.IsWindow(wnd));
 
 		// Turn the WS_EX_ACCEPTFILES style on or off based on the value of the
@@ -61,6 +61,8 @@ private:
 	//-----------------------------------------------------------------------------
 	void OnDropFiles(HDROP hDropInfo)
 	{
+		import winkit.WinAPI;
+
 		// Get the count of the files dropped
 		int nNumFiles = DragQueryFileW(hDropInfo, 0xFFFFFFFF, null, 0);
 

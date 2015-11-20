@@ -6,15 +6,13 @@
 	"authors": ["midi"],
 	
 	"excludedSourceFiles": ["source/winkit/*"],
+	"importPaths": ["source", "source/gtkkit"],
 	
 	"configurations": [
 		{
 			"name": "linux-library",
 			"platforms": ["linux"],
-			"libs": ["dl"],
-			"dependencies": {
-				"gtk-d:gtkd": "~>3.2.0"
-			}
+			"libs": ["dl"]
 		},
 		
 		{
