@@ -36,7 +36,7 @@ public:
 	{
 		import winkit.WinAPI;
 
-		assert(.IsWindow(wnd));
+		assert(IsWindow(wnd));
 
 		// Turn the WS_EX_ACCEPTFILES style on or off based on the value of the
 		// bAccept parameter

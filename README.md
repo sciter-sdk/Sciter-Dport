@@ -1,8 +1,10 @@
-ACTUAL SCITER VERSION: 3.3.0.6
+ACTUAL SCITER VERSION: 3.3.0.7
 
 OctodeskDesk app made with this lib: https://github.com/midiway/OctoDeskdex
 
 For quick starting, download a [Sciter Bootstrap](http://misoftware.rs/Bootstrap/Download) package for the D language, which comes with this library already configured.
+
+**Status**: after I started writing the [C# bindings](https://github.com/midiway/SciterSharp) for Sciter, I realized how a 100% object-orient wrapper around Sciter API is the best way to go for creating a user friendly abstraction. When I started this D-port, in my mind I would be making the equivalent of the C++ classes found in Sciter SDK which is OO btw but the naming of things is very confusing. So the next step for this D-port is to convert it to equivalent classes and names found in the C# port, however I am prioritizing the C# version which is getting Mono cross-platform support. This port will eventually get more attention for improvements and for having GTK support, but right now I am focusing the C# version.
 
 ##About
 

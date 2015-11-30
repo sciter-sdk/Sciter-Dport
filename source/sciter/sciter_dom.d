@@ -693,7 +693,7 @@ public:
 
 
 
-	// State funcs flags are all the ones from eElemetStateBits enum - midi
+	// State funcs flags are all the ones from ELEMENT_STATE_BITS enum (see sciter_x_dom.d)
 	uint get_state()
 	{
 		uint state;
