@@ -18,34 +18,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-// port of 'sciter-x-debug.h'
-module sciter.dbg;
+module sciter.interop.sciter_x_graphics;
 
-public import sciter.interop.sciter_x;
-import sciter.interop.sciter_x_types;
-import sciter.api;
+public import sciter.types;
 
-
-void SciterSetupDebugOutput ( HWINDOW hwndOrNull, void* param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput (hwndOrNull,param,pfOutput); }
-
-
-abstract class debug_output
-{
-	public this(HWINDOW hwnd = HWINDOW.init)
-	{
-		SciterSetupDebugOutput(hwnd, cast(void*) this, &_output_debug);
-	}
-
-	public void setup(HWINDOW hwnd = HWINDOW.init)
-	{
-		SciterSetupDebugOutput(hwnd, cast(void*) this, &_output_debug);
-	}
-
-	abstract void output(OUTPUT_SUBSYTEM subsystem, OUTPUT_SEVERITY severity, wstring text);
-
-	extern(Windows) static void _output_debug(void* param, uint subsystem, uint severity, LPCWSTR text, uint text_length)
-	{
-		debug_output _this = cast(debug_output) param;
-		_this.output(cast(OUTPUT_SUBSYTEM) subsystem, cast(OUTPUT_SEVERITY) severity, text[0..text_length].idup);
-	}
-}

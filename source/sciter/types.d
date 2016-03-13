@@ -27,7 +27,12 @@ version(Linux)
 }
 
 
-alias HELEMENT = Typedef!(size_t, 0, "helement");
-alias HNODE = Typedef!(size_t, 0, "hnode");
-alias HRANGE = Typedef!(size_t, 0, "hrange");
-alias HSARCHIVE = Typedef!(size_t, 0, "hsarchive");
+alias HELEMENT = Typedef!(size_t, 0, "HELEMENT");
+alias HNODE = Typedef!(size_t, 0, "HNODE");
+alias HRANGE = Typedef!(size_t, 0, "HRANGE");
+alias HSARCHIVE = Typedef!(size_t, 0, "HSARCHIVE");
+
+alias HGFX = Typedef!(size_t, 0, "HGFX");
+alias HIMG = Typedef!(size_t, 0, "HIMG");
+alias HPATH = Typedef!(size_t, 0, "HPATH");
+alias HTEXT = Typedef!(size_t, 0, "HTEXT");

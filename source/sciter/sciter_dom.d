@@ -73,7 +73,7 @@ public:
 	}
 	this(this) { use(hn); }
 	~this() { unuse(); }
-    bool is_valid() const { return hn != 0; }
+	bool is_valid() const { return hn != 0; }
 
 	// Note: Although convenient, assigning different types to each other may cause confusions and errors.
 	void opAssign(HNODE h)
@@ -264,9 +264,9 @@ public:
 
 public:
 	void destroy()
-    {
+	{
 		.SciterDeleteElement(he) == SCDOM_OK || assert(false);
-    }
+	}
 	void detach()
 	{
 		.SciterDetachElement(he) == SCDOM_OK || assert(false);
@@ -326,7 +326,7 @@ public:
 		.SciterGetAttributeCount(he, &n) == SCDOM_OK || assert(false);
 		return n;
 	}
-
+	
 	wstring get_attribute(uint n) const
 	{
 		static wstring str_rcv;
@@ -338,19 +338,7 @@ public:
 		.SciterGetNthAttributeValueCB(he, n, frcv, null) == SCDOM_OK || assert(false);
 		return str_rcv;
 	}
-
-	string get_attribute_name(uint n) const
-	{
-		static string str_rcv;
-		LPCSTR_RECEIVER frcv = function(LPCSTR str, uint str_length, void* param)
-		{
-			str_rcv = str[0..str_length].idup;
-		};
-
-		.SciterGetNthAttributeNameCB(he, n, frcv, null) == SCDOM_OK || assert(false);
-		return str_rcv;
-	}
-
+	
 	wstring get_attribute(string name, wstring def_value = null) const
 	{
 		static wstring str_rcv;
@@ -362,6 +350,18 @@ public:
 		SCDOM_RESULT r = .SciterGetAttributeByNameCB(he, (name ~ '\0').ptr, frcv, null);
 		if(r == SCDOM_OK_NOT_HANDLED)
 			return def_value;
+		return str_rcv;
+	}
+	
+	string get_attribute_name(uint n) const
+	{
+		static string str_rcv;
+		LPCSTR_RECEIVER frcv = function(LPCSTR str, uint str_length, void* param)
+		{
+			str_rcv = str[0..str_length].idup;
+		};
+
+		.SciterGetNthAttributeNameCB(he, n, frcv, null) == SCDOM_OK || assert(false);
 		return str_rcv;
 	}
 
@@ -660,21 +660,6 @@ public:
 		return str_rcv;
 	}
 
-	/*json::astring get_html(bool outer = true) 
-	{ 
-		json::astring s;
-		.SciterGetElementHtmlCB(he, outer? TRUE:FALSE, &_LPCBYTE2ASTRING,&s) == SCDOM_OK || assert(false);
-		return s;
-	}
-
-	json::string text()
-	{
-		json::string s;
-		.SciterGetElementTextCB(he, &_LPCWSTR2STRING, &s) == SCDOM_OK || assert(false);
-		return s;
-	}*/
-
-
 	wstring get_text()
 	{
 		static wstring str_rcv;
@@ -771,11 +756,11 @@ public:
 		.SciterPostEvent(he, event_code, heSource? heSource: he, reason) == SCDOM_OK || assert(false);
 	}
 	bool fire_event(ref const BEHAVIOR_EVENT_PARAMS evt, bool post = true)
-    {
+	{
 		BOOL handled = false;
 		.SciterFireEvent(&evt, post, &handled) == SCDOM_OK || assert(false);
 		return handled != 0;
-    }
+	}
 
 	bool call_behavior_method(METHOD_PARAMS* mp)// this call need a pointer that is actually of a struct that inherits METHOD_PARAMS
 	{
@@ -917,10 +902,7 @@ public:
 			HELEMENT hp = el_it.parent();
 			if(hp==0)
 				break;
-
 			el_it = hp;
-			if(!el_it.is_valid())
-				break;
 		}
 		return false;
 	}

@@ -232,6 +232,8 @@ extern(Windows)
 
 		void* function(HWINDOW hwnd) SciterGetCallbackParam;
 		UINT_PTR function(HWINDOW hwnd, UINT_PTR wparam, UINT_PTR lparam, uint timeoutms) SciterPostCallback;// if timeoutms>0 then it is a send, not a post
+
+		void* function() GetSciterGraphicsAPI;
 	}
 }
 

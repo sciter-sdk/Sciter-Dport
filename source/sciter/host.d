@@ -62,7 +62,7 @@ public:
 		har = 0;
 	}
 	
-    // get archive item:
+	// get archive item:
 	const(ubyte)[] get(wstring path)
 	{
 		assert(har);
@@ -134,14 +134,14 @@ protected:
 	uint handle_notification(LPSCITER_CALLBACK_NOTIFICATION pnm)
 	{
 		switch(pnm.code)
-        {
+		{
 			case SC_LOAD_DATA:				return this.on_load_data(cast(LPSCN_LOAD_DATA) pnm);
 			case SC_DATA_LOADED:			return this.on_data_loaded(cast(LPSCN_DATA_LOADED)pnm);
 			case SC_ATTACH_BEHAVIOR:		return this.on_attach_behavior(cast(LPSCN_ATTACH_BEHAVIOR)pnm);
 			case SC_ENGINE_DESTROYED:		return this.on_engine_destroyed();
 			case SC_POSTED_NOTIFICATION:	return this.on_posted_notification(cast(LPSCN_POSTED_NOTIFICATION)pnm);
 			default:
-        }
-        return 0;
+		}
+		return 0;
 	}
 }

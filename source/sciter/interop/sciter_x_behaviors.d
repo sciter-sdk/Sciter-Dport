@@ -42,7 +42,7 @@ extern(Windows)
 		HANDLE_SCROLL = 0x0008,         /** scroll events */
 		HANDLE_TIMER = 0x0010,          /** timer event */
 		HANDLE_SIZE = 0x0020,           /** size changed event */
-		//HANDLE_DRAW = 0x0040,           /** drawing request (event) */
+		HANDLE_DRAW = 0x0040,           /** drawing request (event) */
 		HANDLE_DATA_ARRIVED = 0x080,    /** requested data () has been delivered */
 		HANDLE_BEHAVIOR_EVENT        = 0x0100, /** logical, synthetic events:
 												BUTTON_CLICK, HYPERLINK_CLICK, etc.,
@@ -261,7 +261,7 @@ extern(Windows)
 	struct DRAW_PARAMS
 	{
 		uint				cmd;
-		SCITER_GRAPHICS*	gfx;
+		HGFX				gfx;
 		RECT				area;
 		uint				reserved;
 	}

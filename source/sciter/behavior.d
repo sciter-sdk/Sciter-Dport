@@ -119,7 +119,7 @@ abstract class EventHandler
 			case EVENT_GROUPS.HANDLE_MOUSE:	{ MOUSE_PARAMS* p = cast(MOUSE_PARAMS*)prms; return evh.on_mouse( he, p );  }
 			case EVENT_GROUPS.HANDLE_KEY:	{ KEY_PARAMS* p = cast(KEY_PARAMS*)prms; return evh.on_key( he, p ); }
 			case EVENT_GROUPS.HANDLE_FOCUS:	{ FOCUS_PARAMS* p = cast(FOCUS_PARAMS*)prms; return evh.on_focus( he, p ); }
-			//case EVENT_GROUPS.HANDLE_DRAW:	{ DRAW_PARAMS* p = cast(DRAW_PARAMS*)prms; return evh.on_draw( he, p ); }
+			case EVENT_GROUPS.HANDLE_DRAW:	{ DRAW_PARAMS* p = cast(DRAW_PARAMS*)prms; return evh.on_draw( he, p ); }
 			case EVENT_GROUPS.HANDLE_TIMER:
 				{
 					TIMER_PARAMS* p = cast(TIMER_PARAMS*)prms;
