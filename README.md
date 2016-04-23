@@ -6,7 +6,7 @@ For quick starting, download a [Sciter Bootstrap](http://misoftware.rs/Bootstrap
 
 **Status**: after I started writing the [C# bindings](https://github.com/midiway/SciterSharp) for Sciter, I realized how a 100% object-orient wrapper around Sciter API is the best way to go for creating a user friendly abstraction. When I started this D-port, in my mind I would be making the equivalent of the C++ classes found in Sciter SDK which is OO btw but the naming of things is very confusing. So the next step for this D-port is to convert it to equivalent classes and names found in the C# port, however I am prioritizing the C# version which is getting Mono cross-platform support. This port will eventually get more attention for improvements and for having GTK support, but right now I am focusing the C# version.
 
-##About
+## About
 
 This library is a port of Sciter headers to the D language. [Sciter](http://sciter.com/download/) is a multi-platform HTML engine. So with this library you can create D desktop application using not just HTML, but all the features of Sciter: CSS3, SVG, scripintg, AJAX, ...
 
@@ -20,7 +20,7 @@ Platforms supported until now: **Windows 32bits only**
 License: MIT License
 
 
-##Structs and classes
+## Structs and classes
 
 This is a table of the available D classes/structs and their mapping over the types of the official SDK C++ headers:
 
@@ -95,7 +95,7 @@ This is a table of the available D classes/structs and their mapping over the ty
 	</tr>
 </table>
 
-##Package content
+## Package content
 
 ```
 dub.json					-> DUB package manifest
@@ -107,7 +107,7 @@ sciter32-import-lib.lib		-> **win32** only: DLL import lib
 /source/winkit				-> **win32** only: this are helper classes forming a basic WIN32 user GUI toolkit wrapping common things, like creating and manipulating HWND, message loops, and so on..
 ```
 
-##Features
+## Features
 
 **host <-> UI communication idioms support**
 
@@ -115,9 +115,9 @@ As can be read [here](http://sciter.com/sciter-ui-application-architecture/), th
 
 *1. get-requests*
  
-To handle UI-to-logic calls you first define/extend a EventHandler class in the native side and attaches it to your SciterWindowHost native implementation.
+To handle UI-to-logic calls you first define/extend a `EventHandler` class in the native side and attaches it to your `SciterWindowHost` native implementation.
 
-The Setup() function below first creates the SciterWindowHost instance and calls host.setup_callback() to identify the native HWINDOW attached to it. Then it simply instantiates the EventHandler and uses host.attach_evh() to attach it to the host in order to start receiving events.
+The `Setup()` function below first creates the `SciterWindowHost` instance and calls `host.setup_callback()` to identify the native HWINDOW attached to it. Then it simply instantiates the `EventHandler` and uses `host.attach_evh()` to attach it to the host in order to start receiving events.
 
 ```D
 import sciter.definitions.host;
@@ -141,7 +141,7 @@ Each time script executes code like this:
 var ret = view.Host_DoSomething(param1, param2);
 ```
 
-it will invoke the on_script_call() method of your native EventHandler:
+it will invoke the `on_script_call()` method of your native `EventHandler`:
 
 
 ```D
@@ -169,7 +169,7 @@ class MyHostEvh : EventHandler
 
 *2. application events*
 
-Application can generate some events by itself to the UI script layer. With your native SciterWindowHost in place, you simply call it's call_function() method:
+Application can generate some events by itself to the UI script layer. With your native `SciterWindowHost` in place, you simply call it's `call_function()` method:
 
 ```D
 MyHost host = ...;
@@ -188,7 +188,7 @@ view.Host_AsyncProcess(function(meow) {
 });
 ```
 
-Your native EventHandler shaw be something like:
+Your native `EventHandler` shaw be something like:
 
 ```D
 class PostEvh : EventHandler
@@ -210,7 +210,7 @@ class PostEvh : EventHandler
 ```
 
 
-**json_value supports construction through associative arrays, for example:**
+**`json_value` supports construction through associative arrays, for example:**
 
 ```D
 void Foo()
@@ -227,8 +227,24 @@ void Foo()
 }
 ```
 
+**`json_value` multi-threading guidelines:**
 
-#Library usage - Win32
+Be aware that `json_value` is a struct type, and it's destructor clears the associated Sciter VALUE. So if you need a `json_value` to survive when it goes out of scope (mainly in multi-threading scenarios), you must put it in the heap, not it the stack, so instead of:
+
+```D
+json_value jv = json_value(1234);
+```
+
+..you must:
+
+```D
+json_value* jv = new json_value(1234);
+```
+
+That's D my friend.
+
+
+# Library usage - Win32
 
 ## 1. Configuring linker: sciter32-import-lib.lib import lib
 
@@ -283,7 +299,7 @@ void main()
 }
 ```
 
-#Library usage - Linux
+# Library usage - Linux
 
 Requirements:
 

@@ -213,7 +213,7 @@ extern(Windows)
 		uint function( const VALUE* pval, const VALUE* pkey, VALUE* pretval) ValueGetValueOfKey;
 		uint function( VALUE* pval, /*VALUE_STRING_CVT_TYPE*/ uint how ) ValueToString;
 		uint function( VALUE* pval, LPCWSTR str, uint strLength, /*VALUE_STRING_CVT_TYPE*/ uint how ) ValueFromString;
-		uint function( VALUE* pval, VALUE* pthis, uint argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) ValueInvoke;
+		uint function( const VALUE* pval, const VALUE* pthis, uint argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) ValueInvoke;
 		uint function( VALUE* pval, NATIVE_FUNCTOR_INVOKE*  pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, void* tag) ValueNativeFunctorSet;
 		BOOL function( const VALUE* pval) ValueIsNativeFunctor;
 

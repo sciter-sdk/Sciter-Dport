@@ -46,9 +46,9 @@ unittest
 
 
 
-ISciterAPI* _SAPI;
+__gshared ISciterAPI* _SAPI;
 
-static this()
+shared static this()
 {
 	version(Windows)
 	{
@@ -255,7 +255,7 @@ uint ValueSetValueToKey ( VALUE* pval, const VALUE* pkey, const VALUE* pval_to_s
 uint ValueGetValueOfKey ( const VALUE* pval, const VALUE* pkey, VALUE* pretval) { return SAPI().ValueGetValueOfKey ( pval, pkey,pretval); }
 uint ValueToString ( VALUE* pval, uint how ) { return SAPI().ValueToString ( pval,how ); }
 uint ValueFromString ( VALUE* pval, LPCWSTR str, uint strLength, uint how ) { return SAPI().ValueFromString ( pval, str,strLength,how ); }
-uint ValueInvoke ( VALUE* pval, VALUE* pthis, uint argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) { return SAPI().ValueInvoke ( pval, pthis, argc, argv, pretval, url); }
+uint ValueInvoke ( const VALUE* pval, const VALUE* pthis, uint argc, const VALUE* argv, VALUE* pretval, LPCWSTR url) { return SAPI().ValueInvoke ( pval, pthis, argc, argv, pretval, url); }
 uint ValueNativeFunctorSet ( VALUE* pval, NATIVE_FUNCTOR_INVOKE* pinvoke, NATIVE_FUNCTOR_RELEASE* prelease, void* tag) { return SAPI().ValueNativeFunctorSet (pval, pinvoke, prelease, tag); }
 BOOL ValueIsNativeFunctor ( const VALUE* pval) { return SAPI().ValueIsNativeFunctor (pval); }
 

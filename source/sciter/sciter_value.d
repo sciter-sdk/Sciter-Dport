@@ -76,13 +76,13 @@ public:
 		return &data;
     }
 
-
 	this(this)
 	{
 		VALUE copy = data;
 		.ValueInit(&data);
 		.ValueCopy(&data, &copy);
 	}
+	this(json_value* src)	{ .ValueInit(&data); .ValueCopy(&data, &src.data); }
 	this(ref json_value src){ .ValueInit(&data); .ValueCopy(&data, &src.data); }
 	this(ref VALUE srcv)	{ .ValueInit(&data); .ValueCopy(&data, &srcv); }// move semantics? dont know, so better not even mess with it, cause this is working fine
 	this(VALUE srcv)		{ .ValueInit(&data); .ValueCopy(&data, &srcv); }
@@ -370,17 +370,19 @@ public:
 	bool is_object_error() const    { return data.t == VALUE_TYPE.T_OBJECT && data.u == VALUE_UNIT_TYPE_OBJECT.UT_OBJECT_ERROR; }
 
 
-
 	// T_OBJECT/UT_OBJECT_FUNCTION only, call TS function
 	// 'self' here is what will be known as 'this' inside the function, can be undefined for invocations of global functions 
-	VALUE call(VALUE[] args, json_value self = json_value.init, wstring url_or_script_name = null)
+	VALUE call(const(VALUE)[] args, json_value self = json_value.init, wstring url_or_script_name = null) const
 	{
+		assert(is_function() || is_object_function());
+
 		VALUE rv;
 		.ValueInvoke(&data /*this VALUE*/, &self.data, cast(uint)args.length, args.ptr, &rv, (url_or_script_name ~ '\0').ptr);
 		return rv;
 	}
-	VALUE call(json_value[] args...)
+	VALUE call(const(json_value)[] args...) const
 	{
+		assert(is_function() || is_object_function());
 		return call(cast(VALUE[])args);
 	}
 
