@@ -26,7 +26,7 @@ import sciter.interop.sciter_x_types;
 import sciter.api;
 
 
-void SciterSetupDebugOutput ( HWINDOW hwndOrNull, void* param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput (hwndOrNull,param,pfOutput); }
+void SciterSetupDebugOutput ( HWINDOW hwndOrNull, void* param, DEBUG_OUTPUT_PROC pfOutput) { return SAPI().SciterSetupDebugOutput(hwndOrNull,param,pfOutput); }
 
 
 abstract class debug_output
@@ -47,5 +47,36 @@ abstract class debug_output
 	{
 		debug_output _this = cast(debug_output) param;
 		_this.output(cast(OUTPUT_SUBSYTEM) subsystem, cast(OUTPUT_SEVERITY) severity, text[0..text_length].idup);
+	}
+}
+
+version(Windows)
+{
+	class debug_output_console : debug_output
+	{
+		import winkit.WinAPI;
+
+		private HANDLE m_trace_out;
+
+		public this()
+		{
+		}
+
+		override void output(OUTPUT_SUBSYTEM subsystem, OUTPUT_SEVERITY severity, wstring text)
+		{
+			import std.conv;
+
+			if(!m_trace_out)
+			{
+				AllocConsole();
+				m_trace_out = GetStdHandle(STD_OUTPUT_HANDLE);
+			}
+
+			assert(m_trace_out);
+
+			string msg = to!string(text); // ~ "\n";
+			DWORD written;
+			WriteFile(m_trace_out, msg.ptr, msg.length, &written, null);
+		}
 	}
 }
