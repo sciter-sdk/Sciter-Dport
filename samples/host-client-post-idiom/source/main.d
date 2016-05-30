@@ -1,10 +1,10 @@
 import std.stdio;
 
-import sciter.sciter_x_types;
-import sciter.definitions.api;
-import sciter.definitions.host;
-import sciter.definitions.behavior;
-import sciter.definitions.sciter_value;
+import sciter.interop.sciter_x_types;
+import sciter.api;
+import sciter.host;
+import sciter.behavior;
+import sciter.sciter_value;
 
 
 class PostHost : SciterWindowHost
