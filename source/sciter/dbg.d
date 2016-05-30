@@ -58,10 +58,6 @@ version(Windows)
 
 		private HANDLE m_trace_out;
 
-		public this()
-		{
-		}
-
 		override void output(OUTPUT_SUBSYTEM subsystem, OUTPUT_SEVERITY severity, wstring text)
 		{
 			import std.conv;
