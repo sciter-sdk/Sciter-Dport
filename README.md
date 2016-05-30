@@ -120,7 +120,7 @@ To handle UI-to-logic calls you first define/extend a `EventHandler` class in th
 The `Setup()` function below first creates the `SciterWindowHost` instance and calls `host.setup_callback()` to identify the native HWINDOW attached to it. Then it simply instantiates the `EventHandler` and uses `host.attach_evh()` to attach it to the host in order to start receiving events.
 
 ```D
-import sciter.definitions.host;
+import sciter.host;
 
 class MyHost : SciterWindowHost { ... }
 
@@ -146,8 +146,8 @@ it will invoke the `on_script_call()` method of your native `EventHandler`:
 
 ```D
 import std.conv;
-import sciter.definitions.behavior;
-import sciter.definitions.behavior;
+import sciter.behavior;
+import sciter.behavior;
 
 class MyHostEvh : EventHandler
 {
@@ -259,13 +259,14 @@ Requirements:
 
 - add every .d files under /source/sciter directory to the compiler input, that is, compile them together with your app others .d files
 - add /source to the compiler include path
-- add needed import statements like: ```import sciter.definitions.api```
+- add needed import statements like: ```import sciter.api```
 
 
 Minimal code for creating a Sciter based HWND and loading a external .html file:
+
 ```D
-import sciter.sciter_x_types;
-import sciter.definitions.api;
+import sciter.interop.sciter_x_types;
+import sciter.api;
 
 void main()
 {
@@ -303,7 +304,7 @@ void main()
 
 Requirements:
 
-Sciter for Linux requires GTK3, so make sure to install GTK3 developer package:
+Sciter for Linux requires GTK+3 and libcurl. Just make sure to install GTK+3 developer package:
 
 ```bash
 sudo apt-get install libgtk-3-dev
