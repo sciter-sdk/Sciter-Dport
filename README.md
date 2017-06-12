@@ -25,74 +25,74 @@ License: MIT License
 This is a table of the available D classes/structs and their mapping over the types of the official SDK C++ headers:
 
 <table>
-	<tr>
-		<th>D type</th>
-		<th>C++ equivalent type</th>
-	</tr>
+<tr>
+<th>D type</th>
+<th>C++ equivalent type</th>
+</tr>
 
-	<tr>
-	    <td>
-            <i>module sciter.sciter_dom;</i><br>
-            <b>struct node</b><br>
-            <b>struct element</b>
-	    </td>
+<tr>
+<td>
+<i>module sciter.sciter_dom;</i><br>
+<b>struct node</b><br>
+<b>struct element</b>
+</td>
 
-	    <td>
-            <i>#include "sciter-x-dom.hpp"</i><br>
-            <b>class sciter::dom::node</b><br>
-            <b>class sciter::dom::element</b>
-	    </td>
-	</tr>
+<td>
+<i>#include "sciter-x-dom.hpp"</i><br>
+<b>class sciter::dom::node</b><br>
+<b>class sciter::dom::element</b>
+</td>
+</tr>
 
-    <tr>
-	    <td>
-            <i>module sciter.sciter_value;</i><br>
-            <b>struct json_value</b>
-	    </td>
+<tr>
+<td>
+<i>module sciter.sciter_value;</i><br>
+<b>struct json_value</b>
+</td>
 
-	    <td>
-            <i>#include "value.hpp"</i><br>
-            <b>sciter::value or VALUE</b>
-	    </td>
-	</tr>
+<td>
+<i>#include "value.hpp"</i><br>
+<b>sciter::value or VALUE</b>
+</td>
+</tr>
 
-    <tr>
-	    <td>
-            <i>module sciter.dbg;</i><br>
-            <b>abstract class debug_output</b><br>
-	    </td>
+<tr>
+<td>
+<i>module sciter.dbg;</i><br>
+<b>abstract class debug_output</b><br>
+</td>
 
-	    <td>
-            <i>#include "sciter-x-debug.h"</i><br>
-            <b>class sciter::debug_output</b><br>
-	    </td>
-	</tr>
+<td>
+<i>#include "sciter-x-debug.h"</i><br>
+<b>class sciter::debug_output</b><br>
+</td>
+</tr>
 
-    <tr>
-	    <td>
-            <i>module sciter.host;</i><br>
-            <b>class SciterArchive</b><br>
-            <b>abstract class SciterWindowHost</b>
-	    </td>
+<tr>
+<td>
+<i>module sciter.host;</i><br>
+<b>class SciterArchive</b><br>
+<b>abstract class SciterWindowHost</b>
+</td>
 
-	    <td>
-            <i>#include "sciter-x-host-callback.h"</i><br>
-            <b>class sciter::archive</b><br>
-            <b>class sciter::host&lt;BASE&gt;</b>
-	    </td>
-	</tr>
+<td>
+<i>#include "sciter-x-host-callback.h"</i><br>
+<b>class sciter::archive</b><br>
+<b>class sciter::host&lt;BASE&gt;</b>
+</td>
+</tr>
 
-    <tr>
-	    <td>
-            <i>module sciter.behavior;</i><br>
-            <b>abstract class EventHandler</b>
-	    </td>
+<tr>
+<td>
+<i>module sciter.behavior;</i><br>
+<b>abstract class EventHandler</b>
+</td>
 
-	    <td>
-            <i>#include "sciter-x-behavior.h"</i><br>
-            <b>class sciter::event_handler</b>
-	    </td>
-	</tr>
+<td>
+<i>#include "sciter-x-behavior.h"</i><br>
+<b>class sciter::event_handler</b>
+</td>
+</tr>
 </table>
 
 ## Package content
